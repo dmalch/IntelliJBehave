@@ -105,10 +105,10 @@
                                 implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor"/>
 
         <!--code inspections-->
-        <localInspection language="JAVA" shortName="UnusedStepDeclaration" displayName="Unused step declaration"
+        <localInspection id="unusedStepDeclaration" language="JAVA" shortName="UnusedStepDeclaration" displayName="Unused step declaration"
                          groupName="JBehave" enabledByDefault="false" level="WARNING"
                          implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection"/>
-        <localInspection language="Story" shortName="UndefinedStep" displayName="Undefined step"
+        <localInspection id="undefinedStep" language="Story" shortName="UndefinedStep" displayName="Undefined step"
                          groupName="JBehave" enabledByDefault="true" level="WARNING"
                          implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection"/>
     </extensions>
