@@ -58,7 +58,7 @@ public abstract class StepDefinitionIterator implements ContentIterator {
 
                                 boolean shouldContinue = processStepDefinition(stepDefinitionAnnotation);
                                 if (!shouldContinue) {
-                                    return shouldContinue;
+                                    return false;
                                 }
                             }
                         }

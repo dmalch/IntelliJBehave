@@ -68,7 +68,7 @@ public class UnusedStepsInspection extends BaseJavaLocalInspectionTool {
 
     @Override
     public boolean isEnabledByDefault() {
-        return true;
+        return false;
     }
 
     @NotNull
