@@ -25,40 +25,9 @@ import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
-public class UndefinedStepsInspection extends BaseJavaLocalInspectionTool {
-
-    @Nls
-    @NotNull
-    @Override
-    public String getGroupDisplayName() {
-        return "JBehave";
-    }
-
-    @Nls
-    @NotNull
-    @Override
-    public String getDisplayName() {
-        return "Undefined step";
-    }
-
-    @NotNull
-    @Override
-    public String getShortName() {
-        return "UndefinedStep";
-    }
-
-    @Override
-    public String getStaticDescription() {
-        return super.getStaticDescription();
-    }
-
-    @Override
-    public boolean isEnabledByDefault() {
-        return true;
-    }
+public class UndefinedStepsInspection extends LocalInspectionTool {
 
     @NotNull
     @Override

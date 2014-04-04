@@ -24,7 +24,6 @@ import com.intellij.psi.JavaElementVisitor;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElementVisitor;
 import org.jbehave.core.annotations.*;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -40,36 +39,6 @@ public class UnusedStepsInspection extends BaseJavaLocalInspectionTool {
             Then.class.getName(),
             Alias.class.getName(),
             Aliases.class.getName());
-
-    @Nls
-    @NotNull
-    @Override
-    public String getGroupDisplayName() {
-        return "JBehave";
-    }
-
-    @Nls
-    @NotNull
-    @Override
-    public String getDisplayName() {
-        return "Unused step declaration";
-    }
-
-    @NotNull
-    @Override
-    public String getShortName() {
-        return "UnusedStepDeclaration";
-    }
-
-    @Override
-    public String getStaticDescription() {
-        return super.getStaticDescription();
-    }
-
-    @Override
-    public boolean isEnabledByDefault() {
-        return false;
-    }
 
     @NotNull
     @Override

@@ -105,9 +105,11 @@
                                 implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor"/>
 
         <!--code inspections-->
-        <inspectionToolProvider id="unusedStepsInspection" order="FIRST"
-                                implementation="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspectionProvider"/>
-        <inspectionToolProvider id="undefinedStepsInspection" order="LAST"
-                                implementation="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspectionProvider"/>
+        <localInspection language="JAVA" shortName="UnusedStepDeclaration" displayName="Unused step declaration"
+                         groupName="JBehave" enabledByDefault="false" level="WARNING"
+                         implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection"/>
+        <localInspection language="Story" shortName="UndefinedStep" displayName="Undefined step"
+                         groupName="JBehave" enabledByDefault="true" level="WARNING"
+                         implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection"/>
     </extensions>
 </idea-plugin>
