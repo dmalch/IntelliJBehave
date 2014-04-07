@@ -111,5 +111,7 @@
         <localInspection id="undefinedStep" language="Story" shortName="UndefinedStep" displayName="Undefined step"
                          groupName="JBehave" enabledByDefault="true" level="WARNING"
                          implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection"/>
+        <psi.referenceContributor
+                implementation="com.github.kumaraman21.intellijbehave.resolver.StepAnnotationPsiReferenceContributor"/>
     </extensions>
 </idea-plugin>

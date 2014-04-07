@@ -15,25 +15,20 @@
  */
 package com.github.kumaraman21.intellijbehave.codeInspector;
 
-import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
+import com.github.kumaraman21.intellijbehave.resolver.StepAnnotationPsiReference;
 import com.intellij.codeInspection.BaseJavaLocalInspectionTool;
 import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.psi.JavaElementVisitor;
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.*;
 import org.jbehave.core.annotations.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Set;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.intellij.psi.impl.PsiImplUtil.findAttributeValue;
 
 public class UnusedStepsInspection extends BaseJavaLocalInspectionTool {
-
-    private static final List<String> JBEHAVE_ANNOTATIONS = newArrayList(
+    public static final List<String> JBEHAVE_ANNOTATIONS = newArrayList(
             Given.class.getName(),
             When.class.getName(),
             Then.class.getName(),
@@ -51,19 +46,25 @@ public class UnusedStepsInspection extends BaseJavaLocalInspectionTool {
                     return;
                 }
 
-                Project project = annotation.getProject();
-                StepUsageFinder stepUsageFinder = new StepUsageFinder(project);
-                ProjectRootManager.getInstance(project).getFileIndex().iterateContent(stepUsageFinder);
-                Set<StepPsiElement> stepUsages = stepUsageFinder.getStepUsages();
+                final PsiAnnotationMemberValue value = findAttributeValue(annotation, "value");
 
-                for (StepPsiElement stepUsage : stepUsages) {
-                    if (stepUsage.getReference().resolve() == annotation) {
-                        return;
-                    }
+                if (referencesContainValueOf(value, StepAnnotationPsiReference.class)) {
+                    return;
                 }
 
                 holder.registerProblem(annotation, "Step <code>#ref</code> is never used");
             }
         };
+    }
+
+    private boolean referencesContainValueOf(PsiAnnotationMemberValue value, Class ofClass) {
+        if (value != null) {
+            for (PsiReference reference : value.getReferences()) {
+                if (ofClass.isInstance(reference)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
