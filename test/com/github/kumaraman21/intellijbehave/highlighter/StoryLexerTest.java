@@ -1,11 +1,13 @@
 package com.github.kumaraman21.intellijbehave.highlighter;
 
+import com.github.kumaraman21.intellijbehave.lexer.StoryLexerAdapter;
+import com.github.kumaraman21.intellijbehave.parser.StoryTypes;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.github.kumaraman21.intellijbehave.Samples.*;
-import static com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType.*;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
@@ -13,7 +15,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
  */
 public class StoryLexerTest {
 
-    private StoryLexer storyLexer;
+    private StoryLexerAdapter storyLexerAdapter;
 
     @Test
     @Ignore
@@ -27,296 +29,296 @@ public class StoryLexerTest {
 
     @Test
     public void parseSimpleSample() {
-        storyLexer = new StoryLexer();
-        storyLexer.start(SIMPLE_SAMPLE);
+        storyLexerAdapter = new StoryLexerAdapter();
+        storyLexerAdapter.start(SIMPLE_SAMPLE);
 
-        assertToken(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "An unknown user cannot be logged");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META, "Meta:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META_KEY, "@skip");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"weird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try to login using the password \"soweird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "Then ");
-        advanceAndAssert(STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(WHITE_SPACE);
+        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_TYPE, "Meta:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_KEY, "@skip");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
     }
 
     @Test
     public void parseMultilineSample() {
-        storyLexer = new StoryLexer();
-        storyLexer.start(MULTILINE_SAMPLE);
+        storyLexerAdapter = new StoryLexerAdapter();
+        storyLexerAdapter.start(MULTILINE_SAMPLE);
 
-        assertToken(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "An unknown user cannot be logged");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META, "Meta:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META_KEY, "@skip");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"weird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try to login using the password \"soweird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "Then ");
-        advanceAndAssert(STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(WHITE_SPACE);
+        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_TYPE, "Meta:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_KEY, "@skip");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
     }
 
     @Test
     public void parseMultilineLong() {
-        storyLexer = new StoryLexer();
-        storyLexer.start(MULTILINE_LONG_SAMPLE);
+        storyLexerAdapter = new StoryLexerAdapter();
+        storyLexerAdapter.start(MULTILINE_LONG_SAMPLE);
 
-        assertToken(STORY_DESCRIPTION, "Narrative: ");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(STORY_DESCRIPTION, "In order to play a game");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(STORY_DESCRIPTION, "As a player");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(STORY_DESCRIPTION, "I want to be able to create and manage my account");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "An unknown user cannot be logged");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META, "Meta:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META_KEY, "@skip");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"weird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try to login using the password \"soweird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "Then ");
-        advanceAndAssert(STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "A known user cannot be logged using a wrong password");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "the following existing users:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, " nickname ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, " password ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   Travis ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   PacMan ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"Travis\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "And ");
-        advanceAndAssert(STEP_TEXT, "he is the user with nickname: \"Bomo\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try to login using the password \"McCallum\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "And ");
-        advanceAndAssert(STEP_TEXT, "he tries to login using the password \"Bimo\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "Then ");
-        advanceAndAssert(STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "A known user can be logged using the right password");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "the following existing users:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, " nickname ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, " password ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   Travis ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   PacMan ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"Travis\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try to login using the password \"PacMan\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "Then ");
-        advanceAndAssert(STEP_TEXT, "i get logged");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "And ");
-        advanceAndAssert(STEP_TEXT, "a welcome message is displayed");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try again to login using the password \"PacMan\"");
-        advanceAndAssert(WHITE_SPACE);
+        assertToken(StoryTypes.STORY_DESCRIPTION, "Narrative: ");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.STORY_DESCRIPTION, "In order to play a game");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.STORY_DESCRIPTION, "As a player");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.STORY_DESCRIPTION, "I want to be able to create and manage my account");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_TYPE, "Meta:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_KEY, "@skip");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "A known user cannot be logged using a wrong password");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "the following existing users:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, " nickname ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, " password ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   Travis ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   PacMan ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "And ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "he is the user with nickname: \"Bomo\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"McCallum\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "And ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "he tries to login using the password \"Bimo\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "A known user can be logged using the right password");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "the following existing users:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, " nickname ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, " password ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   Travis ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   PacMan ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"PacMan\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i get logged");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "And ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "a welcome message is displayed");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try again to login using the password \"PacMan\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
     }
 
     @Test
     public void parseMetaSample() {
-        storyLexer = new StoryLexer();
-        storyLexer.start(META_SAMPLE);
+        storyLexerAdapter = new StoryLexerAdapter();
+        storyLexerAdapter.start(META_SAMPLE);
 
-        assertToken(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "An unknown user cannot be logged");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META, "Meta:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META_KEY, "@author");
-        advanceAndAssert(META_TEXT, " carmen");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META_KEY, "@skip");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"weird\"");
-        advanceAndAssert(WHITE_SPACE);
+        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_TYPE, "Meta:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_KEY, "@author");
+        advanceAndAssert(StoryTypes.META_TEXT, " carmen");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_KEY, "@skip");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
     }
 
     @Test
     public void parseLongSample() {
-        storyLexer = new StoryLexer();
-        storyLexer.start(LONG_SAMPLE);
+        storyLexerAdapter = new StoryLexerAdapter();
+        storyLexerAdapter.start(LONG_SAMPLE);
 
-        assertToken(STORY_DESCRIPTION, "Narrative: ");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(STORY_DESCRIPTION, "In order to play a game");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(STORY_DESCRIPTION, "As a player");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(STORY_DESCRIPTION, "I want to be able to create and manage my account");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "An unknown user cannot be logged");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META, "Meta:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(META_KEY, "@skip");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"weird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try to login using the password \"soweird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "Then ");
-        advanceAndAssert(STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "A known user cannot be logged using a wrong password");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "the following existing users:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, " nickname ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, " password ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   Travis ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   PacMan ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"Travis\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try to login using the password \"McCallum\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "Then ");
-        advanceAndAssert(STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(WHITE_SPACE);
+        assertToken(StoryTypes.STORY_DESCRIPTION, "Narrative: ");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.STORY_DESCRIPTION, "In order to play a game");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.STORY_DESCRIPTION, "As a player");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.STORY_DESCRIPTION, "I want to be able to create and manage my account");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_TYPE, "Meta:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.META_KEY, "@skip");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "A known user cannot be logged using a wrong password");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "the following existing users:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, " nickname ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, " password ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   Travis ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   PacMan ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"McCallum\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
 
         // ...
     }
 
     @Test
     public void parseExamples() {
-        storyLexer = new StoryLexer();
-        storyLexer.start(EXAMPLES_SAMPLE);
+        storyLexerAdapter = new StoryLexerAdapter();
+        storyLexerAdapter.start(EXAMPLES_SAMPLE);
 
-        assertToken(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "An unknown user cannot be logged");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "i am the user with nickname: \"<input>\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHEN_TYPE, "When ");
-        advanceAndAssert(STEP_TEXT, "i try to login using the password \"soweird\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(THEN_TYPE, "Then ");
-        advanceAndAssert(STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(EXAMPLE_TYPE, "Examples:");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "  login   ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   password   ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "  Travis  ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   Pacman     ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "  Vlad    ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(TABLE_CELL, "   Thundercat ");
-        advanceAndAssert(TABLE_DELIM);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(SCENARIO_TYPE, "Scenario: ");
-        advanceAndAssert(SCENARIO_TEXT, "A known user can be logged using the right password");
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(WHITE_SPACE);
-        advanceAndAssert(GIVEN_TYPE, "Given ");
-        advanceAndAssert(STEP_TEXT, "the following existing users:");
-        advanceAndAssert(WHITE_SPACE);
+        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"<input>\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.EXAMPLE_TYPE, "Examples:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "  login   ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   password   ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "  Travis  ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   Pacman     ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "  Vlad    ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(StoryTypes.TABLE_CELL, "   Thundercat ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario: ");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, "A known user can be logged using the right password");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.STEP_TEXT, "the following existing users:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
 
         // ...
 
@@ -324,49 +326,30 @@ public class StoryLexerTest {
     }
 
     private void advanceAndAssert(final IElementType storyTokenType) {
-        storyLexer.advance();
-        assertThat(storyLexer.getTokenType()).isEqualTo(storyTokenType);
+        storyLexerAdapter.advance();
+        assertThat(storyLexerAdapter.getTokenType()).isEqualTo(storyTokenType);
     }
 
     private void advanceAndAssert(final IElementType storyTokenType, final String content) {
-        storyLexer.advance();
+        storyLexerAdapter.advance();
         assertToken(storyTokenType, content);
     }
 
     private void assertToken(final IElementType storyTokenType, final String content) {
-        assertThat(storyLexer.getTokenType()).isEqualTo(storyTokenType);
-        assertThat(storyLexer.getTokenText().replaceAll("\\n", "")).isEqualTo(content);
+        assertThat(storyLexerAdapter.getTokenType()).isEqualTo(storyTokenType);
+        assertThat(storyLexerAdapter.getTokenText().replaceAll("\\n", "")).isEqualTo(content);
     }
 
     private void traceAll(final String content) {
-        final StoryLexer storyLexer = new StoryLexer();
-        storyLexer.start(content);
+        final StoryLexerAdapter storyLexerAdapter = new StoryLexerAdapter();
+        storyLexerAdapter.start(content);
 
         IElementType tokenType;
         do {
-            tokenType = storyLexer.getTokenType();
-            System.out.println("[" +
-                    rightPad(tokenType, "STORY_DESCRIPTION".length()) + "]" +
-                    rightPad(storyLexer.lexerState(), "IN_DIRECTIVE".length()) +
-                    ": >>" + escape(storyLexer.getTokenSequence()) + "<<");
-
-            storyLexer.advance();
-            tokenType = storyLexer.getTokenType();
+            storyLexerAdapter.getTokenType();
+            storyLexerAdapter.advance();
+            tokenType = storyLexerAdapter.getTokenType();
         }
         while (tokenType != null);
     }
-
-    private String rightPad(final Object object, final int length) {
-        final StringBuilder builder = new StringBuilder(object.toString());
-        while (builder.length() < length) {
-            builder.append(" ");
-        }
-        return builder.toString();
-    }
-
-    private String escape(final CharSequence tokenSequence) {
-        return tokenSequence.toString().replace("\n", "\\n").replace("\r", "\\r");
-    }
-
-
 }

@@ -1,7 +1,7 @@
 package com.github.kumaraman21.intellijbehave.completion;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
 import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
+import com.github.kumaraman21.intellijbehave.parser.StoryTypes;
 import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionAnnotation;
 import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionIterator;
 import com.github.kumaraman21.intellijbehave.resolver.StepPsiReference;
@@ -45,7 +45,8 @@ public class StoryCompletionContributor extends CompletionContributor {
 
     private LocalizedKeywords lookupLocalizedKeywords(CompletionParameters parameters) {
         String locale = "en";
-        ASTNode localeNode = parameters.getOriginalFile().getNode().findChildByType(StoryTokenType.COMMENT_WITH_LOCALE);
+//        ASTNode localeNode = parameters.getOriginalFile().getNode().findChildByType(StoryTypes.COMMENT_WITH_LOCALE);
+        ASTNode localeNode = parameters.getOriginalFile().getNode().findChildByType(StoryTypes.COMMENT);
         if (localeNode != null) {
             String localeFound = LocalizedStorySupport.checkForLanguageDefinition(localeNode.getText());
             if (localeFound != null) {

@@ -1,9 +1,11 @@
 package com.github.kumaraman21.intellijbehave.highlighter;
 
+import com.github.kumaraman21.intellijbehave.parser.StoryTypes;
 import com.github.kumaraman21.intellijbehave.utility.CharTree;
 import com.github.kumaraman21.intellijbehave.utility.JBKeyword;
 import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;
 import com.intellij.lexer.LexerBase;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.util.ArrayUtil;
 import org.jbehave.core.i18n.LocalizedKeywords;
@@ -131,11 +133,12 @@ public class StoryLocalizedLexer extends LexerBase {
                 String locale = LocalizedStorySupport.checkForLanguageDefinition(tokenText());
                 if (locale != null) {
                     changeLocale(locale);
-                    tokenType = StoryTokenType.COMMENT_WITH_LOCALE;
+//                    tokenType = StoryTypes.COMMENT_WITH_LOCALE;
+                    tokenType = StoryTypes.COMMENT;
                     return;
                 }
             }
-            tokenType = StoryTokenType.COMMENT;
+            tokenType = StoryTypes.COMMENT;
             return;
         }
 
@@ -148,17 +151,17 @@ public class StoryLocalizedLexer extends LexerBase {
                     position += entry.length;
                     return;
                 } else if (consume(CRLF)) {
-                    tokenType = StoryTokenType.WHITE_SPACE;
+                    tokenType = TokenType.WHITE_SPACE;
                     return;
                 } else {
                     consume(INPUT_CHAR);
-                    tokenType = StoryTokenType.STORY_DESCRIPTION;
+                    tokenType = StoryTypes.STORY_DESCRIPTION;
                     return;
                 }
             }
             case IN_DISPATCH: {
                 if (consume(CRLF) || consume(SPACES)) {
-                    tokenType = StoryTokenType.WHITE_SPACE;
+                    tokenType = TokenType.WHITE_SPACE;
                     return;
                 }
                 CharTree.Entry<JBKeyword> entry = charTree.lookup(buffer, position);
@@ -168,7 +171,7 @@ public class StoryLocalizedLexer extends LexerBase {
             }
             case IN_SCENARIO: {
                 if (consume(CRLF)) {
-                    tokenType = StoryTokenType.WHITE_SPACE;
+                    tokenType = TokenType.WHITE_SPACE;
                     //
                     CharTree.Entry<JBKeyword> entry = charTree.lookup(buffer, position);
                     if (entry.hasValue()) {
@@ -195,7 +198,7 @@ public class StoryLocalizedLexer extends LexerBase {
                     return;
                 } else {
                     consume(INPUT_CHAR);
-                    tokenType = StoryTokenType.SCENARIO_TEXT;
+                    tokenType = StoryTypes.SCENARIO_TEXT;
                     return;
                 }
             }
@@ -206,7 +209,7 @@ public class StoryLocalizedLexer extends LexerBase {
                         case MetaProperty:
                             position += entry.length;
                             consume(META_PROPERTY_CHARS);
-                            tokenType = StoryTokenType.META_KEY;
+                            tokenType = StoryTypes.META_KEY;
                             return;
                         default:
                             tokenType = tokenType(entry.value);
@@ -214,10 +217,10 @@ public class StoryLocalizedLexer extends LexerBase {
                             return;
                     }
                 } else if (consume(SPACES)) {
-                    tokenType = StoryTokenType.WHITE_SPACE;
+                    tokenType = TokenType.WHITE_SPACE;
                     return;
                 } else if (consume(CRLF)) {
-                    tokenType = StoryTokenType.WHITE_SPACE;
+                    tokenType = TokenType.WHITE_SPACE;
 
                     //
                     entry = charTree.lookup(buffer, position);
@@ -246,13 +249,13 @@ public class StoryLocalizedLexer extends LexerBase {
                     return;
                 } else {
                     consumeUntil(META_PROPERTY_CHARS, keywords.metaProperty());
-                    tokenType = StoryTokenType.META_TEXT;
+                    tokenType = StoryTypes.META_TEXT;
                     return;
                 }
             }
             case IN_STEP: {
                 if (consume(CRLF)) {
-                    tokenType = StoryTokenType.WHITE_SPACE;
+                    tokenType = TokenType.WHITE_SPACE;
 
                     //
                     CharTree.Entry<JBKeyword> entry = charTree.lookup(buffer, position);
@@ -280,7 +283,7 @@ public class StoryLocalizedLexer extends LexerBase {
                     return;
                 } else {
                     consume(INPUT_CHAR);
-                    tokenType = StoryTokenType.STEP_TEXT;
+                    tokenType = StoryTypes.STEP_TEXT;
                     return;
                 }
             }
@@ -288,7 +291,7 @@ public class StoryLocalizedLexer extends LexerBase {
             case IN_STEP_TABLE:
             case IN_TABLE: {
                 if (consume(CRLF)) {
-                    tokenType = StoryTokenType.WHITE_SPACE;
+                    tokenType = TokenType.WHITE_SPACE;
                     //
                     CharTree.Entry<JBKeyword> entry = charTree.lookup(buffer, position);
                     if (entry.hasValue()) {
@@ -310,13 +313,13 @@ public class StoryLocalizedLexer extends LexerBase {
                     }
                     return;
                 } else if (consume(keywords.examplesTableHeaderSeparator())) {
-                    tokenType = StoryTokenType.TABLE_DELIM;
+                    tokenType = StoryTypes.TABLE_DELIM;
                     return;
                 } else if (consume(keywords.examplesTableValueSeparator())) {
-                    tokenType = StoryTokenType.TABLE_DELIM;
+                    tokenType = StoryTypes.TABLE_DELIM;
                     return;
                 } else if (consumeUntil(INPUT_CHAR, keywords.examplesTableHeaderSeparator(), keywords.examplesTableValueSeparator())) {
-                    tokenType = StoryTokenType.TABLE_CELL;
+                    tokenType = StoryTypes.TABLE_CELL;
                     return;
                 }
             }
@@ -413,51 +416,43 @@ public class StoryLocalizedLexer extends LexerBase {
 
     private IElementType tokenType(JBKeyword value) {
         if (value == null) {
-            return StoryTokenType.BAD_CHARACTER;
+            return StoryTypes.BAD_CHARACTER;
         }
         switch (value) {
             case Given:
                 state = State.IN_STEP;
-                return StoryTokenType.STEP_TYPE_GIVEN;
+                return StoryTypes.GIVEN_STEP_TYPE;
             case When:
                 state = State.IN_STEP;
-                return StoryTokenType.STEP_TYPE_WHEN;
+                return StoryTypes.WHEN_STEP_TYPE;
             case Then:
                 state = State.IN_STEP;
-                return StoryTokenType.STEP_TYPE_THEN;
-            case And:
-                state = State.IN_STEP;
-                return StoryTokenType.STEP_TYPE_AND;
+                return StoryTypes.THEN_STEP_TYPE;
             case Ignorable:
             case ExamplesTableIgnorableSeparator:
-                return StoryTokenType.COMMENT;
+                return StoryTypes.COMMENT;
             case Narrative:
             case AsA:
             case InOrderTo:
-            case IWantTo:
-                state = State.IN_STORY;
-                return StoryTokenType.NARRATIVE_TYPE;
             case ExamplesTable:
-                return StoryTokenType.EXAMPLE_TYPE;
+                return StoryTypes.EXAMPLE_TYPE;
             case ExamplesTableHeaderSeparator:
             case ExamplesTableValueSeparator:
                 state = State.IN_TABLE;
-                return StoryTokenType.TABLE_DELIM;
-            case GivenStories:
-                return StoryTokenType.GIVEN_STORIES;
+                return StoryTypes.TABLE_DELIM;
             case Meta:
                 state = State.IN_META;
-                return StoryTokenType.META;
+                return StoryTypes.META_TYPE;
             case Scenario:
                 state = State.IN_SCENARIO;
-                return StoryTokenType.SCENARIO_TYPE;
+                return StoryTypes.SCENARIO_TYPE;
 
             case MetaProperty:
                 break;
             case ExamplesTableRow:
                 break;
         }
-        return StoryTokenType.BAD_CHARACTER;
+        return StoryTypes.BAD_CHARACTER;
     }
 
 

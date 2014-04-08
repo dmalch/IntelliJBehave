@@ -1,12 +1,13 @@
 package com.github.kumaraman21.intellijbehave.highlighter;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-
+import com.github.kumaraman21.intellijbehave.parser.StoryTypes;
 import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
-
 import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
  * @author <a href="http://twitter.com/aloyer">@aloyer</a>
@@ -20,11 +21,11 @@ public class StoryLocalizedLexer_MalformedTest {
         storyLexer = new StoryLocalizedLexer(new LocalizedStorySupport());
         storyLexer.start("| Travis | Pacman |");
 
-        assertToken(StoryTokenType.TABLE_DELIM, "|");
-        advanceAndAssert(StoryTokenType.TABLE_CELL, " Travis ");
-        advanceAndAssert(StoryTokenType.TABLE_DELIM, "|");
-        advanceAndAssert(StoryTokenType.TABLE_CELL, " Pacman ");
-        advanceAndAssert(StoryTokenType.TABLE_DELIM, "|");
+        assertToken(StoryTypes.TABLE_DELIM, "|");
+        advanceAndAssert(StoryTypes.TABLE_CELL, " Travis ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM, "|");
+        advanceAndAssert(StoryTypes.TABLE_CELL, " Pacman ");
+        advanceAndAssert(StoryTypes.TABLE_DELIM, "|");
         advanceAndAssert(null);
     }
 
@@ -37,16 +38,16 @@ public class StoryLocalizedLexer_MalformedTest {
                 "Then\n" +
                 "And\n");
 
-        assertToken(StoryTokenType.SCENARIO_TYPE, "Scenario:");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_GIVEN, "Given");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_WHEN, "When");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_THEN, "Then");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_AND, "And");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
+        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario:");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "And");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(null);
     }
 
@@ -58,15 +59,15 @@ public class StoryLocalizedLexer_MalformedTest {
                 "When\n" +
                 "Then\n");
 
-        assertToken(StoryTokenType.SCENARIO_TYPE, "Scenario:");
-        advanceAndAssert(StoryTokenType.SCENARIO_TEXT, " Given a nice");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_GIVEN, "Given");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_WHEN, "When");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_THEN, "Then");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
+        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario:");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, " Given a nice");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(null);
     }
 

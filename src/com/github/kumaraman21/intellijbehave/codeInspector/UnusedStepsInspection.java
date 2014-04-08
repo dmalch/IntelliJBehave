@@ -57,7 +57,7 @@ public class UnusedStepsInspection extends BaseJavaLocalInspectionTool {
         };
     }
 
-    private boolean referencesContainValueOf(PsiAnnotationMemberValue value, Class ofClass) {
+    public static boolean referencesContainValueOf(PsiElement value, Class ofClass) {
         if (value != null) {
             for (PsiReference reference : value.getReferences()) {
                 if (ofClass.isInstance(reference)) {

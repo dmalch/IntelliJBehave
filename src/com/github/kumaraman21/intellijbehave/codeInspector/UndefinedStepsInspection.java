@@ -17,15 +17,17 @@ package com.github.kumaraman21.intellijbehave.codeInspector;
 
 import com.github.kumaraman21.intellijbehave.highlighter.StorySyntaxHighlighter;
 import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
-import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionAnnotation;
+import com.github.kumaraman21.intellijbehave.resolver.StepPsiReference;
 import com.github.kumaraman21.intellijbehave.utility.ParametrizedString;
 import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.ex.ProblemDescriptorImpl;
 import com.intellij.openapi.editor.colors.TextAttributesKey;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
+
+import static com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection.referencesContainValueOf;
+import static com.intellij.psi.impl.PsiImplUtil.findAttributeValue;
 
 public class UndefinedStepsInspection extends LocalInspectionTool {
 
@@ -43,22 +45,22 @@ public class UndefinedStepsInspection extends LocalInspectionTool {
                 }
 
                 StepPsiElement stepPsiElement = (StepPsiElement) psiElement;
-                StepDefinitionAnnotation annotationDef = stepPsiElement.getReference().stepDefinitionAnnotation();
-                if (annotationDef == null) {
-                    holder.registerProblem(stepPsiElement, "Step <code>#ref</code> is not defined");
-                } else {
-                    highlightParameters(stepPsiElement, annotationDef, holder);
+
+                if (referencesContainValueOf(stepPsiElement, StepPsiReference.class)) {
+                    highlightParameters(stepPsiElement, holder);
+                    return;
                 }
+
+                holder.registerProblem(stepPsiElement, "Step <code>#ref</code> is not defined");
             }
         };
     }
 
 
     private void highlightParameters(StepPsiElement stepPsiElement,
-                                     StepDefinitionAnnotation annotation,
                                      ProblemsHolder holder) {
         String stepText = stepPsiElement.getStepText();
-        String annotationText = annotation.getAnnotationText();
+        String annotationText = getAnnotationTextFrom(stepPsiElement);
         ParametrizedString pString = new ParametrizedString(annotationText);
 
         int offset = stepPsiElement.getStepTextOffset();
@@ -72,6 +74,20 @@ public class UndefinedStepsInspection extends LocalInspectionTool {
             }
             offset += length;
         }
+    }
+
+    public static String getAnnotationTextFrom(StepPsiElement value) {
+        if (value != null) {
+            for (PsiReference reference : value.getReferences()) {
+                if (PsiAnnotation.class.isInstance(reference)) {
+                    final PsiAnnotationMemberValue valueAttribute = findAttributeValue((PsiAnnotation) reference, "value");
+                    if (valueAttribute != null) {
+                        return valueAttribute.getText();
+                    }
+                }
+            }
+        }
+        return "";
     }
 
     private static void registerHiglighting(TextAttributesKey attributesKey,

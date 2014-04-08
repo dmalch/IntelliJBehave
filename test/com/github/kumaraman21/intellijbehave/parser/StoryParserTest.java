@@ -1,7 +1,7 @@
 package com.github.kumaraman21.intellijbehave.parser;
 
 import com.github.kumaraman21.intellijbehave.Samples;
-import com.github.kumaraman21.intellijbehave.highlighter.StoryLexer;
+import com.github.kumaraman21.intellijbehave.lexer.StoryLexerAdapter;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.impl.PsiBuilderImpl;
 import com.intellij.openapi.project.Project;
@@ -20,9 +20,9 @@ public class StoryParserTest {
     @Test
     public void test1() throws Throwable {
         Project project = mock(Project.class);
-        PsiBuilder builder = new PsiBuilderImpl(project, null, new StoryParserDefinition(), new StoryLexer(), null, Samples.SIMPLE_SAMPLE, null, null);
+        PsiBuilder builder = new PsiBuilderImpl(project, null, new StoryParserDefinition(), new StoryLexerAdapter(), null, Samples.SIMPLE_SAMPLE, null, null);
 
         StoryParser parser = new StoryParser();
-        parser.parse(StoryElementType.STORY_FILE, builder);
+        parser.parse(StoryParserDefinition.FILE, builder);
     }
 }

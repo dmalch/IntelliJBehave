@@ -15,6 +15,7 @@
  */
 package com.github.kumaraman21.intellijbehave.highlighter;
 
+import com.github.kumaraman21.intellijbehave.lexer.StoryLexerFactory;
 import com.intellij.lexer.LayeredLexer;
 
 public class StorySyntaxHighlightingLexer extends LayeredLexer {

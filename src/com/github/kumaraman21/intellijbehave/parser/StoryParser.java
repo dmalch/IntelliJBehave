@@ -1,395 +1,347 @@
-/*
- * Copyright 2011-12 Aman Kumar
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+// This is a generated file. Not intended for manual editing.
 package com.github.kumaraman21.intellijbehave.parser;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
+import com.intellij.lang.PsiBuilder.Marker;
 import com.intellij.lang.PsiParser;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.tree.TokenSet;
-import org.apache.commons.lang.StringUtils;
-import org.jetbrains.annotations.NotNull;
 
+import static com.github.kumaraman21.intellijbehave.parser.StoryTypes.*;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
+
+@SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class StoryParser implements PsiParser {
 
-    private static final boolean DEBUG = false;
+    public static final Logger LOG_ = Logger.getInstance("com.github.kumaraman21.intellijbehave.parser.StoryParser");
 
-    @NotNull
-    @Override
-    public ASTNode parse(IElementType root, PsiBuilder builder) {
-        final PsiBuilder.Marker rootMarker = builder.mark();
-        builder.setDebugMode(true);
-        parseStory(builder);
-        rootMarker.done(root);
-        return builder.getTreeBuilt();
+    public ASTNode parse(IElementType root_, PsiBuilder builder_) {
+        boolean result_;
+        builder_ = adapt_builder_(root_, builder_, this, null);
+        Marker marker_ = enter_section_(builder_, 0, _COLLAPSE_, null);
+        if (root_ == EXAMPLE) {
+            result_ = example(builder_, 0);
+        }
+        else if (root_ == GIVEN) {
+            result_ = given(builder_, 0);
+        }
+        else if (root_ == GIVEN_STEP) {
+            result_ = givenStep(builder_, 0);
+        }
+        else if (root_ == META_INFO) {
+            result_ = metaInfo(builder_, 0);
+        }
+        else if (root_ == NARRATIVE) {
+            result_ = narrative(builder_, 0);
+        }
+        else if (root_ == SCENARIO) {
+            result_ = scenario(builder_, 0);
+        }
+        else if (root_ == SCENARIO_HEADER) {
+            result_ = scenarioHeader(builder_, 0);
+        }
+        else if (root_ == TABLE) {
+            result_ = table(builder_, 0);
+        }
+        else if (root_ == THEN) {
+            result_ = then(builder_, 0);
+        }
+        else if (root_ == THEN_STEP) {
+            result_ = thenStep(builder_, 0);
+        }
+        else if (root_ == WHEN) {
+            result_ = when(builder_, 0);
+        }
+        else if (root_ == WHEN_STEP) {
+            result_ = whenStep(builder_, 0);
+        }
+        else {
+            result_ = parse_root_(root_, builder_, 0);
+        }
+        exit_section_(builder_, 0, marker_, root_, result_, true, TRUE_CONDITION);
+        return builder_.getTreeBuilt();
     }
 
-    @SuppressWarnings("UnnecessaryLabelOnContinueStatement")
-    private void parseStory(PsiBuilder builder) {
-        final PsiBuilder.Marker storyMarker = builder.mark();
-
-        ParserState state = new ParserState(builder);
-
-        whileLoop:
-        while (!builder.eof()) {
-            IElementType tokenType = builder.getTokenType();
-
-            // Comment and whitespace are not returned by default
-
-            if (isComment(tokenType)) {
-                state.enterComment();
-                builder.advanceLexer();
-                continue whileLoop;
-            } else {
-                state.leaveComment();
-            }
-
-            if (isWhitespace(tokenType)) {
-                if (isCrlf(builder.getTokenText())) {
-                    // this is never called unfortunately
-                    state.leaveTableRow();
-                }
-
-                state.enterWhitespace();
-                builder.advanceLexer();
-                continue whileLoop;
-            } else {
-                state.leaveWhitespace();
-            }
-
-
-            if (isStoryDescription(tokenType)) {
-                state.enterStoryDescription();
-                builder.advanceLexer();
-                continue whileLoop;
-            } else {
-                state.leaveStoryDescription();
-            }
-
-            if (isScenario(tokenType)) {
-                state.enterScenario();
-                builder.advanceLexer();
-                continue whileLoop;
-            } else if (!belongsToScenario(tokenType)) {
-                state.leaveScenario();
-            }
-
-            if (isScenarioText(tokenType)) {
-                builder.advanceLexer();
-                continue whileLoop;
-            }
-
-            if (isMeta(tokenType)) {
-                state.enterMeta();
-                builder.advanceLexer();
-                continue whileLoop;
-            }
-
-            if (isStepType(tokenType)) {
-                state.enterStepType(tokenType);
-                builder.advanceLexer();
-                continue whileLoop;
-            }
-
-            if (isStepText(tokenType)) {
-                builder.advanceLexer();
-                continue whileLoop;
-            }
-
-            if (isExampleTable(tokenType)) {
-                state.enterExampleTable();
-                builder.advanceLexer();
-                continue whileLoop;
-            } else if (!belongsToTable(tokenType)) {
-                state.leaveExampleTable();
-            }
-
-            if (isTableRow(tokenType)) {
-                state.enterTableRow();
-                builder.advanceLexer();
-                continue whileLoop;
-            }
-
-            // unknown
-            PsiBuilder.Marker unknwonMark = builder.mark();
-            builder.advanceLexer();
-            unknwonMark.done(StoryElementType.UNKNOWN_FRAGMENT);
-        }
-        state.leaveRemainings();
-        storyMarker.done(StoryElementType.STORY);
+    protected boolean parse_root_(final IElementType root_, final PsiBuilder builder_, final int level_) {
+        return storyFile(builder_, level_ + 1);
     }
 
-    private static boolean isCrlf(String text) {
-        return text.contains("\n") || text.contains("\r");
+    /* ********************************************************** */
+    // EXAMPLE_TYPE EXAMPLE_TEXT CRLF
+    public static boolean example(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "example")) return false;
+        if (!nextTokenIs(builder_, EXAMPLE_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeTokens(builder_, 0, EXAMPLE_TYPE, EXAMPLE_TEXT, CRLF);
+        exit_section_(builder_, marker_, EXAMPLE, result_);
+        return result_;
     }
 
-    private static class MarkerData {
-        private final PsiBuilder.Marker marker;
-        private final IElementType elementType;
-
-        private MarkerData(PsiBuilder.Marker marker, IElementType elementType) {
-            this.marker = marker;
-            this.elementType = elementType;
-        }
-
-        public boolean matches(IElementType elementType) {
-            return this.elementType == elementType;
-        }
-
-        public boolean matches(TokenSet tokenSet) {
-            return tokenSet.contains(this.elementType);
-        }
-
-        public void applyMark() {
-            marker.done(elementType);
-        }
+    /* ********************************************************** */
+    // GIVEN_TYPE givenStep
+    public static boolean given(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "given")) return false;
+        if (!nextTokenIs(builder_, GIVEN_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeToken(builder_, GIVEN_TYPE);
+        result_ = result_ && givenStep(builder_, level_ + 1);
+        exit_section_(builder_, marker_, GIVEN, result_);
+        return result_;
     }
 
-    private static class ParserState {
-        private final PsiBuilder builder;
-        private final MarkerData[] markers = new MarkerData[10];
-        private int markerIndex = -1;
-        private StoryElementType previousStepElementType = null;
-
-
-        public ParserState(PsiBuilder builder) {
-            this.builder = builder;
-        }
-
-        private void matchesHeadOrPush(StoryElementType elementType) {
-            if (markerIndex >= 0 && markers[markerIndex].matches(elementType)) {
-                return;
-            }
-            markers[++markerIndex] = new MarkerData(builder.mark(), elementType);
-            if (DEBUG) {
-                System.out.println("StoryParser$ParserState: PUSH>> " + StringUtils.repeat("..", markerIndex) + elementType);
-            }
-        }
-
-        private void popUntilOnlyIfPresent(StoryElementType elementType) {
-            int newMarkerIndex = markerIndex;
-            for (int i = markerIndex; i >= 0; i--) {
-                if (markers[i].matches(elementType)) {
-                    newMarkerIndex = i - 1;
-                    break;
-                }
-            }
-
-            for (int i = newMarkerIndex + 1; i <= markerIndex; i++) {
-                if (DEBUG) {
-                    System.out.println("StoryParser$ParserState: POP >> " + StringUtils.repeat("..", i) + markers[i].elementType);
-                }
-                markers[i].applyMark();
-            }
-
-            markerIndex = newMarkerIndex;
-        }
-
-        public void leaveRemainings() {
-            while (markerIndex >= 0) {
-                if (DEBUG) {
-                    System.out.println("StoryParser$ParserState: POP >> " + StringUtils.repeat("..", markerIndex) + markers[markerIndex].elementType);
-                }
-                markers[markerIndex--].applyMark();
-            }
-        }
-
-
-        private void popUntilOnlyIfPresent(TokenSet tokenSet) {
-            int newMarkerIndex = markerIndex;
-            for (int i = markerIndex; i >= 0; i--) {
-                if (markers[i].matches(tokenSet)) {
-                    newMarkerIndex = i - 1;
-                    break;
-                }
-            }
-
-            for (int i = newMarkerIndex + 1; i <= markerIndex; i++) {
-                if (DEBUG) {
-                    System.out.println("StoryParser$ParserState: POP >> " + StringUtils.repeat("..", i) + markers[i].elementType);
-                }
-                markers[i].applyMark();
-            }
-
-            markerIndex = newMarkerIndex;
-        }
-
-
-        public void enterComment() {
-            matchesHeadOrPush(StoryElementType.COMMENT);
-        }
-
-        private void leaveComment() {
-            popUntilOnlyIfPresent(StoryElementType.COMMENT);
-        }
-
-        public void enterWhitespace() {
-        }
-
-        public void leaveWhitespace() {
-        }
-
-        public void enterStoryDescription() {
-            leaveRemainings();
-            matchesHeadOrPush(StoryElementType.STORY_DESCRIPTION);
-        }
-
-        private void leaveStoryDescription() {
-            popUntilOnlyIfPresent(StoryElementType.STORY_DESCRIPTION);
-        }
-
-        public void enterScenario() {
-            leaveRemainings();
-            previousStepElementType = null;
-            matchesHeadOrPush(StoryElementType.SCENARIO);
-        }
-
-        private void leaveScenario() {
-            leaveRemainings();
-            previousStepElementType = null;
-            popUntilOnlyIfPresent(StoryElementType.SCENARIO);
-        }
-
-        public void enterMeta() {
-            leaveStoryDescription();
-            leaveExampleTable();
-            leaveTableRow();
-            leaveStep();
-            matchesHeadOrPush(StoryElementType.META);
-        }
-
-        private void leaveMeta() {
-            popUntilOnlyIfPresent(StoryElementType.META);
-        }
-
-        public void enterStepType(IElementType tokenType) {
-            leaveExampleTable();
-            leaveMeta();
-            leaveStep();
-            leaveStoryDescription();
-            leaveTableRow();
-
-            StoryElementType elementType = previousStepElementType;
-            if (tokenType == StoryTokenType.STEP_TYPE_GIVEN) {
-                elementType = StoryElementType.GIVEN_STEP;
-            } else if (tokenType == StoryTokenType.STEP_TYPE_WHEN) {
-                elementType = StoryElementType.WHEN_STEP;
-            } else if (tokenType == StoryTokenType.STEP_TYPE_THEN) {
-                elementType = StoryElementType.THEN_STEP;
-            }
-
-            if (elementType == null) { // yuk!
-                elementType = StoryElementType.GIVEN_STEP;
-            }
-            previousStepElementType = elementType;
-            matchesHeadOrPush(elementType);
-        }
-
-        private void leaveStep() {
-            leaveTableRow();
-            popUntilOnlyIfPresent(StoryElementType.STEPS_TOKEN_SET);
-        }
-
-        public void enterExampleTable() {
-            leaveTableRow();
-            leaveStep();
-            leaveMeta();
-            leaveExampleTable();
-            matchesHeadOrPush(StoryElementType.EXAMPLES);
-        }
-
-        public void leaveExampleTable() {
-            leaveTableRow();
-            popUntilOnlyIfPresent(StoryElementType.EXAMPLES);
-        }
-
-        public void enterTableRow() {
-            matchesHeadOrPush(StoryElementType.TABLE_ROW);
-        }
-
-        public void leaveTableRow() {
-            popUntilOnlyIfPresent(StoryElementType.TABLE_ROW);
-        }
+    /* ********************************************************** */
+    // GIVEN_STEP_TYPE STEP_TEXT CRLF
+    public static boolean givenStep(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "givenStep")) return false;
+        if (!nextTokenIs(builder_, GIVEN_STEP_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeTokens(builder_, 0, GIVEN_STEP_TYPE, STEP_TEXT, CRLF);
+        exit_section_(builder_, marker_, GIVEN_STEP, result_);
+        return result_;
     }
 
-    private static boolean belongsToScenario(IElementType tokenType) {
-        return isWhitespace(tokenType)
-                || isComment(tokenType)
-                || isScenarioText(tokenType)
-                || isStoryDescription(tokenType)
-                || isStepType(tokenType)
-                || isStepText(tokenType)
-                || isExampleTable(tokenType)
-                || isTableRow(tokenType)
-                || isMeta(tokenType);
+    /* ********************************************************** */
+    // META_TYPE META_KEY META_TEXT CRLF
+    public static boolean metaInfo(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "metaInfo")) return false;
+        if (!nextTokenIs(builder_, META_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeTokens(builder_, 0, META_TYPE, META_KEY, META_TEXT, CRLF);
+        exit_section_(builder_, marker_, META_INFO, result_);
+        return result_;
     }
 
-    private boolean belongsToTable(IElementType tokenType) {
-        return isWhitespace(tokenType)
-                || isComment(tokenType)
-                || isTableRow(tokenType);
+    /* ********************************************************** */
+    // (STORY_DESCRIPTION | WHITE_SPACE)+
+    public static boolean narrative(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "narrative")) return false;
+        if (!nextTokenIs(builder_, "<narrative>", STORY_DESCRIPTION, WHITE_SPACE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_, level_, _NONE_, "<narrative>");
+        result_ = narrative_0(builder_, level_ + 1);
+        int pos_ = current_position_(builder_);
+        while (result_) {
+            if (!narrative_0(builder_, level_ + 1)) break;
+            if (!empty_element_parsed_guard_(builder_, "narrative", pos_)) break;
+            pos_ = current_position_(builder_);
+        }
+        exit_section_(builder_, level_, marker_, NARRATIVE, result_, false, null);
+        return result_;
     }
 
-    private static boolean isMeta(IElementType tokenType) {
-        return tokenType == StoryTokenType.META
-                || tokenType == StoryTokenType.META_KEY
-                || tokenType == StoryTokenType.META_TEXT;
+    // STORY_DESCRIPTION | WHITE_SPACE
+    private static boolean narrative_0(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "narrative_0")) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeToken(builder_, STORY_DESCRIPTION);
+        if (!result_) result_ = consumeToken(builder_, WHITE_SPACE);
+        exit_section_(builder_, marker_, null, result_);
+        return result_;
     }
 
-    private static boolean isExampleTable(IElementType tokenType) {
-        return tokenType == StoryTokenType.EXAMPLE_TYPE;
+    /* ********************************************************** */
+    // scenarioHeader (metaInfo | example | given | when | then | table | COMMENT | WHITE_SPACE)+
+    public static boolean scenario(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "scenario")) return false;
+        if (!nextTokenIs(builder_, SCENARIO_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = scenarioHeader(builder_, level_ + 1);
+        result_ = result_ && scenario_1(builder_, level_ + 1);
+        exit_section_(builder_, marker_, SCENARIO, result_);
+        return result_;
     }
 
-    private static boolean isTableRow(IElementType tokenType) {
-        return tokenType == StoryTokenType.TABLE_CELL
-                || tokenType == StoryTokenType.TABLE_DELIM;
+    // (metaInfo | example | given | when | then | table | COMMENT | WHITE_SPACE)+
+    private static boolean scenario_1(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "scenario_1")) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = scenario_1_0(builder_, level_ + 1);
+        int pos_ = current_position_(builder_);
+        while (result_) {
+            if (!scenario_1_0(builder_, level_ + 1)) break;
+            if (!empty_element_parsed_guard_(builder_, "scenario_1", pos_)) break;
+            pos_ = current_position_(builder_);
+        }
+        exit_section_(builder_, marker_, null, result_);
+        return result_;
     }
 
-    private static boolean isStepType(IElementType tokenType) {
-        return tokenType == StoryTokenType.STEP_TYPE_GIVEN
-                || tokenType == StoryTokenType.STEP_TYPE_WHEN
-                || tokenType == StoryTokenType.STEP_TYPE_THEN
-                || tokenType == StoryTokenType.STEP_TYPE_AND;
+    // metaInfo | example | given | when | then | table | COMMENT | WHITE_SPACE
+    private static boolean scenario_1_0(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "scenario_1_0")) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = metaInfo(builder_, level_ + 1);
+        if (!result_) result_ = example(builder_, level_ + 1);
+        if (!result_) result_ = given(builder_, level_ + 1);
+        if (!result_) result_ = when(builder_, level_ + 1);
+        if (!result_) result_ = then(builder_, level_ + 1);
+        if (!result_) result_ = table(builder_, level_ + 1);
+        if (!result_) result_ = consumeToken(builder_, COMMENT);
+        if (!result_) result_ = consumeToken(builder_, WHITE_SPACE);
+        exit_section_(builder_, marker_, null, result_);
+        return result_;
     }
 
-    private static boolean isStepText(IElementType tokenType) {
-        return tokenType == StoryTokenType.STEP_TEXT;
+    /* ********************************************************** */
+    // SCENARIO_TYPE SCENARIO_TEXT CRLF
+    public static boolean scenarioHeader(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "scenarioHeader")) return false;
+        if (!nextTokenIs(builder_, SCENARIO_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeTokens(builder_, 0, SCENARIO_TYPE, SCENARIO_TEXT, CRLF);
+        exit_section_(builder_, marker_, SCENARIO_HEADER, result_);
+        return result_;
     }
 
-    private static boolean isScenario(IElementType tokenType) {
-        return tokenType == StoryTokenType.SCENARIO_TYPE;
+    /* ********************************************************** */
+    // narrative CRLF+ scenario* | BAD_CHARACTER
+    static boolean storyFile(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "storyFile")) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = storyFile_0(builder_, level_ + 1);
+        if (!result_) result_ = consumeToken(builder_, BAD_CHARACTER);
+        exit_section_(builder_, marker_, null, result_);
+        return result_;
     }
 
-    private static boolean isScenarioText(IElementType tokenType) {
-        return tokenType == StoryTokenType.SCENARIO_TEXT;
+    // narrative CRLF+ scenario*
+    private static boolean storyFile_0(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "storyFile_0")) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = narrative(builder_, level_ + 1);
+        result_ = result_ && storyFile_0_1(builder_, level_ + 1);
+        result_ = result_ && storyFile_0_2(builder_, level_ + 1);
+        exit_section_(builder_, marker_, null, result_);
+        return result_;
     }
 
-    private static boolean isWhitespace(IElementType tokenType) {
-        return tokenType == StoryTokenType.WHITE_SPACE;
+    // CRLF+
+    private static boolean storyFile_0_1(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "storyFile_0_1")) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeToken(builder_, CRLF);
+        int pos_ = current_position_(builder_);
+        while (result_) {
+            if (!consumeToken(builder_, CRLF)) break;
+            if (!empty_element_parsed_guard_(builder_, "storyFile_0_1", pos_)) break;
+            pos_ = current_position_(builder_);
+        }
+        exit_section_(builder_, marker_, null, result_);
+        return result_;
     }
 
-    private static boolean isComment(IElementType tokenType) {
-        return tokenType == StoryTokenType.COMMENT
-                || tokenType == StoryTokenType.COMMENT_WITH_LOCALE;
+    // scenario*
+    private static boolean storyFile_0_2(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "storyFile_0_2")) return false;
+        int pos_ = current_position_(builder_);
+        while (true) {
+            if (!scenario(builder_, level_ + 1)) break;
+            if (!empty_element_parsed_guard_(builder_, "storyFile_0_2", pos_)) break;
+            pos_ = current_position_(builder_);
+        }
+        return true;
     }
 
-    private static boolean isStoryDescription(IElementType tokenType) {
-        return tokenType == StoryTokenType.STORY_DESCRIPTION
-                || tokenType == StoryTokenType.NARRATIVE_TYPE
-                || tokenType == StoryTokenType.NARRATIVE_TEXT;
+    /* ********************************************************** */
+    // TABLE_DELIM (TABLE_CELL TABLE_DELIM)+
+    public static boolean table(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "table")) return false;
+        if (!nextTokenIs(builder_, TABLE_DELIM)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeToken(builder_, TABLE_DELIM);
+        result_ = result_ && table_1(builder_, level_ + 1);
+        exit_section_(builder_, marker_, TABLE, result_);
+        return result_;
     }
+
+    // (TABLE_CELL TABLE_DELIM)+
+    private static boolean table_1(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "table_1")) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = table_1_0(builder_, level_ + 1);
+        int pos_ = current_position_(builder_);
+        while (result_) {
+            if (!table_1_0(builder_, level_ + 1)) break;
+            if (!empty_element_parsed_guard_(builder_, "table_1", pos_)) break;
+            pos_ = current_position_(builder_);
+        }
+        exit_section_(builder_, marker_, null, result_);
+        return result_;
+    }
+
+    // TABLE_CELL TABLE_DELIM
+    private static boolean table_1_0(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "table_1_0")) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeTokens(builder_, 0, TABLE_CELL, TABLE_DELIM);
+        exit_section_(builder_, marker_, null, result_);
+        return result_;
+    }
+
+    /* ********************************************************** */
+    // THEN_TYPE thenStep
+    public static boolean then(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "then")) return false;
+        if (!nextTokenIs(builder_, THEN_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeToken(builder_, THEN_TYPE);
+        result_ = result_ && thenStep(builder_, level_ + 1);
+        exit_section_(builder_, marker_, THEN, result_);
+        return result_;
+    }
+
+    /* ********************************************************** */
+    // THEN_STEP_TYPE STEP_TEXT CRLF
+    public static boolean thenStep(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "thenStep")) return false;
+        if (!nextTokenIs(builder_, THEN_STEP_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeTokens(builder_, 0, THEN_STEP_TYPE, STEP_TEXT, CRLF);
+        exit_section_(builder_, marker_, THEN_STEP, result_);
+        return result_;
+    }
+
+    /* ********************************************************** */
+    // WHEN_TYPE whenStep
+    public static boolean when(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "when")) return false;
+        if (!nextTokenIs(builder_, WHEN_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeToken(builder_, WHEN_TYPE);
+        result_ = result_ && whenStep(builder_, level_ + 1);
+        exit_section_(builder_, marker_, WHEN, result_);
+        return result_;
+    }
+
+    /* ********************************************************** */
+    // WHEN_STEP_TYPE STEP_TEXT CRLF
+    public static boolean whenStep(PsiBuilder builder_, int level_) {
+        if (!recursion_guard_(builder_, level_, "whenStep")) return false;
+        if (!nextTokenIs(builder_, WHEN_STEP_TYPE)) return false;
+        boolean result_ = false;
+        Marker marker_ = enter_section_(builder_);
+        result_ = consumeTokens(builder_, 0, WHEN_STEP_TYPE, STEP_TEXT, CRLF);
+        exit_section_(builder_, marker_, WHEN_STEP, result_);
+        return result_;
+    }
+
 }

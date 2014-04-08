@@ -15,10 +15,9 @@
  */
 package com.github.kumaraman21.intellijbehave.parser;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
-import com.github.kumaraman21.intellijbehave.resolver.StepPsiReference;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.tree.TokenSet;
 import org.jbehave.core.steps.StepType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,19 +32,13 @@ public class StepPsiElement extends ASTWrapperPsiElement {
         this.stepType = stepType;
     }
 
-    @Override
-    @NotNull
-    public StepPsiReference getReference() {
-        return new StepPsiReference(this);
-    }
-
     public StepType getStepType() {
         return stepType;
     }
 
     @Nullable
     public ASTNode getKeyword() {
-        return getNode().findChildByType(StoryTokenType.STEP_TYPES);
+        return getNode().findChildByType(TokenSet.create(StoryTypes.GIVEN_STEP_TYPE, StoryTypes.WHEN_STEP_TYPE, StoryTypes.THEN_STEP_TYPE));
     }
 
     public String getStepText() {

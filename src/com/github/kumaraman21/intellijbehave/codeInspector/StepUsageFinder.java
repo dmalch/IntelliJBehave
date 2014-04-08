@@ -1,7 +1,7 @@
 package com.github.kumaraman21.intellijbehave.codeInspector;
 
 import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
-import com.github.kumaraman21.intellijbehave.parser.StoryFileImpl;
+import com.github.kumaraman21.intellijbehave.parser.StoryFile;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.intellij.openapi.project.Project;
@@ -38,13 +38,13 @@ public class StepUsageFinder implements ContentIterator {
 	@Override
 	public boolean processFile(VirtualFile virtualFile) {
 		PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
-		if (psiFile instanceof StoryFileImpl) {
-			stepUsages.addAll(getSteps((StoryFileImpl) psiFile));
+		if (psiFile instanceof StoryFile) {
+			stepUsages.addAll(getSteps((StoryFile) psiFile));
 		}
 		return true;
 	}
 
-	private List<StepPsiElement> getSteps(final StoryFileImpl psiFile) {
+	private List<StepPsiElement> getSteps(final StoryFile psiFile) {
 		try {
 			return cache.getUnchecked(key(psiFile));
 		} catch (final Exception e) {
@@ -52,7 +52,7 @@ public class StepUsageFinder implements ContentIterator {
 		}
 	}
 
-	private CacheKey key(final StoryFileImpl psiFile) {
+	private CacheKey key(final StoryFile psiFile) {
 		return new CacheKey(psiFile);
 	}
 
@@ -61,13 +61,13 @@ public class StepUsageFinder implements ContentIterator {
 	}
 
 	private class CacheKey {
-		private final StoryFileImpl psiFile;
+		private final StoryFile psiFile;
 
-		public CacheKey(final StoryFileImpl psiFile) {
+		public CacheKey(final StoryFile psiFile) {
 			this.psiFile = psiFile;
 		}
 
-		public StoryFileImpl getPsiFile() {
+		public StoryFile getPsiFile() {
 			return psiFile;
 		}
 

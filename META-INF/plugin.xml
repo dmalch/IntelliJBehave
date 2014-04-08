@@ -113,5 +113,7 @@
                          implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection"/>
         <psi.referenceContributor
                 implementation="com.github.kumaraman21.intellijbehave.resolver.StepAnnotationPsiReferenceContributor"/>
+        <psi.referenceContributor
+                implementation="com.github.kumaraman21.intellijbehave.resolver.StepPsiReferenceContributor"/>
     </extensions>
 </idea-plugin>

@@ -15,6 +15,8 @@
  */
 package com.github.kumaraman21.intellijbehave.parser;
 
+import com.github.kumaraman21.intellijbehave.language.StoryFileType;
+import com.github.kumaraman21.intellijbehave.language.StoryLanguage;
 import com.github.kumaraman21.intellijbehave.utility.NodeToPsiElement;
 import com.github.kumaraman21.intellijbehave.utility.NodeToStepPsiElement;
 import com.intellij.extapi.psi.PsiFileBase;
@@ -27,22 +29,21 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.github.kumaraman21.intellijbehave.language.StoryFileType.STORY_FILE_TYPE;
 import static com.github.kumaraman21.intellijbehave.parser.StoryElementType.*;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.transform;
 import static java.util.Arrays.asList;
 
-public class StoryFileImpl extends PsiFileBase {
+public class StoryFile extends PsiFileBase {
 
-    public StoryFileImpl(FileViewProvider fileViewProvider) {
-        super(fileViewProvider, STORY_FILE_TYPE.getLanguage());
+    public StoryFile(FileViewProvider fileViewProvider) {
+        super(fileViewProvider, StoryLanguage.INSTANCE);
     }
 
     @NotNull
     @Override
     public FileType getFileType() {
-        return STORY_FILE_TYPE;
+        return StoryFileType.INSTANCE;
     }
 
     @NotNull

@@ -1,12 +1,13 @@
 package com.github.kumaraman21.intellijbehave.highlighter;
 
-import static org.fest.assertions.api.Assertions.assertThat;
-
+import com.github.kumaraman21.intellijbehave.parser.StoryTypes;
 import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
-
 import org.jetbrains.annotations.Nullable;
 import org.junit.Test;
+
+import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
  * @author <a href="http://twitter.com/aloyer">@aloyer</a>
@@ -24,17 +25,17 @@ public class StoryLocalizedLexer_FrenchTest {
                 "Quand on sera dehors\n" +
                 "Alors elle pourra se soulager!");
 
-        assertToken(StoryTokenType.SCENARIO_TYPE, "Scénario:");
-        advanceAndAssert(StoryTokenType.SCENARIO_TEXT, " une simple sortie");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_GIVEN, "Etant donné que");
-        advanceAndAssert(StoryTokenType.STEP_TEXT, " nous allons promener notre chienne");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_WHEN, "Quand");
-        advanceAndAssert(StoryTokenType.STEP_TEXT, " on sera dehors");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_THEN, "Alors");
-        advanceAndAssert(StoryTokenType.STEP_TEXT, " elle pourra se soulager!");
+        assertToken(StoryTypes.SCENARIO_TYPE, "Scénario:");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, " une simple sortie");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Etant donné que");
+        advanceAndAssert(StoryTypes.STEP_TEXT, " nous allons promener notre chienne");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "Quand");
+        advanceAndAssert(StoryTypes.STEP_TEXT, " on sera dehors");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Alors");
+        advanceAndAssert(StoryTypes.STEP_TEXT, " elle pourra se soulager!");
         advanceAndAssert(null);
     }
 
@@ -49,19 +50,19 @@ public class StoryLocalizedLexer_FrenchTest {
                 "Quand on sera dehors\n" +
                 "Alors elle pourra se soulager!");
 
-        assertToken(StoryTokenType.COMMENT_WITH_LOCALE, "!-- language:fr");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.SCENARIO_TYPE, "Scénario:");
-        advanceAndAssert(StoryTokenType.SCENARIO_TEXT, " une simple sortie");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_GIVEN, "Etant donné que");
-        advanceAndAssert(StoryTokenType.STEP_TEXT, " nous allons promener notre chienne");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_WHEN, "Quand");
-        advanceAndAssert(StoryTokenType.STEP_TEXT, " on sera dehors");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTokenType.STEP_TYPE_THEN, "Alors");
-        advanceAndAssert(StoryTokenType.STEP_TEXT, " elle pourra se soulager!");
+//        assertToken(StoryTypes.COMMENT_WITH_LOCALE, "!-- language:fr");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scénario:");
+        advanceAndAssert(StoryTypes.SCENARIO_TEXT, " une simple sortie");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Etant donné que");
+        advanceAndAssert(StoryTypes.STEP_TEXT, " nous allons promener notre chienne");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "Quand");
+        advanceAndAssert(StoryTypes.STEP_TEXT, " on sera dehors");
+        advanceAndAssert(TokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Alors");
+        advanceAndAssert(StoryTypes.STEP_TEXT, " elle pourra se soulager!");
         advanceAndAssert(null);
     }
 

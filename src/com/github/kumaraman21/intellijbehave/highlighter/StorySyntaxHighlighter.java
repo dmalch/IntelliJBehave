@@ -15,6 +15,7 @@
  */
 package com.github.kumaraman21.intellijbehave.highlighter;
 
+import com.github.kumaraman21.intellijbehave.parser.StoryTypes;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
@@ -28,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-import static com.intellij.openapi.editor.colors.TextAttributesKey.*;
+import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
 public class StorySyntaxHighlighter extends SyntaxHighlighterBase {
 
@@ -101,27 +102,27 @@ public class StorySyntaxHighlighter extends SyntaxHighlighterBase {
     public static TextAttributesKey BAD_CHARACTER = createTextAttributesKey(BAD_CHARACTER_ID);
 
     static {
-        ATTRIBUTES.put(StoryTokenType.STORY_DESCRIPTION, STORY_DESCRIPTION);
-        ATTRIBUTES.put(StoryTokenType.NARRATIVE_TYPE, STORY_DESCRIPTION);
-        ATTRIBUTES.put(StoryTokenType.NARRATIVE_TEXT, STORY_DESCRIPTION);
-        ATTRIBUTES.put(StoryTokenType.SCENARIO_TYPE, SCENARIO_TYPE);
-        ATTRIBUTES.put(StoryTokenType.SCENARIO_TEXT, SCENARIO_TEXT);
-        ATTRIBUTES.put(StoryTokenType.GIVEN_TYPE, STEP_TYPE);
-        ATTRIBUTES.put(StoryTokenType.WHEN_TYPE, STEP_TYPE);
-        ATTRIBUTES.put(StoryTokenType.THEN_TYPE, STEP_TYPE);
-        ATTRIBUTES.put(StoryTokenType.STEP_TYPE_GIVEN, STEP_TYPE);
-        ATTRIBUTES.put(StoryTokenType.STEP_TYPE_WHEN, STEP_TYPE);
-        ATTRIBUTES.put(StoryTokenType.STEP_TYPE_THEN, STEP_TYPE);
-        ATTRIBUTES.put(StoryTokenType.STEP_TYPE_AND, STEP_TYPE);
-        ATTRIBUTES.put(StoryTokenType.STEP_TEXT, STEP_TEXT);
-        ATTRIBUTES.put(StoryTokenType.TABLE_DELIM, TABLE_DELIM);
-        ATTRIBUTES.put(StoryTokenType.TABLE_CELL, TABLE_CELL);
-        ATTRIBUTES.put(StoryTokenType.META, META_TYPE);
-        ATTRIBUTES.put(StoryTokenType.META_KEY, META_KEY);
-        ATTRIBUTES.put(StoryTokenType.META_TEXT, META_TEXT);
-        ATTRIBUTES.put(StoryTokenType.COMMENT, LINE_COMMENT);
-        ATTRIBUTES.put(StoryTokenType.COMMENT_WITH_LOCALE, LINE_COMMENT);
-        ATTRIBUTES.put(StoryTokenType.BAD_CHARACTER, BAD_CHARACTER);
+        ATTRIBUTES.put(StoryTypes.STORY_DESCRIPTION, STORY_DESCRIPTION);
+//        ATTRIBUTES.put(StoryTypes.NARRATIVE_TYPE, STORY_DESCRIPTION);
+//        ATTRIBUTES.put(StoryTypes.NARRATIVE_TEXT, STORY_DESCRIPTION);
+        ATTRIBUTES.put(StoryTypes.SCENARIO_TYPE, SCENARIO_TYPE);
+        ATTRIBUTES.put(StoryTypes.SCENARIO_TEXT, SCENARIO_TEXT);
+        ATTRIBUTES.put(StoryTypes.GIVEN_TYPE, STEP_TYPE);
+        ATTRIBUTES.put(StoryTypes.WHEN_TYPE, STEP_TYPE);
+        ATTRIBUTES.put(StoryTypes.THEN_TYPE, STEP_TYPE);
+        ATTRIBUTES.put(StoryTypes.GIVEN_STEP_TYPE, STEP_TYPE);
+        ATTRIBUTES.put(StoryTypes.WHEN_STEP_TYPE, STEP_TYPE);
+        ATTRIBUTES.put(StoryTypes.THEN_STEP_TYPE, STEP_TYPE);
+//        ATTRIBUTES.put(StoryTypes.STEP_TYPE_AND, STEP_TYPE);
+        ATTRIBUTES.put(StoryTypes.STEP_TEXT, STEP_TEXT);
+        ATTRIBUTES.put(StoryTypes.TABLE_DELIM, TABLE_DELIM);
+        ATTRIBUTES.put(StoryTypes.TABLE_CELL, TABLE_CELL);
+        ATTRIBUTES.put(StoryTypes.META_TYPE, META_TYPE);
+        ATTRIBUTES.put(StoryTypes.META_KEY, META_KEY);
+        ATTRIBUTES.put(StoryTypes.META_TEXT, META_TEXT);
+        ATTRIBUTES.put(StoryTypes.COMMENT, LINE_COMMENT);
+//        ATTRIBUTES.put(StoryTypes.COMMENT_WITH_LOCALE, LINE_COMMENT);
+        ATTRIBUTES.put(StoryTypes.BAD_CHARACTER, BAD_CHARACTER);
     }
 
     private static TextAttributesKey createKey(String externalName, TextAttributesKey textAttributesKey) {

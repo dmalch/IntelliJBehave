@@ -1,4 +1,4 @@
-package com.github.kumaraman21.intellijbehave.highlighter;
+package com.github.kumaraman21.intellijbehave.lexer;
 
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
@@ -92,7 +92,7 @@ import java.util.Stack;
     }
 %}
 
-%class _StoryLexer
+%class StoryLexer
 %implements FlexLexer
 %unicode
 %function advance
@@ -105,8 +105,6 @@ WhiteSpace     = {CRLF} | {BlankChar}
 NonWhiteSpace  = [^ \n\r\t\f]
 TableCellChar  = [^\r\n\|]
 NonMetaKey     = [^@\r\n]
-AnyKey         = {InputChar}|{InputChar}{CRLF}
-KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Then " | "And " | "!--" | "|"
 
 %state IN_DIRECTIVE
 %state IN_STORY
@@ -131,19 +129,19 @@ KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Th
     | "!--"
     | "|" ) {InputChar}+  { yystatePush(IN_DIRECTIVE); yypushback(yytext().length());       }
     {CRLF}                { yystatePush(IN_STORY); yypushback(yytext().length());           }
-    {InputChar}+          { return StoryTokenType.STORY_DESCRIPTION;                        }
+    {InputChar}+          { return StoryTypes.STORY_DESCRIPTION;                            }
 }
 
 <IN_DIRECTIVE> {
-    "Scenario: "                             { yystatePopNPush(2, IN_SCENARIO); return StoryTokenType.SCENARIO_TYPE; }
-    "Meta:"                                  { yystatePopNPush(2, IN_META);     return StoryTokenType.META;          }
-    "Examples:"                              { yystatePopNPush(2, IN_EXAMPLES); return StoryTokenType.EXAMPLE_TYPE;  }
-    "Given "                                 { yystatePopNPush(2, IN_GIVEN);    currentStepStart = 0; return StoryTokenType.GIVEN_TYPE;    }
-    "When "                                  { yystatePopNPush(2, IN_WHEN);     currentStepStart = 0; return StoryTokenType.WHEN_TYPE;     }
-    "Then "                                  { yystatePopNPush(2, IN_THEN);     currentStepStart = 0; return StoryTokenType.THEN_TYPE;     }
-    "!--" {InputChar}*                       { yystatePop();                    return StoryTokenType.COMMENT;       }
-    "|"                                      { yystatePopNPush(1, IN_TABLE);    return StoryTokenType.TABLE_DELIM;   }
-    {WhiteSpace}+                            {                                  return StoryTokenType.WHITE_SPACE;   }
+    "Scenario: "                             { yystatePopNPush(2, IN_SCENARIO); return StoryTypes.SCENARIO_TYPE; }
+    "Meta:"                                  { yystatePopNPush(2, IN_META);     return StoryTypes.META_TYPE;     }
+    "Examples:"                              { yystatePopNPush(2, IN_EXAMPLES); return StoryTypes.EXAMPLE_TYPE;  }
+    "Given "                                 { yystatePopNPush(2, IN_GIVEN);    currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
+    "When "                                  { yystatePopNPush(2, IN_WHEN);     currentStepStart = 0; return StoryTypes.WHEN_TYPE;     }
+    "Then "                                  { yystatePopNPush(2, IN_THEN);     currentStepStart = 0; return StoryTypes.THEN_TYPE;     }
+    "!--" {InputChar}*                       { yystatePop();                    return StoryTypes.COMMENT;       }
+    "|"                                      { yystatePopNPush(1, IN_TABLE);    return StoryTypes.TABLE_DELIM;   }
+    {WhiteSpace}+                            {                                  return StoryTypes.WHITE_SPACE;   }
 }
 
 <IN_STORY>  {
@@ -154,8 +152,8 @@ KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Th
         | "Given " | "When " | "Then " | "And "
         | "!--"
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
-    {InputChar}+                                     { return StoryTokenType.STORY_DESCRIPTION; }
-    {CRLF}                                           { return StoryTokenType.WHITE_SPACE;   }
+    {InputChar}+                                     { return StoryTypes.STORY_DESCRIPTION; }
+    {CRLF}                                           { return StoryTypes.WHITE_SPACE;   }
 }
 
 
@@ -167,13 +165,13 @@ KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Th
         | "Given " | "When " | "Then " | "And "
         | "!--"
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
-    {InputChar}+                                     { return StoryTokenType.SCENARIO_TEXT; }
-    {CRLF}                                           { return StoryTokenType.WHITE_SPACE;   }
+    {InputChar}+                                     { return StoryTypes.SCENARIO_TEXT; }
+    {CRLF}                                           { return StoryTypes.WHITE_SPACE;   }
 }
 
 
 <IN_META>  {
-    "@" {NonWhiteSpace}*                             { return StoryTokenType.META_KEY; }
+    "@" {NonWhiteSpace}*                             { return StoryTypes.META_KEY; }
     {CRLF}
         ( "Scenario: "
         | "Meta:"
@@ -181,8 +179,8 @@ KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Th
         | "Given " | "When " | "Then " | "And "
         | "!--"
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
-    {NonMetaKey}+                                    { return StoryTokenType.META_TEXT;     }
-    {CRLF}                                           { return StoryTokenType.WHITE_SPACE;   }
+    {NonMetaKey}+                                    { return StoryTypes.META_TEXT;     }
+    {CRLF}                                           { return StoryTypes.WHITE_SPACE;   }
 }
 
 <IN_GIVEN>  {
@@ -195,13 +193,13 @@ KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Th
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
     "And "{InputChar}+{CRLF}
         ("And " | "Given " | "When " | "Then "
-        | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTokenType.GIVEN_TYPE;    }
+        | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
     {InputChar}+{CRLF}
         ("And " | "Given " | "When " | "Then "
         | "| "
-        | "")                                        { retrieveMultilineText(); return StoryTokenType.STEP_TEXT; }
+        | "")                                        { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
     {InputChar}+{CRLF}{InputChar}                    { setStepStart(); }
-    {CRLF}                                           { return StoryTokenType.WHITE_SPACE;   }
+    {CRLF}                                           { return StoryTypes.WHITE_SPACE;   }
 }
 
 <IN_WHEN>  {
@@ -214,13 +212,13 @@ KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Th
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
     "And "{InputChar}+{CRLF}
         ("And " | "Given " | "When " | "Then "
-        | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTokenType.WHEN_TYPE;    }
+        | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTypes.WHEN_TYPE;    }
     {InputChar}+{CRLF}
         ("And " | "Given " | "When " | "Then "
         | "| "
-        | "")                                        { retrieveMultilineText(); return StoryTokenType.STEP_TEXT; }
+        | "")                                        { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
     {InputChar}+{CRLF}{InputChar}                    { setStepStart(); }
-    {CRLF}                                           { return StoryTokenType.WHITE_SPACE;   }
+    {CRLF}                                           { return StoryTypes.WHITE_SPACE;   }
 }
 
 <IN_THEN>  {
@@ -233,13 +231,13 @@ KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Th
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
     "And "{InputChar}+{CRLF}
         ("And " | "Given " | "When " | "Then "
-        | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTokenType.THEN_TYPE;    }
+        | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTypes.THEN_TYPE;    }
     {InputChar}+{CRLF}
         ("And " | "Given " | "When " | "Then "
         | "| "
-        | "")                                        { retrieveMultilineText(); return StoryTokenType.STEP_TEXT; }
+        | "")                                        { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
     {InputChar}+{CRLF}{InputChar}                    { setStepStart(); }
-    {CRLF}                                           { return StoryTokenType.WHITE_SPACE;   }
+    {CRLF}                                           { return StoryTypes.WHITE_SPACE;   }
 }
 
 <IN_EXAMPLES> {
@@ -250,14 +248,14 @@ KeyWords       = "Scenario: " | "Meta:" | "Examples:" | "Given " | "When " | "Th
         | "Given " | "When " | "Then " | "And "
         | "!--"
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
-    {WhiteSpace}                                     { return StoryTokenType.WHITE_SPACE;   }
+    {WhiteSpace}                                     { return StoryTypes.WHITE_SPACE;   }
 }
 
 <IN_TABLE>  {
-    {TableCellChar}+                   { return StoryTokenType.TABLE_CELL;  }
-    "|"                                { return StoryTokenType.TABLE_DELIM; }
+    {TableCellChar}+                   { return StoryTypes.TABLE_CELL;  }
+    "|"                                { return StoryTypes.TABLE_DELIM; }
     {CRLF}                             { yystatePop(); yypushback(1); }
 }
 
-.                                      { return StoryTokenType.BAD_CHARACTER; }
+.                                      { return StoryTypes.BAD_CHARACTER; }
 

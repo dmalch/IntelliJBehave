@@ -23,6 +23,8 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 
+import static com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection.getAnnotationTextFrom;
+import static com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection.referencesContainValueOf;
 import static com.github.kumaraman21.intellijbehave.utility.ParametrizedString.StringToken;
 
 public class StoryAnnotator implements Annotator {
@@ -33,19 +35,18 @@ public class StoryAnnotator implements Annotator {
         }
 
         StepPsiElement stepPsiElement = (StepPsiElement) psiElement;
-        StepDefinitionAnnotation annotationDef = stepPsiElement.getReference().stepDefinitionAnnotation();
-        if (annotationDef == null) {
-            annotationHolder.createErrorAnnotation(psiElement, "No definition found for the step");
-        } else {
-            annotateParameters(stepPsiElement, annotationDef, annotationHolder);
+
+        if (referencesContainValueOf(stepPsiElement, StepPsiReference.class)) {
+            annotateParameters(stepPsiElement, annotationHolder);
+            return;
         }
+
+        annotationHolder.createErrorAnnotation(psiElement, "No definition found for the step");
     }
 
-    private void annotateParameters(StepPsiElement stepPsiElement,
-                                    StepDefinitionAnnotation annotation,
-                                    AnnotationHolder annotationHolder) {
+    private void annotateParameters(StepPsiElement stepPsiElement, AnnotationHolder annotationHolder) {
         String stepText = stepPsiElement.getStepText();
-        String annotationText = annotation.getAnnotationText();
+        String annotationText = getAnnotationTextFrom(stepPsiElement);
         ParametrizedString pString = new ParametrizedString(annotationText);
 
         int offset = stepPsiElement.getTextOffset();

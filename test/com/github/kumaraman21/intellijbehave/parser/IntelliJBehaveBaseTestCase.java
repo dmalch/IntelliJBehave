@@ -1,7 +1,7 @@
 package com.github.kumaraman21.intellijbehave.parser;
 
 import com.github.kumaraman21.intellijbehave.Samples;
-import com.github.kumaraman21.intellijbehave.highlighter.StoryLexerFactory;
+import com.github.kumaraman21.intellijbehave.lexer.StoryLexerFactory;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.impl.PsiBuilderImpl;
@@ -33,7 +33,7 @@ public class IntelliJBehaveBaseTestCase extends PsiTestCase {
     }
 
 //    protected void setSettings() {
-//        final StoryFileType fileType = StoryFileType.STORY_FILE_TYPE;
+//        final StoryFileType fileType = StoryFileType.INSTANCE;
 //        mySettings = getSettings();
 //        mySettings.getIndentOptions(fileType).INDENT_SIZE = 2;
 //        mySettings.getIndentOptions(fileType).CONTINUATION_INDENT_SIZE = 2;
@@ -106,7 +106,7 @@ public class IntelliJBehaveBaseTestCase extends PsiTestCase {
                 null);
 
         StoryParser parser = new StoryParser();
-        return parser.parse(StoryElementType.STORY_FILE, builder);
+        return parser.parse(StoryParserDefinition.FILE, builder);
     }
 
 }
