@@ -15,11 +15,11 @@
  */
 package com.github.kumaraman21.intellijbehave.highlighter;
 
-import com.github.kumaraman21.intellijbehave.lexer.StoryLexerFactory;
+import com.github.kumaraman21.intellijbehave.lexer.StoryLexerAdapter;
 import com.intellij.lexer.LayeredLexer;
 
 public class StorySyntaxHighlightingLexer extends LayeredLexer {
 	public StorySyntaxHighlightingLexer() {
-		super(new StoryLexerFactory().createLexer());
+        super(new StoryLexerAdapter());
 	}
 }
