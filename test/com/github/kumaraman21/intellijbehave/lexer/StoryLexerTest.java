@@ -165,14 +165,16 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "And ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "And");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "he is the user with nickname: \"Bomo\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"McCallum\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "And ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "And");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "he tries to login using the password \"Bimo\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
@@ -211,7 +213,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get logged");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "And ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "And");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "a welcome message is displayed");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
