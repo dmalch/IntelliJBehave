@@ -5,51 +5,39 @@ import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.options.colors.AttributesDescriptor;
 import com.intellij.openapi.options.colors.ColorDescriptor;
 import com.intellij.openapi.options.colors.ColorSettingsPage;
-
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import javax.swing.*;
 import java.util.Map;
+
+import static com.github.kumaraman21.intellijbehave.highlighter.StorySyntaxHighlighter.*;
+import static com.intellij.icons.AllIcons.FileTypes.Text;
 
 /**
  * @author <a href="http://twitter.com/aloyer">@aloyer</a>
  */
 public class StoryColorsAndFontsPage implements ColorSettingsPage {
 
-    @NotNull
-    public String getDisplayName() {
-        return "JBehave";
-    }
+    private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
+            new AttributesDescriptor("Story description", STORY_DESCRIPTION),
+            new AttributesDescriptor("Scenario keyword", SCENARIO),
+            new AttributesDescriptor("Scenario text", SCENARIO_TEXT),
+            new AttributesDescriptor("Step keyword", STEP_TYPE),
+            new AttributesDescriptor("Step text", STEP_TEXT),
+            new AttributesDescriptor("Table delimiter", TABLE_DELIM),
+            new AttributesDescriptor("Table cell", TABLE_CELL),
+            new AttributesDescriptor("Meta keyword", META_TYPE),
+            new AttributesDescriptor("Meta key", META_KEY),
+            new AttributesDescriptor("Meta text", META_TEXT),
+            new AttributesDescriptor("Line comment", LINE_COMMENT),
+            new AttributesDescriptor("Bad Character", BAD_CHARACTER)
+    };
 
     @Nullable
     public Icon getIcon() {
-        return null;//IntelliJBehaveIcons.ICON_16x16;
-    }
-
-    @NotNull
-    public AttributesDescriptor[] getAttributeDescriptors() {
-        return ATTRS;
-    }
-
-    private static final AttributesDescriptor[] ATTRS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Story description", StorySyntaxHighlighter.STORY_DESCRIPTION),//
-            new AttributesDescriptor("Scenario keyword", StorySyntaxHighlighter.SCENARIO_TYPE),//
-            new AttributesDescriptor("Scenario text", StorySyntaxHighlighter.SCENARIO_TEXT),//
-            new AttributesDescriptor("Step keyword", StorySyntaxHighlighter.STEP_TYPE),//
-            new AttributesDescriptor("Step text", StorySyntaxHighlighter.STEP_TEXT), //
-            new AttributesDescriptor("Table delimiter", StorySyntaxHighlighter.TABLE_DELIM),
-            new AttributesDescriptor("Table cell", StorySyntaxHighlighter.TABLE_CELL),//
-            new AttributesDescriptor("Meta keyword", StorySyntaxHighlighter.META_TYPE),//
-            new AttributesDescriptor("Meta key", StorySyntaxHighlighter.META_KEY),//
-            new AttributesDescriptor("Meta text", StorySyntaxHighlighter.META_TEXT), //
-            new AttributesDescriptor("Line comment", StorySyntaxHighlighter.LINE_COMMENT),//
-            new AttributesDescriptor("Bad Character", StorySyntaxHighlighter.BAD_CHARACTER)
-    };
-
-    @NotNull
-    public ColorDescriptor[] getColorDescriptors() {
-        return new ColorDescriptor[0];
+        return Text;
     }
 
     @NotNull
@@ -89,5 +77,20 @@ public class StoryColorsAndFontsPage implements ColorSettingsPage {
     @Nullable
     public Map<String, TextAttributesKey> getAdditionalHighlightingTagToDescriptorMap() {
         return null;
+    }
+
+    @NotNull
+    public AttributesDescriptor[] getAttributeDescriptors() {
+        return DESCRIPTORS;
+    }
+
+    @NotNull
+    public ColorDescriptor[] getColorDescriptors() {
+        return ColorDescriptor.EMPTY_ARRAY;
+    }
+
+    @NotNull
+    public String getDisplayName() {
+        return "JBehave";
     }
 }

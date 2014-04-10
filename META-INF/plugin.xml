@@ -105,7 +105,8 @@
                                 implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor"/>
 
         <!--code inspections-->
-        <localInspection id="unusedStepDeclaration" language="JAVA" shortName="UnusedStepDeclaration" displayName="Unused step declaration"
+        <localInspection id="unusedStepDeclaration" language="JAVA" shortName="UnusedStepDeclaration"
+                         displayName="Unused step declaration"
                          groupName="JBehave" enabledByDefault="false" level="WARNING"
                          implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection"/>
         <localInspection id="undefinedStep" language="Story" shortName="UndefinedStep" displayName="Undefined step"
@@ -115,5 +116,7 @@
                 implementation="com.github.kumaraman21.intellijbehave.resolver.StepAnnotationPsiReferenceContributor"/>
         <psi.referenceContributor
                 implementation="com.github.kumaraman21.intellijbehave.resolver.StepPsiReferenceContributor"/>
+        <lang.syntaxHighlighterFactory key="Story"
+                                       implementationClass="com.github.kumaraman21.intellijbehave.highlighter.StorySyntaxHighlighterFactory"/>
     </extensions>
 </idea-plugin>
