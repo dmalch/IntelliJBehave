@@ -144,42 +144,35 @@ Keywords       = {KeywordsWithTable} | "And"
     "|"                                              { yystatePopNPush(1, IN_TABLE);    return StoryTypes.TABLE_DELIM;   }
 }
 
-<IN_SCENARIO>  {
+<IN_SCENARIO> {
     {Keywords}{InputChar}*                           { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
     {NonWhiteSpace}{InputChar}*                      { return StoryTypes.SCENARIO_TEXT; }
 }
 
-<IN_META>  {
-    "@"{NonWhiteSpace}*                              { return StoryTypes.META_KEY; }
+<IN_META> {
+    "@"{NonWhiteSpace}*                              { return StoryTypes.META_KEY;      }
     {Keywords}{InputChar}*                           { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
     {MetaText}+                                      { return StoryTypes.META_TEXT;     }
 }
 
-<IN_GIVEN>  {
-    {KeywordsWithTable}{InputChar}*+{CRLF}{InputChar}*
-                                                     { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
+<IN_GIVEN> {
     "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
-    {NonWhiteSpace}{InputChar}*{CRLF}({KeywordsSteps} | "| " | "")
-                                                     { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
-    {NonWhiteSpace}{InputChar}*{CRLF}{InputChar}     { setStepStart(); }
+                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
 }
 
-<IN_WHEN>  {
-    {KeywordsWithTable}{InputChar}*+{CRLF}{InputChar}*
-                                                     { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
+<IN_WHEN> {
     "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.WHEN_TYPE;    }
-    {NonWhiteSpace}{InputChar}*{CRLF}({KeywordsSteps} | "| " | "")
-                                                     { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
-    {NonWhiteSpace}{InputChar}*{CRLF}{InputChar}     { setStepStart(); }
+                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.WHEN_TYPE;    }
 }
 
-<IN_THEN>  {
+<IN_THEN> {
+    "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
+                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.THEN_TYPE;    }
+}
+
+<IN_GIVEN, IN_WHEN, IN_THEN> {
     {KeywordsWithTable}{InputChar}*+{CRLF}{InputChar}*
                                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
-    "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.THEN_TYPE;    }
     {NonWhiteSpace}{InputChar}*{CRLF}({KeywordsSteps} | "| " | "")
                                                      { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
     {NonWhiteSpace}{InputChar}*{CRLF}{InputChar}     { setStepStart(); }
@@ -189,7 +182,7 @@ Keywords       = {KeywordsWithTable} | "And"
     {Keywords}                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
 }
 
-<IN_TABLE>  {
+<IN_TABLE> {
     {KeywordsShort}{InputChar}*        { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
     {TableCellChar}+                   { return StoryTypes.TABLE_CELL;  }
     "|"                                { return StoryTypes.TABLE_DELIM; }
