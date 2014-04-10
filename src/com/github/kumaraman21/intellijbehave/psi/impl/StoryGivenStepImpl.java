@@ -11,14 +11,14 @@ import static com.github.kumaraman21.intellijbehave.parser.StoryTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.kumaraman21.intellijbehave.psi.*;
 
-public class StoryThenImpl extends ASTWrapperPsiElement implements StoryThen {
+public class StoryGivenStepImpl extends ASTWrapperPsiElement implements StoryGivenStep {
 
-  public StoryThenImpl(ASTNode node) {
+  public StoryGivenStepImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof StoryVisitor) ((StoryVisitor)visitor).visitThen(this);
+    if (visitor instanceof StoryVisitor) ((StoryVisitor)visitor).visitGivenStep(this);
     else super.accept(visitor);
   }
 

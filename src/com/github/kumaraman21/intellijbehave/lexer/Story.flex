@@ -135,12 +135,12 @@ Keywords       = {KeywordsWithTable} | "And"
 }
 
 <IN_DIRECTIVE> {
-    "Scenario:"                                      { yystatePopNPush(2, IN_SCENARIO); return StoryTypes.SCENARIO_TYPE; }
-    "Meta:"                                          { yystatePopNPush(2, IN_META);     return StoryTypes.META_TYPE;     }
-    "Examples:"                                      { yystatePopNPush(2, IN_EXAMPLES); return StoryTypes.EXAMPLE_TYPE;  }
-    "Given"                                          { yystatePopNPush(2, IN_GIVEN);    currentStepStart = 0; return StoryTypes.GIVEN_TYPE;}
-    "When"                                           { yystatePopNPush(2, IN_WHEN);     currentStepStart = 0; return StoryTypes.WHEN_TYPE; }
-    "Then"                                           { yystatePopNPush(2, IN_THEN);     currentStepStart = 0; return StoryTypes.THEN_TYPE; }
+    "Scenario:"                                      { yystatePopNPush(2, IN_SCENARIO); return StoryTypes.SCENARIO; }
+    "Meta:"                                          { yystatePopNPush(2, IN_META);     return StoryTypes.META;     }
+    "Examples:"                                      { yystatePopNPush(2, IN_EXAMPLES); return StoryTypes.EXAMPLE;  }
+    "Given"                                          { yystatePopNPush(2, IN_GIVEN);    currentStepStart = 0; return StoryTypes.GIVEN;}
+    "When"                                           { yystatePopNPush(2, IN_WHEN);     currentStepStart = 0; return StoryTypes.WHEN; }
+    "Then"                                           { yystatePopNPush(2, IN_THEN);     currentStepStart = 0; return StoryTypes.THEN; }
     "!--" {InputChar}*                               { yystatePop();                    return StoryTypes.COMMENT;       }
     "|"                                              { yystatePopNPush(1, IN_TABLE);    return StoryTypes.TABLE_DELIM;   }
 }
@@ -158,17 +158,17 @@ Keywords       = {KeywordsWithTable} | "And"
 
 <IN_GIVEN> {
     "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
+                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.GIVEN;    }
 }
 
 <IN_WHEN> {
     "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.WHEN_TYPE;    }
+                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.WHEN;    }
 }
 
 <IN_THEN> {
     "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.THEN_TYPE;    }
+                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.THEN;    }
 }
 
 <IN_GIVEN, IN_WHEN, IN_THEN> {

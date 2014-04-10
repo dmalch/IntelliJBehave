@@ -7,11 +7,11 @@ import com.intellij.psi.PsiElement;
 
 public class StoryVisitor extends PsiElementVisitor {
 
-  public void visitExample(@NotNull StoryExample o) {
+  public void visitExampleBlock(@NotNull StoryExampleBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitGiven(@NotNull StoryGiven o) {
+  public void visitGivenStep(@NotNull StoryGivenStep o) {
     visitPsiElement(o);
   }
 
@@ -23,7 +23,7 @@ public class StoryVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitScenario(@NotNull StoryScenario o) {
+  public void visitScenarioBlock(@NotNull StoryScenarioBlock o) {
     visitPsiElement(o);
   }
 
@@ -35,11 +35,11 @@ public class StoryVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitThen(@NotNull StoryThen o) {
+  public void visitThenStep(@NotNull StoryThenStep o) {
     visitPsiElement(o);
   }
 
-  public void visitWhen(@NotNull StoryWhen o) {
+  public void visitWhenStep(@NotNull StoryWhenStep o) {
     visitPsiElement(o);
   }
 

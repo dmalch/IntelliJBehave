@@ -11,27 +11,27 @@ import static com.github.kumaraman21.intellijbehave.parser.StoryTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.kumaraman21.intellijbehave.psi.*;
 
-public class StoryScenarioImpl extends ASTWrapperPsiElement implements StoryScenario {
+public class StoryScenarioBlockImpl extends ASTWrapperPsiElement implements StoryScenarioBlock {
 
-  public StoryScenarioImpl(ASTNode node) {
+  public StoryScenarioBlockImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof StoryVisitor) ((StoryVisitor)visitor).visitScenario(this);
+    if (visitor instanceof StoryVisitor) ((StoryVisitor)visitor).visitScenarioBlock(this);
     else super.accept(visitor);
   }
 
   @Override
   @NotNull
-  public List<StoryExample> getExampleList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, StoryExample.class);
+  public List<StoryExampleBlock> getExampleBlockList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, StoryExampleBlock.class);
   }
 
   @Override
   @NotNull
-  public List<StoryGiven> getGivenList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, StoryGiven.class);
+  public List<StoryGivenStep> getGivenStepList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, StoryGivenStep.class);
   }
 
   @Override
@@ -54,14 +54,14 @@ public class StoryScenarioImpl extends ASTWrapperPsiElement implements StoryScen
 
   @Override
   @NotNull
-  public List<StoryThen> getThenList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, StoryThen.class);
+  public List<StoryThenStep> getThenStepList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, StoryThenStep.class);
   }
 
   @Override
   @NotNull
-  public List<StoryWhen> getWhenList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, StoryWhen.class);
+  public List<StoryWhenStep> getWhenStepList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, StoryWhenStep.class);
   }
 
 }

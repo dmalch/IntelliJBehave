@@ -5,13 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface StoryScenario extends PsiElement {
+public interface StoryScenarioBlock extends PsiElement {
 
   @NotNull
-  List<StoryExample> getExampleList();
+  List<StoryExampleBlock> getExampleBlockList();
 
   @NotNull
-  List<StoryGiven> getGivenList();
+  List<StoryGivenStep> getGivenStepList();
 
   @NotNull
   List<StoryMetaInfo> getMetaInfoList();
@@ -23,9 +23,9 @@ public interface StoryScenario extends PsiElement {
   List<StoryTable> getTableList();
 
   @NotNull
-  List<StoryThen> getThenList();
+  List<StoryThenStep> getThenStepList();
 
   @NotNull
-  List<StoryWhen> getWhenList();
+  List<StoryWhenStep> getWhenStepList();
 
 }
