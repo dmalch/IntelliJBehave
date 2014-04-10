@@ -145,8 +145,7 @@ NonMetaKey     = [^@\r\n]
 }
 
 <IN_STORY>  {
-    {CRLF}
-        ( "Scenario: "
+    {CRLF}( "Scenario: "
         | "Meta:"
         | "Examples:"
         | "Given " | "When " | "Then " | "And "
@@ -158,8 +157,7 @@ NonMetaKey     = [^@\r\n]
 
 
 <IN_SCENARIO>  {
-    {CRLF}
-        ( "Scenario: "
+    {CRLF}( "Scenario: "
         | "Meta:"
         | "Examples:"
         | "Given " | "When " | "Then " | "And "
@@ -172,8 +170,7 @@ NonMetaKey     = [^@\r\n]
 
 <IN_META>  {
     "@" {NonWhiteSpace}*                             { return StoryTypes.META_KEY; }
-    {CRLF}
-        ( "Scenario: "
+    {CRLF}( "Scenario: "
         | "Meta:"
         | "Examples:"
         | "Given " | "When " | "Then " | "And "
@@ -184,18 +181,15 @@ NonMetaKey     = [^@\r\n]
 }
 
 <IN_GIVEN>  {
-    {CRLF}
-        ( "Scenario: "
+    {CRLF}( "Scenario: "
         | "Meta:"
         | "Examples:"
         | "Given " | "When " | "Then "
         | "!--"
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
-    "And "{InputChar}+{CRLF}
-        ("And " | "Given " | "When " | "Then "
+    "And "{InputChar}+{CRLF}("And " | "Given " | "When " | "Then "
         | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
-    {InputChar}+{CRLF}
-        ("And " | "Given " | "When " | "Then "
+    {InputChar}+{CRLF}("And " | "Given " | "When " | "Then "
         | "| "
         | "")                                        { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
     {InputChar}+{CRLF}{InputChar}                    { setStepStart(); }
@@ -203,18 +197,15 @@ NonMetaKey     = [^@\r\n]
 }
 
 <IN_WHEN>  {
-    {CRLF}
-        ( "Scenario: "
+    {CRLF}( "Scenario: "
         | "Meta:"
         | "Examples:"
         | "Given " | "When " | "Then "
         | "!--"
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
-    "And "{InputChar}+{CRLF}
-        ("And " | "Given " | "When " | "Then "
+    "And "{InputChar}+{CRLF}("And " | "Given " | "When " | "Then "
         | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTypes.WHEN_TYPE;    }
-    {InputChar}+{CRLF}
-        ("And " | "Given " | "When " | "Then "
+    {InputChar}+{CRLF}("And " | "Given " | "When " | "Then "
         | "| "
         | "")                                        { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
     {InputChar}+{CRLF}{InputChar}                    { setStepStart(); }
@@ -222,18 +213,15 @@ NonMetaKey     = [^@\r\n]
 }
 
 <IN_THEN>  {
-    {CRLF}
-        ( "Scenario: "
+    {CRLF}( "Scenario: "
         | "Meta:"
         | "Examples:"
         | "Given " | "When " | "Then "
         | "!--"
         | "|" )                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
-    "And "{InputChar}+{CRLF}
-        ("And " | "Given " | "When " | "Then "
+    "And "{InputChar}+{CRLF}("And " | "Given " | "When " | "Then "
         | {InputChar})                               { yypushback(yytext().length() - 4); currentStepStart = 0; return StoryTypes.THEN_TYPE;    }
-    {InputChar}+{CRLF}
-        ("And " | "Given " | "When " | "Then "
+    {InputChar}+{CRLF}("And " | "Given " | "When " | "Then "
         | "| "
         | "")                                        { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
     {InputChar}+{CRLF}{InputChar}                    { setStepStart(); }
@@ -241,8 +229,7 @@ NonMetaKey     = [^@\r\n]
 }
 
 <IN_EXAMPLES> {
-    {CRLF}
-        ( "Scenario: "
+    {CRLF}( "Scenario: "
         | "Meta:"
         | "Examples:"
         | "Given " | "When " | "Then " | "And "
