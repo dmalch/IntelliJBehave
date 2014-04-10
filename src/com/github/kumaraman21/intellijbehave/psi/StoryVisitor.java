@@ -15,10 +15,6 @@ public class StoryVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitGivenStep(@NotNull StoryGivenStep o) {
-    visitPsiElement(o);
-  }
-
   public void visitMetaInfo(@NotNull StoryMetaInfo o) {
     visitPsiElement(o);
   }
@@ -43,15 +39,7 @@ public class StoryVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitThenStep(@NotNull StoryThenStep o) {
-    visitPsiElement(o);
-  }
-
   public void visitWhen(@NotNull StoryWhen o) {
-    visitPsiElement(o);
-  }
-
-  public void visitWhenStep(@NotNull StoryWhenStep o) {
     visitPsiElement(o);
   }
 

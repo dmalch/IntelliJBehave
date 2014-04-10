@@ -13,16 +13,13 @@
   tokenTypeClass="com.github.kumaraman21.intellijbehave.parser.StoryTokenType"
 }
 
-storyFile ::= (narrative WHITE_SPACE scenario* | BAD_CHARACTER)
-narrative ::= (STORY_DESCRIPTION | WHITE_SPACE)+
-scenario ::= scenarioHeader (metaInfo | example | given | when | then | table | COMMENT)+ WHITE_SPACE
-scenarioHeader ::= SCENARIO_TYPE SCENARIO_TEXT CRLF
-metaInfo ::= META_TYPE META_KEY META_TEXT CRLF
-example ::= EXAMPLE_TYPE EXAMPLE_TEXT CRLF
-given ::= GIVEN_TYPE givenStep
-givenStep ::= GIVEN_STEP_TYPE STEP_TEXT CRLF
-when ::= WHEN_TYPE whenStep
-whenStep ::= WHEN_STEP_TYPE STEP_TEXT CRLF
-then ::= THEN_TYPE thenStep
-thenStep ::= THEN_STEP_TYPE STEP_TEXT CRLF
+storyFile ::= (narrative scenario* | BAD_CHARACTER)
+narrative ::= STORY_DESCRIPTION STORY_DESCRIPTION*
+scenario ::= scenarioHeader (metaInfo | example | given | when | then | table | COMMENT)*
+scenarioHeader ::= SCENARIO_TYPE SCENARIO_TEXT
+metaInfo ::= META_TYPE META_KEY META_TEXT
+example ::= EXAMPLE_TYPE EXAMPLE_TEXT
+given ::= GIVEN_TYPE STEP_TEXT?
+when ::= WHEN_TYPE STEP_TEXT?
+then ::= THEN_TYPE STEP_TEXT?
 table ::= TABLE_DELIM (TABLE_CELL TABLE_DELIM)+

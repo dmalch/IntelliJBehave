@@ -110,9 +110,9 @@ public class StorySyntaxHighlighter extends SyntaxHighlighterBase {
         ATTRIBUTES.put(StoryTypes.GIVEN_TYPE, STEP_TYPE);
         ATTRIBUTES.put(StoryTypes.WHEN_TYPE, STEP_TYPE);
         ATTRIBUTES.put(StoryTypes.THEN_TYPE, STEP_TYPE);
-        ATTRIBUTES.put(StoryTypes.GIVEN_STEP_TYPE, STEP_TYPE);
-        ATTRIBUTES.put(StoryTypes.WHEN_STEP_TYPE, STEP_TYPE);
-        ATTRIBUTES.put(StoryTypes.THEN_STEP_TYPE, STEP_TYPE);
+//        ATTRIBUTES.put(StoryTypes.GIVEN_STEP_TYPE, STEP_TYPE);
+//        ATTRIBUTES.put(StoryTypes.WHEN_STEP_TYPE, STEP_TYPE);
+//        ATTRIBUTES.put(StoryTypes.THEN_STEP_TYPE, STEP_TYPE);
 //        ATTRIBUTES.put(StoryTypes.STEP_TYPE_AND, STEP_TYPE);
         ATTRIBUTES.put(StoryTypes.STEP_TEXT, STEP_TEXT);
         ATTRIBUTES.put(StoryTypes.TABLE_DELIM, TABLE_DELIM);

@@ -22,10 +22,4 @@ public class StoryWhenImpl extends ASTWrapperPsiElement implements StoryWhen {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public StoryWhenStep getWhenStep() {
-    return findNotNullChildByClass(StoryWhenStep.class);
-  }
-
 }

@@ -22,10 +22,4 @@ public class StoryGivenImpl extends ASTWrapperPsiElement implements StoryGiven {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public StoryGivenStep getGivenStep() {
-    return findNotNullChildByClass(StoryGivenStep.class);
-  }
-
 }

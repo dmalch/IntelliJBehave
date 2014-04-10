@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface StoryGiven extends PsiElement {
 
-  @NotNull
-  StoryGivenStep getGivenStep();
-
 }

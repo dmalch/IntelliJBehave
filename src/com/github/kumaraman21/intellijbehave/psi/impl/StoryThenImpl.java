@@ -22,10 +22,4 @@ public class StoryThenImpl extends ASTWrapperPsiElement implements StoryThen {
     else super.accept(visitor);
   }
 
-  @Override
-  @NotNull
-  public StoryThenStep getThenStep() {
-    return findNotNullChildByClass(StoryThenStep.class);
-  }
-
 }

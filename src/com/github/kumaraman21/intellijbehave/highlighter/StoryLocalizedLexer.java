@@ -421,13 +421,13 @@ public class StoryLocalizedLexer extends LexerBase {
         switch (value) {
             case Given:
                 state = State.IN_STEP;
-                return StoryTypes.GIVEN_STEP_TYPE;
+                return StoryTypes.GIVEN_TYPE;
             case When:
                 state = State.IN_STEP;
-                return StoryTypes.WHEN_STEP_TYPE;
+                return StoryTypes.WHEN_TYPE;
             case Then:
                 state = State.IN_STEP;
-                return StoryTypes.THEN_STEP_TYPE;
+                return StoryTypes.THEN_TYPE;
             case Ignorable:
             case ExamplesTableIgnorableSeparator:
                 return StoryTypes.COMMENT;

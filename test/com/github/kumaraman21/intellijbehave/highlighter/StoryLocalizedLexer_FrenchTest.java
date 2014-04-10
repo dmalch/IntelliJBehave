@@ -28,13 +28,13 @@ public class StoryLocalizedLexer_FrenchTest {
         assertToken(StoryTypes.SCENARIO_TYPE, "Scénario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " une simple sortie");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Etant donné que");
+//        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Etant donné que");
         advanceAndAssert(StoryTypes.STEP_TEXT, " nous allons promener notre chienne");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "Quand");
+//        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "Quand");
         advanceAndAssert(StoryTypes.STEP_TEXT, " on sera dehors");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Alors");
+//        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Alors");
         advanceAndAssert(StoryTypes.STEP_TEXT, " elle pourra se soulager!");
         advanceAndAssert(null);
     }
@@ -55,13 +55,13 @@ public class StoryLocalizedLexer_FrenchTest {
         advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scénario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " une simple sortie");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Etant donné que");
+//        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Etant donné que");
         advanceAndAssert(StoryTypes.STEP_TEXT, " nous allons promener notre chienne");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "Quand");
+//        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "Quand");
         advanceAndAssert(StoryTypes.STEP_TEXT, " on sera dehors");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Alors");
+//        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Alors");
         advanceAndAssert(StoryTypes.STEP_TEXT, " elle pourra se soulager!");
         advanceAndAssert(null);
     }

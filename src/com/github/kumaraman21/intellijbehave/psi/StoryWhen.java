@@ -7,7 +7,4 @@ import com.intellij.psi.PsiElement;
 
 public interface StoryWhen extends PsiElement {
 
-  @NotNull
-  StoryWhenStep getWhenStep();
-
 }
