@@ -32,10 +32,12 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
     }
@@ -53,7 +55,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario:");
@@ -72,7 +75,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
     }
@@ -94,10 +98,12 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
     }
@@ -127,10 +133,12 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario:");
@@ -160,13 +168,15 @@ public class StoryLexerTest {
         advanceAndAssert(StoryTypes.GIVEN_TYPE, "And ");
         advanceAndAssert(StoryTypes.STEP_TEXT, "he is the user with nickname: \"Bomo\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"McCallum\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "And ");
         advanceAndAssert(StoryTypes.STEP_TEXT, "he tries to login using the password \"Bimo\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario:");
@@ -193,16 +203,19 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"PacMan\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get logged");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.THEN_TYPE, "And ");
         advanceAndAssert(StoryTypes.STEP_TEXT, "a welcome message is displayed");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try again to login using the password \"PacMan\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
     }
@@ -254,10 +267,12 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario:");
@@ -284,10 +299,12 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"McCallum\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
 
@@ -307,10 +324,12 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"<input>\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
+        advanceAndAssert(StoryTypes.WHEN_TYPE, "When");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
+        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.EXAMPLE_TYPE, "Examples:");
