@@ -11,7 +11,7 @@ public interface StoryTypes {
   IElementType EXAMPLE_BLOCK = new StoryElementType("EXAMPLE_BLOCK");
   IElementType GIVEN_STEP = new StoryElementType("GIVEN_STEP");
   IElementType META_INFO = new StoryElementType("META_INFO");
-  IElementType NARRATIVE = new StoryElementType("NARRATIVE");
+  IElementType NARRATIVE_BLOCK = new StoryElementType("NARRATIVE_BLOCK");
   IElementType SCENARIO_BLOCK = new StoryElementType("SCENARIO_BLOCK");
   IElementType SCENARIO_HEADER = new StoryElementType("SCENARIO_HEADER");
   IElementType TABLE = new StoryElementType("TABLE");
@@ -47,8 +47,8 @@ public interface StoryTypes {
       else if (type == META_INFO) {
         return new StoryMetaInfoImpl(node);
       }
-      else if (type == NARRATIVE) {
-        return new StoryNarrativeImpl(node);
+      else if (type == NARRATIVE_BLOCK) {
+        return new StoryNarrativeBlockImpl(node);
       }
       else if (type == SCENARIO_BLOCK) {
         return new StoryScenarioBlockImpl(node);

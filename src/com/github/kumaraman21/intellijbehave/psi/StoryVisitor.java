@@ -19,7 +19,7 @@ public class StoryVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNarrative(@NotNull StoryNarrative o) {
+  public void visitNarrativeBlock(@NotNull StoryNarrativeBlock o) {
     visitPsiElement(o);
   }
 

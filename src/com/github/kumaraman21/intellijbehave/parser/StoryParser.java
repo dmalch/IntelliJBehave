@@ -1,15 +1,15 @@
 // This is a generated file. Not intended for manual editing.
 package com.github.kumaraman21.intellijbehave.parser;
 
+import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
+import com.intellij.lang.PsiParser;
 import com.intellij.openapi.diagnostic.Logger;
+import com.intellij.psi.tree.IElementType;
+
 import static com.github.kumaraman21.intellijbehave.parser.StoryTypes.*;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
-import com.intellij.lang.PsiParser;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class StoryParser implements PsiParser {
@@ -29,8 +29,8 @@ public class StoryParser implements PsiParser {
     else if (root_ == META_INFO) {
       result_ = metaInfo(builder_, 0);
     }
-    else if (root_ == NARRATIVE) {
-      result_ = narrative(builder_, 0);
+    else if (root_ == NARRATIVE_BLOCK) {
+      result_ = narrativeBlock(builder_, 0);
     }
     else if (root_ == SCENARIO_BLOCK) {
       result_ = scenarioBlock(builder_, 0);
@@ -104,24 +104,24 @@ public class StoryParser implements PsiParser {
 
   /* ********************************************************** */
   // STORY_DESCRIPTION STORY_DESCRIPTION*
-  public static boolean narrative(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "narrative")) return false;
+  public static boolean narrativeBlock(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "narrativeBlock")) return false;
     if (!nextTokenIs(builder_, STORY_DESCRIPTION)) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, STORY_DESCRIPTION);
-    result_ = result_ && narrative_1(builder_, level_ + 1);
-    exit_section_(builder_, marker_, NARRATIVE, result_);
+    result_ = result_ && narrativeBlock_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, NARRATIVE_BLOCK, result_);
     return result_;
   }
 
   // STORY_DESCRIPTION*
-  private static boolean narrative_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "narrative_1")) return false;
+  private static boolean narrativeBlock_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "narrativeBlock_1")) return false;
     int pos_ = current_position_(builder_);
     while (true) {
       if (!consumeToken(builder_, STORY_DESCRIPTION)) break;
-      if (!empty_element_parsed_guard_(builder_, "narrative_1", pos_)) break;
+      if (!empty_element_parsed_guard_(builder_, "narrativeBlock_1", pos_)) break;
       pos_ = current_position_(builder_);
     }
     return true;
@@ -181,7 +181,7 @@ public class StoryParser implements PsiParser {
   }
 
   /* ********************************************************** */
-  // narrative scenarioBlock* | BAD_CHARACTER
+  // narrativeBlock scenarioBlock* | BAD_CHARACTER
   static boolean storyFile(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "storyFile")) return false;
     if (!nextTokenIs(builder_, "", BAD_CHARACTER, STORY_DESCRIPTION)) return false;
@@ -193,12 +193,12 @@ public class StoryParser implements PsiParser {
     return result_;
   }
 
-  // narrative scenarioBlock*
+  // narrativeBlock scenarioBlock*
   private static boolean storyFile_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "storyFile_0")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
-    result_ = narrative(builder_, level_ + 1);
+    result_ = narrativeBlock(builder_, level_ + 1);
     result_ = result_ && storyFile_0_1(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
