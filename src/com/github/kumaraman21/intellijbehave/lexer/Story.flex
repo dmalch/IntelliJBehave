@@ -107,9 +107,10 @@ NonWhiteSpace  = [^\ \n\r\t\f]
 InputChar      = [^\r\n]
 TableCellChar  = [^\r\n\|]
 MetaText       = [^@\r\n]
-KeywordsSteps  = "Given" | "When" | "Then" | "And"
-KeywordsShort  = "Scenario:" | "Meta:" | "Examples:" | "Given" | "When" | "Then" | "!--"
-KeywordsWithTable  ={KeywordsShort} | "|"
+GivenWhenThen  = "Given" | "When" | "Then"
+KeywordsSteps  = {GivenWhenThen} | "And"
+KeywordsShort  = "Scenario:" | "Meta:" | "Examples:" | {GivenWhenThen} | "!--"
+KeywordsWithTable  = {KeywordsShort} | "|"
 Keywords       = {KeywordsWithTable} | "And"
 
 %state IN_DIRECTIVE
@@ -129,17 +130,17 @@ Keywords       = {KeywordsWithTable} | "And"
 %%
 
 <YYINITIAL> {
-    {Keywords}{InputChar}+                           { yystatePush(IN_DIRECTIVE); yypushback(yytext().length());       }
-    {InputChar}+                                     { return StoryTypes.STORY_DESCRIPTION;                            }
+    {Keywords}{InputChar}+                           { yystatePush(IN_DIRECTIVE); yypushback(yytext().length());         }
+    {InputChar}+                                     { return StoryTypes.STORY_DESCRIPTION;                              }
 }
 
 <IN_DIRECTIVE> {
     "Scenario:"                                      { yystatePopNPush(2, IN_SCENARIO); return StoryTypes.SCENARIO_TYPE; }
     "Meta:"                                          { yystatePopNPush(2, IN_META);     return StoryTypes.META_TYPE;     }
     "Examples:"                                      { yystatePopNPush(2, IN_EXAMPLES); return StoryTypes.EXAMPLE_TYPE;  }
-    "Given"                                          { yystatePopNPush(2, IN_GIVEN);    currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
-    "When"                                           { yystatePopNPush(2, IN_WHEN);     currentStepStart = 0; return StoryTypes.WHEN_TYPE;     }
-    "Then"                                           { yystatePopNPush(2, IN_THEN);     currentStepStart = 0; return StoryTypes.THEN_TYPE;     }
+    "Given"                                          { yystatePopNPush(2, IN_GIVEN);    currentStepStart = 0; return StoryTypes.GIVEN_TYPE;}
+    "When"                                           { yystatePopNPush(2, IN_WHEN);     currentStepStart = 0; return StoryTypes.WHEN_TYPE; }
+    "Then"                                           { yystatePopNPush(2, IN_THEN);     currentStepStart = 0; return StoryTypes.THEN_TYPE; }
     "!--" {InputChar}*                               { yystatePop();                    return StoryTypes.COMMENT;       }
     "|"                                              { yystatePopNPush(1, IN_TABLE);    return StoryTypes.TABLE_DELIM;   }
 }
@@ -157,29 +158,30 @@ Keywords       = {KeywordsWithTable} | "And"
 
 <IN_GIVEN> {
     "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
+                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.GIVEN_TYPE;    }
 }
 
 <IN_WHEN> {
     "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.WHEN_TYPE;    }
+                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.WHEN_TYPE;    }
 }
 
 <IN_THEN> {
     "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
-                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.THEN_TYPE;    }
+                                                     { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.THEN_TYPE;    }
 }
 
 <IN_GIVEN, IN_WHEN, IN_THEN> {
-    {KeywordsWithTable}{InputChar}*+{CRLF}{InputChar}*
+    {KeywordsWithTable}{InputChar}*({CRLF}{InputChar}*)?
                                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
     {NonWhiteSpace}{InputChar}*{CRLF}({KeywordsSteps} | "| " | "")
                                                      { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
     {NonWhiteSpace}{InputChar}*{CRLF}{InputChar}     { setStepStart(); }
+    {NonWhiteSpace}{InputChar}*                      { return StoryTypes.STEP_TEXT; }
 }
 
 <IN_EXAMPLES> {
-    {Keywords}                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
+    {Keywords}                                       { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
 }
 
 <IN_TABLE> {

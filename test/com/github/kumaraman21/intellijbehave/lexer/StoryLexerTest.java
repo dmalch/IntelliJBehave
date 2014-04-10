@@ -39,7 +39,6 @@ public class StoryLexerTest {
         advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(TokenType.WHITE_SPACE);
     }
 
     @Test
@@ -78,7 +77,6 @@ public class StoryLexerTest {
         advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i get an error message of type \"Wrong Credentials\"");
-        advanceAndAssert(TokenType.WHITE_SPACE);
     }
 
     @Test
@@ -242,7 +240,6 @@ public class StoryLexerTest {
         advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
-        advanceAndAssert(TokenType.WHITE_SPACE);
     }
 
     @Test

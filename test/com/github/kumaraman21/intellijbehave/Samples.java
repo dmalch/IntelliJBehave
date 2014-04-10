@@ -13,7 +13,7 @@ public class Samples {
                     "\n" + //
                     "Given i am the user with nickname: \"weird\"\n" + //
                     "When i try to login using the password \"soweird\"\n" + //
-                    "Then i get an error message of type \"Wrong Credentials\"\n";
+                    "Then i get an error message of type \"Wrong Credentials\"";
 
     public static final String INCOMPLETE_STORY_SAMPLE =
             "Scenario: An unknown user cannot be logged\n" +
@@ -25,8 +25,7 @@ public class Samples {
                     "\n" +
                     "Scenario: An unknown user cannot be logged 3\n" +
                     "Given i am the user with nickname: \"weird\"\n" +
-                    "Then i get an error message of type \"Wrong Credentials\"\n" +
-                    "\n";
+                    "Then i get an error message of type \"Wrong Credentials\"";
 
     public static final String MULTILINE_SAMPLE =
             "Scenario: An unknown user cannot be logged\n" + //
@@ -45,7 +44,7 @@ public class Samples {
                     "!-- un commentaire qui n'a rien à voir\n" +
                     "Quand on sera dehors\n" +
                     "Alors elle pourra se soulager!\n" +
-                    "Et elle sera super contente\n";
+                    "Et elle sera super contente";
 
     public static final String LONG_SAMPLE =
             "Narrative: \n" + //
@@ -81,8 +80,7 @@ public class Samples {
                     "Given i am the user with nickname: \"Travis\"\n" + //
                     "When i try to login using the password \"PacMan\"\n" + //
                     "Then i get logged\n" + //
-                    "And a welcome message is displayed\n" + //
-                    "\n";
+                    "And a welcome message is displayed";
 
     public static final String MULTILINE_LONG_SAMPLE =
             "Narrative: \n" + //
@@ -122,8 +120,7 @@ public class Samples {
                     "Then i get logged\n" + //
                     "And a\n welcome message is displayed\n" + //
                     "When i try again to login using the\n password \"PacMan\"\n" + //
-                    "Then i \nget logged\n" + //
-                    "\n";
+                    "Then i \nget logged";
 
     public static final String META_SAMPLE =
             "Scenario: An unknown user cannot be logged\n" + //
@@ -132,7 +129,7 @@ public class Samples {
                     "@author carmen\n" + //
                     "@skip\n" + //
                     "\n" + //
-                    "Given i am the user with nickname: \"weird\"\n";
+                    "Given i am the user with nickname: \"weird\"";
 
     public static final String EXAMPLES_SAMPLE =
             "Scenario: An unknown user cannot be logged\n" + //
@@ -151,8 +148,7 @@ public class Samples {
                     "Given the following existing users:\n" + //
                     "| nickname | password |\n" + //
                     "|   Travis |   PacMan |\n" + //
-                    "Given i am the user with nickname: \"Travis\"\n" //
-            ;
+                    "Given i am the user with nickname: \"Travis\"";
 
     public static final String COMPLEX_SAMPLE =
             "Narrative: \n" + //
@@ -186,6 +182,5 @@ public class Samples {
                     "|   Travis |   PacMan |\n" + //
                     "Given i am the user with nickname: \"Travis\"\n" + //
                     "When i try to login using the password \"McCallum\"\n" + //
-                    "Then i get an error message of type \"Wrong Credentials\"\n" + //
-                    "\n";
+                    "Then i get an error message of type \"Wrong Credentials\"";
 }
