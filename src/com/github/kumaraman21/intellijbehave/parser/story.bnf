@@ -13,7 +13,7 @@
   tokenTypeClass="com.github.kumaraman21.intellijbehave.parser.StoryTokenType"
 }
 
-FILE ::= (narrative WHITE_SPACE scenario* | BAD_CHARACTER)
+storyFile ::= (narrative WHITE_SPACE scenario* | BAD_CHARACTER)
 narrative ::= (STORY_DESCRIPTION | WHITE_SPACE)+
 scenario ::= scenarioHeader (metaInfo | example | given | when | then | table | COMMENT)+ WHITE_SPACE
 scenarioHeader ::= SCENARIO_TYPE SCENARIO_TEXT CRLF
