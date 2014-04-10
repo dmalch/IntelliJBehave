@@ -32,10 +32,10 @@ public class StoryLocalizedLexer_SamplesTest {
         storyLexer = new StoryLocalizedLexer(new LocalizedStorySupport());
         storyLexer.start(SIMPLE_SAMPLE);
 
-        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario:");
+        assertToken(StoryTypes.SCENARIO, "Scenario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " An unknown user cannot be logged");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.META_TYPE, "Meta:");
+        advanceAndAssert(StoryTypes.META, "Meta:");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.META_KEY, "@skip");
         advanceAndAssert(TokenType.WHITE_SPACE);
@@ -45,7 +45,7 @@ public class StoryLocalizedLexer_SamplesTest {
 //        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "When");
         advanceAndAssert(StoryTypes.STEP_TEXT, " i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-//        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Then");
+//        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
         advanceAndAssert(StoryTypes.STEP_TEXT, " i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
     }
@@ -55,10 +55,10 @@ public class StoryLocalizedLexer_SamplesTest {
         storyLexer = new StoryLocalizedLexer(new LocalizedStorySupport());
         storyLexer.start(META_SAMPLE);
 
-        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario:");
+        assertToken(StoryTypes.SCENARIO, "Scenario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " An unknown user cannot be logged");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.META_TYPE, "Meta:");
+        advanceAndAssert(StoryTypes.META, "Meta:");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.META_KEY, "@author");
         advanceAndAssert(TokenType.WHITE_SPACE);
@@ -88,10 +88,10 @@ public class StoryLocalizedLexer_SamplesTest {
 //        advanceAndAssert(StoryTypes.NARRATIVE_TYPE, "I want to");
         advanceAndAssert(StoryTypes.STORY_DESCRIPTION, " be able to create and manage my account");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario:");
+        advanceAndAssert(StoryTypes.SCENARIO, "Scenario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " An unknown user cannot be logged");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.META_TYPE, "Meta:");
+        advanceAndAssert(StoryTypes.META, "Meta:");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.META_KEY, "@skip");
         advanceAndAssert(TokenType.WHITE_SPACE);
@@ -101,10 +101,10 @@ public class StoryLocalizedLexer_SamplesTest {
 //        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "When");
         advanceAndAssert(StoryTypes.STEP_TEXT, " i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-//        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Then");
+//        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
         advanceAndAssert(StoryTypes.STEP_TEXT, " i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario:");
+        advanceAndAssert(StoryTypes.SCENARIO, "Scenario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " A known user cannot be logged using a wrong password");
         advanceAndAssert(TokenType.WHITE_SPACE);
 //        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Given");
@@ -128,7 +128,7 @@ public class StoryLocalizedLexer_SamplesTest {
 //        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "When");
         advanceAndAssert(StoryTypes.STEP_TEXT, " i try to login using the password \"McCallum\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-//        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Then");
+//        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
         advanceAndAssert(StoryTypes.STEP_TEXT, " i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
 
@@ -140,7 +140,7 @@ public class StoryLocalizedLexer_SamplesTest {
         storyLexer = new StoryLocalizedLexer(new LocalizedStorySupport());
         storyLexer.start(EXAMPLES_SAMPLE);
 
-        assertToken(StoryTypes.SCENARIO_TYPE, "Scenario:");
+        assertToken(StoryTypes.SCENARIO, "Scenario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " An unknown user cannot be logged");
         advanceAndAssert(TokenType.WHITE_SPACE);
 //        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Given");
@@ -149,10 +149,10 @@ public class StoryLocalizedLexer_SamplesTest {
 //        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "When");
         advanceAndAssert(StoryTypes.STEP_TEXT, " i try to login using the password \"soweird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-//        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Then");
+//        advanceAndAssert(StoryTypes.THEN_TYPE, "Then");
         advanceAndAssert(StoryTypes.STEP_TEXT, " i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.EXAMPLE_TYPE, "Examples:");
+        advanceAndAssert(StoryTypes.EXAMPLE, "Examples:");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.TABLE_DELIM);
@@ -173,7 +173,7 @@ public class StoryLocalizedLexer_SamplesTest {
         advanceAndAssert(StoryTypes.TABLE_CELL, "   Thundercat ");
         advanceAndAssert(StoryTypes.TABLE_DELIM);
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario:");
+        advanceAndAssert(StoryTypes.SCENARIO, "Scenario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " A known user can be logged using the right password");
         advanceAndAssert(TokenType.WHITE_SPACE);
 //        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Given");

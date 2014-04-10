@@ -435,17 +435,17 @@ public class StoryLocalizedLexer extends LexerBase {
             case AsA:
             case InOrderTo:
             case ExamplesTable:
-                return StoryTypes.EXAMPLE_TYPE;
+                return StoryTypes.EXAMPLE;
             case ExamplesTableHeaderSeparator:
             case ExamplesTableValueSeparator:
                 state = State.IN_TABLE;
                 return StoryTypes.TABLE_DELIM;
             case Meta:
                 state = State.IN_META;
-                return StoryTypes.META_TYPE;
+                return StoryTypes.META;
             case Scenario:
                 state = State.IN_SCENARIO;
-                return StoryTypes.SCENARIO_TYPE;
+                return StoryTypes.SCENARIO;
 
             case MetaProperty:
                 break;

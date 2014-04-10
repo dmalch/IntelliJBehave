@@ -105,7 +105,7 @@ public class StorySyntaxHighlighter extends SyntaxHighlighterBase {
         ATTRIBUTES.put(StoryTypes.STORY_DESCRIPTION, STORY_DESCRIPTION);
 //        ATTRIBUTES.put(StoryTypes.NARRATIVE_TYPE, STORY_DESCRIPTION);
 //        ATTRIBUTES.put(StoryTypes.NARRATIVE_TEXT, STORY_DESCRIPTION);
-        ATTRIBUTES.put(StoryTypes.SCENARIO_TYPE, SCENARIO_TYPE);
+        ATTRIBUTES.put(StoryTypes.SCENARIO, SCENARIO_TYPE);
         ATTRIBUTES.put(StoryTypes.SCENARIO_TEXT, SCENARIO_TEXT);
         ATTRIBUTES.put(StoryTypes.GIVEN_STEP, STEP_TYPE);
         ATTRIBUTES.put(StoryTypes.WHEN_STEP, STEP_TYPE);
@@ -117,7 +117,7 @@ public class StorySyntaxHighlighter extends SyntaxHighlighterBase {
         ATTRIBUTES.put(StoryTypes.STEP_TEXT, STEP_TEXT);
         ATTRIBUTES.put(StoryTypes.TABLE_DELIM, TABLE_DELIM);
         ATTRIBUTES.put(StoryTypes.TABLE_CELL, TABLE_CELL);
-        ATTRIBUTES.put(StoryTypes.META_TYPE, META_TYPE);
+        ATTRIBUTES.put(StoryTypes.META, META_TYPE);
         ATTRIBUTES.put(StoryTypes.META_KEY, META_KEY);
         ATTRIBUTES.put(StoryTypes.META_TEXT, META_TEXT);
         ATTRIBUTES.put(StoryTypes.COMMENT, LINE_COMMENT);

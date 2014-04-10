@@ -25,7 +25,7 @@ public class StoryLocalizedLexer_FrenchTest {
                 "Quand on sera dehors\n" +
                 "Alors elle pourra se soulager!");
 
-        assertToken(StoryTypes.SCENARIO_TYPE, "Scénario:");
+        assertToken(StoryTypes.SCENARIO, "Scénario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " une simple sortie");
         advanceAndAssert(TokenType.WHITE_SPACE);
 //        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Etant donné que");
@@ -34,7 +34,7 @@ public class StoryLocalizedLexer_FrenchTest {
 //        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "Quand");
         advanceAndAssert(StoryTypes.STEP_TEXT, " on sera dehors");
         advanceAndAssert(TokenType.WHITE_SPACE);
-//        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Alors");
+//        advanceAndAssert(StoryTypes.THEN_TYPE, "Alors");
         advanceAndAssert(StoryTypes.STEP_TEXT, " elle pourra se soulager!");
         advanceAndAssert(null);
     }
@@ -52,7 +52,7 @@ public class StoryLocalizedLexer_FrenchTest {
 
 //        assertToken(StoryTypes.COMMENT_WITH_LOCALE, "!-- language:fr");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scénario:");
+        advanceAndAssert(StoryTypes.SCENARIO, "Scénario:");
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, " une simple sortie");
         advanceAndAssert(TokenType.WHITE_SPACE);
 //        advanceAndAssert(StoryTypes.GIVEN_STEP_TYPE, "Etant donné que");
@@ -61,7 +61,7 @@ public class StoryLocalizedLexer_FrenchTest {
 //        advanceAndAssert(StoryTypes.WHEN_STEP_TYPE, "Quand");
         advanceAndAssert(StoryTypes.STEP_TEXT, " on sera dehors");
         advanceAndAssert(TokenType.WHITE_SPACE);
-//        advanceAndAssert(StoryTypes.THEN_STEP_TYPE, "Alors");
+//        advanceAndAssert(StoryTypes.THEN_TYPE, "Alors");
         advanceAndAssert(StoryTypes.STEP_TEXT, " elle pourra se soulager!");
         advanceAndAssert(null);
     }
