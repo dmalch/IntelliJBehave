@@ -28,7 +28,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.META_KEY, "@skip");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
@@ -48,7 +49,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
@@ -58,14 +60,16 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged 2");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TYPE, "Scenario:");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged 3");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.THEN_TYPE, "Then ");
@@ -86,7 +90,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.META_KEY, "@skip");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
@@ -118,7 +123,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.META_KEY, "@skip");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
@@ -131,7 +137,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, "A known user cannot be logged using a wrong password");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "the following existing users:");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.TABLE_DELIM);
@@ -146,7 +153,8 @@ public class StoryLexerTest {
         advanceAndAssert(StoryTypes.TABLE_CELL, "   PacMan ");
         advanceAndAssert(StoryTypes.TABLE_DELIM);
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.GIVEN_TYPE, "And ");
@@ -165,7 +173,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, "A known user can be logged using the right password");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "the following existing users:");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.TABLE_DELIM);
@@ -180,7 +189,8 @@ public class StoryLexerTest {
         advanceAndAssert(StoryTypes.TABLE_CELL, "   PacMan ");
         advanceAndAssert(StoryTypes.TABLE_DELIM);
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
@@ -213,7 +223,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.META_KEY, "@skip");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
     }
@@ -239,7 +250,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.META_KEY, "@skip");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"weird\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
@@ -252,7 +264,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, "A known user cannot be logged using a wrong password");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "the following existing users:");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.TABLE_DELIM);
@@ -267,7 +280,8 @@ public class StoryLexerTest {
         advanceAndAssert(StoryTypes.TABLE_CELL, "   PacMan ");
         advanceAndAssert(StoryTypes.TABLE_DELIM);
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"Travis\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
@@ -289,7 +303,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, "An unknown user cannot be logged");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "i am the user with nickname: \"<input>\"");
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.WHEN_TYPE, "When ");
@@ -322,7 +337,8 @@ public class StoryLexerTest {
         advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.SCENARIO_TEXT, "A known user can be logged using the right password");
         advanceAndAssert(TokenType.WHITE_SPACE);
-        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given ");
+        advanceAndAssert(StoryTypes.GIVEN_TYPE, "Given");
+        advanceAndAssert(TokenType.WHITE_SPACE);
         advanceAndAssert(StoryTypes.STEP_TEXT, "the following existing users:");
         advanceAndAssert(TokenType.WHITE_SPACE);
     }
