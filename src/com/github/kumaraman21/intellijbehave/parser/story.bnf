@@ -11,6 +11,8 @@
   elementTypeHolderClass="com.github.kumaraman21.intellijbehave.parser.StoryTypes"
   elementTypeClass="com.github.kumaraman21.intellijbehave.parser.StoryElementType"
   tokenTypeClass="com.github.kumaraman21.intellijbehave.parser.StoryTokenType"
+
+  psiImplUtilClass="com.github.kumaraman21.intellijbehave.psi.impl.StoryPsiImplUtil"
 }
 
 storyFile ::= (narrativeBlock scenarioBlock* | BAD_CHARACTER)
