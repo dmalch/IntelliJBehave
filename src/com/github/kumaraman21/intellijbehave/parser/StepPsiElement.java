@@ -38,7 +38,7 @@ public class StepPsiElement extends ASTWrapperPsiElement {
 
     @Nullable
     public ASTNode getKeyword() {
-        return getNode().findChildByType(TokenSet.create(StoryTypes.GIVEN_STEP, StoryTypes.WHEN_STEP, StoryTypes.THEN));
+        return getNode().findChildByType(TokenSet.create(StoryTypes.STEP_PSI_ELEMENT));
     }
 
     public String getStepText() {

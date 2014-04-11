@@ -8,15 +8,15 @@ import com.github.kumaraman21.intellijbehave.parser.psi.impl.*;
 
 public interface StoryTypes {
 
-  IElementType EXAMPLE_BLOCK = new StoryElementType("EXAMPLE_BLOCK");
-  IElementType GIVEN_STEP = new StoryElementType("GIVEN_STEP");
-  IElementType META_INFO = new StoryElementType("META_INFO");
-  IElementType NARRATIVE_BLOCK = new StoryElementType("NARRATIVE_BLOCK");
-  IElementType SCENARIO_BLOCK = new StoryElementType("SCENARIO_BLOCK");
-  IElementType SCENARIO_HEADER = new StoryElementType("SCENARIO_HEADER");
-  IElementType TABLE = new StoryElementType("TABLE");
-  IElementType THEN_STEP = new StoryElementType("THEN_STEP");
-  IElementType WHEN_STEP = new StoryElementType("WHEN_STEP");
+  IElementType EXAMPLE_BLOCK_PSI_ELEMENT = new StoryElementType("EXAMPLE_BLOCK_PSI_ELEMENT");
+  IElementType META_INFO_PSI_ELEMENT = new StoryElementType("META_INFO_PSI_ELEMENT");
+  IElementType NARRATIVE_BLOCK_PSI_ELEMENT = new StoryElementType("NARRATIVE_BLOCK_PSI_ELEMENT");
+  IElementType SCENARIO_BLOCK_PSI_ELEMENT = new StoryElementType("SCENARIO_BLOCK_PSI_ELEMENT");
+  IElementType SCENARIO_HEADER_PSI_ELEMENT = new StoryElementType("SCENARIO_HEADER_PSI_ELEMENT");
+  IElementType STEP_PSI_ELEMENT = new StoryElementType("STEP_PSI_ELEMENT");
+  IElementType STEP_TEXT_PSI_ELEMENT = new StoryElementType("STEP_TEXT_PSI_ELEMENT");
+  IElementType STEP_TYPE_PSI_ELEMENT = new StoryElementType("STEP_TYPE_PSI_ELEMENT");
+  IElementType TABLE_PSI_ELEMENT = new StoryElementType("TABLE_PSI_ELEMENT");
 
   IElementType BAD_CHARACTER = new StoryTokenType("BAD_CHARACTER");
   IElementType COMMENT = new StoryTokenType("COMMENT");
@@ -38,32 +38,32 @@ public interface StoryTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-       if (type == EXAMPLE_BLOCK) {
-        return new StoryExampleBlockImpl(node);
+       if (type == EXAMPLE_BLOCK_PSI_ELEMENT) {
+        return new StoryExampleBlockPsiElementImpl(node);
       }
-      else if (type == GIVEN_STEP) {
-        return new StoryGivenStepImpl(node);
+      else if (type == META_INFO_PSI_ELEMENT) {
+        return new StoryMetaInfoPsiElementImpl(node);
       }
-      else if (type == META_INFO) {
-        return new StoryMetaInfoImpl(node);
+      else if (type == NARRATIVE_BLOCK_PSI_ELEMENT) {
+        return new StoryNarrativeBlockPsiElementImpl(node);
       }
-      else if (type == NARRATIVE_BLOCK) {
-        return new StoryNarrativeBlockImpl(node);
+      else if (type == SCENARIO_BLOCK_PSI_ELEMENT) {
+        return new StoryScenarioBlockPsiElementImpl(node);
       }
-      else if (type == SCENARIO_BLOCK) {
-        return new StoryScenarioBlockImpl(node);
+      else if (type == SCENARIO_HEADER_PSI_ELEMENT) {
+        return new StoryScenarioHeaderPsiElementImpl(node);
       }
-      else if (type == SCENARIO_HEADER) {
-        return new StoryScenarioHeaderImpl(node);
+      else if (type == STEP_PSI_ELEMENT) {
+        return new StoryStepPsiElementImpl(node);
       }
-      else if (type == TABLE) {
-        return new StoryTableImpl(node);
+      else if (type == STEP_TEXT_PSI_ELEMENT) {
+        return new StoryStepTextPsiElementImpl(node);
       }
-      else if (type == THEN_STEP) {
-        return new StoryThenStepImpl(node);
+      else if (type == STEP_TYPE_PSI_ELEMENT) {
+        return new StoryStepTypePsiElementImpl(node);
       }
-      else if (type == WHEN_STEP) {
-        return new StoryWhenStepImpl(node);
+      else if (type == TABLE_PSI_ELEMENT) {
+        return new StoryTablePsiElementImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

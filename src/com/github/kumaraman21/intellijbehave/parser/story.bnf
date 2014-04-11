@@ -7,21 +7,21 @@
   psiImplClassSuffix="Impl"
   psiPackage="com.github.kumaraman21.intellijbehave.parser.psi"
   psiImplPackage="com.github.kumaraman21.intellijbehave.parser.psi.impl"
+  psiImplUtilClass="com.github.kumaraman21.intellijbehave.parser.psi.impl.StoryPsiImplUtil"
 
   elementTypeHolderClass="com.github.kumaraman21.intellijbehave.parser.StoryTypes"
   elementTypeClass="com.github.kumaraman21.intellijbehave.parser.StoryElementType"
   tokenTypeClass="com.github.kumaraman21.intellijbehave.parser.StoryTokenType"
-
-  psiImplUtilClass="com.github.kumaraman21.intellijbehave.parser.psi.impl.StoryPsiImplUtil"
 }
 
-storyFile ::= (narrativeBlock scenarioBlock* | BAD_CHARACTER)
-narrativeBlock ::= STORY_DESCRIPTION STORY_DESCRIPTION*
-scenarioBlock ::= scenarioHeader (metaInfo | exampleBlock | givenStep | whenStep | thenStep | table | COMMENT)*
-scenarioHeader ::= SCENARIO SCENARIO_TEXT
-metaInfo ::= META META_KEY META_TEXT
-exampleBlock ::= EXAMPLE EXAMPLE_TEXT
-givenStep ::= GIVEN STEP_TEXT?
-whenStep ::= WHEN STEP_TEXT?
-thenStep ::= THEN STEP_TEXT?
-table ::= TABLE_DELIM (TABLE_CELL TABLE_DELIM)+
+storyFile ::= (narrativeBlockPsiElement scenarioBlockPsiElement* | BAD_CHARACTER)
+narrativeBlockPsiElement ::= STORY_DESCRIPTION STORY_DESCRIPTION*
+scenarioBlockPsiElement ::= scenarioHeaderPsiElement (metaInfoPsiElement | exampleBlockPsiElement | stepPsiElement | tablePsiElement | COMMENT)*
+scenarioHeaderPsiElement ::= SCENARIO SCENARIO_TEXT
+metaInfoPsiElement ::= META META_KEY META_TEXT
+exampleBlockPsiElement ::= EXAMPLE EXAMPLE_TEXT
+stepPsiElement ::= stepTypePsiElement stepTextPsiElement?
+stepTypePsiElement ::= GIVEN | WHEN | THEN {mixin="com.github.kumaraman21.intellijbehave.parser.psi.impl.JBehaveStepTypePsiElementImpl"
+ implements="com.github.kumaraman21.intellijbehave.parser.psi.JBehaveStepTypePsiElement"}
+stepTextPsiElement ::= STEP_TEXT
+tablePsiElement ::= TABLE_DELIM (TABLE_CELL TABLE_DELIM)+

@@ -15,7 +15,7 @@
  */
 package com.github.kumaraman21.intellijbehave.resolver;
 
-import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
+import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepPsiElement;
 import com.intellij.openapi.roots.ContentIterator;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
@@ -29,18 +29,18 @@ public abstract class StepDefinitionIterator implements ContentIterator {
 
     private final StepDefinitionAnnotationConverter stepDefinitionAnnotationConverter = new StepDefinitionAnnotationConverter();
     private StepType stepType;
-    private StepPsiElement storyRef;
+    private StoryStepPsiElement storyStepPsiElement;
 
-    public StepDefinitionIterator(@Nullable StepType stepType, StepPsiElement storyRef) {
+    public StepDefinitionIterator(@Nullable StepType stepType, StoryStepPsiElement storyStepPsiElement) {
         this.stepType = stepType;
-        this.storyRef = storyRef;
+        this.storyStepPsiElement = storyStepPsiElement;
     }
 
     @Override
     public boolean processFile(VirtualFile virtualFile) {
 
         if (StringUtils.contains(virtualFile.getNameWithoutExtension(), "Steps")) {
-            PsiFile psiFile = PsiManager.getInstance(storyRef.getProject()).findFile(virtualFile);
+            PsiFile psiFile = PsiManager.getInstance(storyStepPsiElement.getProject()).findFile(virtualFile);
             if (psiFile instanceof PsiClassOwner) {
                 // System.out.println("Virtual File that is a PsiClassOwner: "+virtualFile);
 
@@ -74,8 +74,8 @@ public abstract class StepDefinitionIterator implements ContentIterator {
         return stepType;
     }
 
-    public StepPsiElement getStoryRef() {
-        return storyRef;
+    public StoryStepPsiElement getStoryStepPsiElement() {
+        return storyStepPsiElement;
     }
 
     public abstract boolean processStepDefinition(StepDefinitionAnnotation stepDefinitionAnnotation);

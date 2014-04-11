@@ -1,45 +1,45 @@
 package com.github.kumaraman21.intellijbehave.resolver;
 
+import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepPsiElement;
 import org.jbehave.core.parsers.RegexPrefixCapturingPatternParser;
 import org.jbehave.core.parsers.StepMatcher;
 import org.jbehave.core.parsers.StepPatternParser;
 
-import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
-
 public class StepAnnotationFinder extends StepDefinitionIterator {
 
-	private StepDefinitionAnnotation matchingAnnotation;
-	private StepPatternParser stepPatternParser = new RegexPrefixCapturingPatternParser();
+    private StepDefinitionAnnotation matchingAnnotation;
+    private StepPatternParser stepPatternParser = new RegexPrefixCapturingPatternParser();
 
-	public StepAnnotationFinder(StepPsiElement storyRef) {
-		super(storyRef.getStepType(), storyRef);
-	}
+    public StepAnnotationFinder(StoryStepPsiElement storyStepPsiElement) {
+        super(storyStepPsiElement.getStepTypePsiElement().getStepType(), storyStepPsiElement);
+    }
 
-	@Override
-	public boolean processStepDefinition(StepDefinitionAnnotation stepDefinitionAnnotation) {
-		StepMatcher stepMatcher = stepPatternParser.parseStep(getStepType(), stepDefinitionAnnotation.getAnnotationText());
+    @Override
+    public boolean processStepDefinition(StepDefinitionAnnotation stepDefinitionAnnotation) {
+        StepMatcher stepMatcher = stepPatternParser.parseStep(getStepType(), stepDefinitionAnnotation.getAnnotationText());
 
-		if (stepMatcher.matches(getStoryRef().getStepText())) {
+        if (getStoryStepPsiElement().getStepTextPsiElement() != null
+                && stepMatcher.matches(getStoryStepPsiElement().getStepTextPsiElement().getText())) {
 
-			final Integer newPriority = getPriority(stepDefinitionAnnotation);
-			final Integer oldPriority = getPriority(matchingAnnotation);
+            final Integer newPriority = getPriority(stepDefinitionAnnotation);
+            final Integer oldPriority = getPriority(matchingAnnotation);
 
-			if (newPriority > oldPriority) {
-				matchingAnnotation = stepDefinitionAnnotation;
-			}
-		}
-		return true;
-	}
+            if (newPriority > oldPriority) {
+                matchingAnnotation = stepDefinitionAnnotation;
+            }
+        }
+        return true;
+    }
 
-	private Integer getPriority(final StepDefinitionAnnotation stepDefinitionAnnotation) {
-		if (stepDefinitionAnnotation == null) {
-			return -1;
-		}
+    private Integer getPriority(final StepDefinitionAnnotation stepDefinitionAnnotation) {
+        if (stepDefinitionAnnotation == null) {
+            return -1;
+        }
 
-		return Integer.valueOf(stepDefinitionAnnotation.getAnnotation().findAttributeValue("priority").getText());
-	}
+        return Integer.valueOf(stepDefinitionAnnotation.getAnnotation().findAttributeValue("priority").getText());
+    }
 
-	public StepDefinitionAnnotation getMatchingAnnotation() {
-		return matchingAnnotation;
-	}
+    public StepDefinitionAnnotation getMatchingAnnotation() {
+        return matchingAnnotation;
+    }
 }

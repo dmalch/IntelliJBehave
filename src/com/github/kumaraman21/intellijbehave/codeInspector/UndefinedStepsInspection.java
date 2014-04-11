@@ -16,8 +16,9 @@
 package com.github.kumaraman21.intellijbehave.codeInspector;
 
 import com.github.kumaraman21.intellijbehave.highlighter.StorySyntaxHighlighter;
-import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
-import com.github.kumaraman21.intellijbehave.resolver.StepPsiReference;
+import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepPsiElement;
+import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepTextPsiElement;
+import com.github.kumaraman21.intellijbehave.resolver.StoryStepPsiReference;
 import com.github.kumaraman21.intellijbehave.utility.ParametrizedString;
 import com.intellij.codeInspection.*;
 import com.intellij.codeInspection.ex.ProblemDescriptorImpl;
@@ -40,13 +41,13 @@ public class UndefinedStepsInspection extends LocalInspectionTool {
             public void visitElement(PsiElement psiElement) {
                 super.visitElement(psiElement);
 
-                if (!(psiElement instanceof StepPsiElement)) {
+                if (!(psiElement instanceof StoryStepPsiElement)) {
                     return;
                 }
 
-                StepPsiElement stepPsiElement = (StepPsiElement) psiElement;
+                StoryStepPsiElement stepPsiElement = (StoryStepPsiElement) psiElement;
 
-                if (referencesContainValueOf(stepPsiElement, StepPsiReference.class)) {
+                if (referencesContainValueOf(stepPsiElement, StoryStepPsiReference.class)) {
                     highlightParameters(stepPsiElement, holder);
                     return;
                 }
@@ -57,26 +58,24 @@ public class UndefinedStepsInspection extends LocalInspectionTool {
     }
 
 
-    private void highlightParameters(StepPsiElement stepPsiElement,
+    private void highlightParameters(StoryStepPsiElement stepPsiElement,
                                      ProblemsHolder holder) {
-        String stepText = stepPsiElement.getStepText();
+        String stepText = stepPsiElement.getStepTextPsiElement().getText();
         String annotationText = getAnnotationTextFrom(stepPsiElement);
         ParametrizedString pString = new ParametrizedString(annotationText);
 
-        int offset = stepPsiElement.getStepTextOffset();
         for (ParametrizedString.StringToken token : pString.tokenize(stepText)) {
             int length = token.getValue().length();
             if (token.isIdentifier()) {
                 registerHiglighting(StorySyntaxHighlighter.TABLE_CELL,
-                        stepPsiElement,
-                        TextRange.from(offset, length),
+                        stepPsiElement.getStepTextPsiElement(),
+                        TextRange.from(0, length),
                         holder);
             }
-            offset += length;
         }
     }
 
-    public static String getAnnotationTextFrom(StepPsiElement value) {
+    public static String getAnnotationTextFrom(StoryStepPsiElement value) {
         if (value != null) {
             for (PsiReference reference : value.getReferences()) {
                 if (PsiAnnotation.class.isInstance(reference)) {
@@ -91,7 +90,7 @@ public class UndefinedStepsInspection extends LocalInspectionTool {
     }
 
     private static void registerHiglighting(TextAttributesKey attributesKey,
-                                            StepPsiElement step,
+                                            StoryStepTextPsiElement step,
                                             TextRange range,
                                             ProblemsHolder holder) {
         final ProblemDescriptor descriptor = new ProblemDescriptorImpl(

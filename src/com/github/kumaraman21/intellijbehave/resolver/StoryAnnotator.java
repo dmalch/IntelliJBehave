@@ -15,36 +15,30 @@
  */
 package com.github.kumaraman21.intellijbehave.resolver;
 
-import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
-import com.github.kumaraman21.intellijbehave.utility.ParametrizedString;
+import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepPsiElement;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
-
-import static com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection.getAnnotationTextFrom;
-import static com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection.referencesContainValueOf;
-import static com.github.kumaraman21.intellijbehave.utility.ParametrizedString.StringToken;
 
 public class StoryAnnotator implements Annotator {
     @Override
     public void annotate(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        if (!(psiElement instanceof StepPsiElement)) {
+        if (!(psiElement instanceof StoryStepPsiElement)) {
             return;
         }
 
-        StepPsiElement stepPsiElement = (StepPsiElement) psiElement;
+        /*StoryStepPsiElement storyStepPsiElement = (StoryStepPsiElement) psiElement;
 
-        if (referencesContainValueOf(stepPsiElement, StepPsiReference.class)) {
-            annotateParameters(stepPsiElement, annotationHolder);
+        if (referencesContainValueOf(storyStepPsiElement, StepPsiReference.class)) {
+            annotateParameters(storyStepPsiElement, annotationHolder);
             return;
         }
 
-        annotationHolder.createErrorAnnotation(psiElement, "No definition found for the step");
+        annotationHolder.createErrorAnnotation(psiElement, "No definition found for the step");*/
     }
 
-    private void annotateParameters(StepPsiElement stepPsiElement, AnnotationHolder annotationHolder) {
+    /*private void annotateParameters(StepPsiElement stepPsiElement, AnnotationHolder annotationHolder) {
         String stepText = stepPsiElement.getStepText();
         String annotationText = getAnnotationTextFrom(stepPsiElement);
         ParametrizedString pString = new ParametrizedString(annotationText);
@@ -58,5 +52,5 @@ public class StoryAnnotator implements Annotator {
             }
             offset += length;
         }
-    }
+    }*/
 }

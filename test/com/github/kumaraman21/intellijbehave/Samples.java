@@ -94,8 +94,8 @@ public class Samples {
                     "@skip\n" + //
                     "\n" + //
                     "Given i am the user\n with nickname: \"weird\"\n" + //
-                    "When i try to login using the password \"soweird\"\n" + //
-                    "Then i get an error\n message of type \"Wrong Credentials\"\n" + //
+                    "When i try to login u\ns\ning the password \"soweird\"\n" + //
+                    "Then i get an error\n m\nessage of type \"Wrong Credentials\"\n" + //
                     "\n" + //
                     "\n" + //
                     "Scenario: A known user cannot be logged using a wrong password\n" + //

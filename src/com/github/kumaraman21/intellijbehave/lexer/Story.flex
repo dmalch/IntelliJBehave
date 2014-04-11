@@ -76,6 +76,7 @@ import java.util.Stack;
         yypushback(yytext().length() - lastIndexOfCrLf(yytext()));
         if(currentStepStart != 0) {
             zzStartRead = currentStepStart;
+            currentStepStart = 0;
         }
     }
 
@@ -157,17 +158,17 @@ Keywords       = {KeywordsWithTable} | "And"
 }
 
 <IN_GIVEN> {
-    "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
+    "And"{InputChar}+{CRLF}({KeywordsSteps} | {BlankChar}*{InputChar})
                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.GIVEN;    }
 }
 
 <IN_WHEN> {
-    "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
+    "And"{InputChar}+{CRLF}({KeywordsSteps} | {BlankChar}*{InputChar})
                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.WHEN;    }
 }
 
 <IN_THEN> {
-    "And"{InputChar}+{CRLF}({KeywordsSteps} | {InputChar})
+    "And"{InputChar}+{CRLF}({KeywordsSteps} | {BlankChar}*{InputChar})
                                                      { yypushback(yytext().length() - 3); currentStepStart = 0; return StoryTypes.THEN;    }
 }
 
@@ -176,7 +177,7 @@ Keywords       = {KeywordsWithTable} | "And"
                                                      { yystatePush(IN_DIRECTIVE); yypushback(yytext().length()); }
     {NonWhiteSpace}{InputChar}*{CRLF}({KeywordsSteps} | "| " | "")
                                                      { retrieveMultilineText(); return StoryTypes.STEP_TEXT; }
-    {NonWhiteSpace}{InputChar}*{CRLF}{InputChar}     { setStepStart(); }
+    {NonWhiteSpace}{InputChar}*{CRLF}{BlankChar}*{InputChar}     { setStepStart(); yypushback(1);}
     {NonWhiteSpace}{InputChar}*                      { return StoryTypes.STEP_TEXT; }
 }
 

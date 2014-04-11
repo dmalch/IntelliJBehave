@@ -373,7 +373,7 @@ public class StoryLexerTest {
     }
 
     private void assertToken(final IElementType storyTokenType, final String content) {
-        assertThat(storyLexerAdapter.getTokenType()).isEqualTo(storyTokenType);
         assertThat(storyLexerAdapter.getTokenText().replaceAll("\\n", "")).isEqualTo(content);
+        assertThat(storyLexerAdapter.getTokenType()).isEqualTo(storyTokenType);
     }
 }

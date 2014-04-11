@@ -20,32 +20,32 @@ public class StoryParser implements PsiParser {
     boolean result_;
     builder_ = adapt_builder_(root_, builder_, this, null);
     Marker marker_ = enter_section_(builder_, 0, _COLLAPSE_, null);
-    if (root_ == EXAMPLE_BLOCK) {
-      result_ = exampleBlock(builder_, 0);
+    if (root_ == EXAMPLE_BLOCK_PSI_ELEMENT) {
+      result_ = exampleBlockPsiElement(builder_, 0);
     }
-    else if (root_ == GIVEN_STEP) {
-      result_ = givenStep(builder_, 0);
+    else if (root_ == META_INFO_PSI_ELEMENT) {
+      result_ = metaInfoPsiElement(builder_, 0);
     }
-    else if (root_ == META_INFO) {
-      result_ = metaInfo(builder_, 0);
+    else if (root_ == NARRATIVE_BLOCK_PSI_ELEMENT) {
+      result_ = narrativeBlockPsiElement(builder_, 0);
     }
-    else if (root_ == NARRATIVE_BLOCK) {
-      result_ = narrativeBlock(builder_, 0);
+    else if (root_ == SCENARIO_BLOCK_PSI_ELEMENT) {
+      result_ = scenarioBlockPsiElement(builder_, 0);
     }
-    else if (root_ == SCENARIO_BLOCK) {
-      result_ = scenarioBlock(builder_, 0);
+    else if (root_ == SCENARIO_HEADER_PSI_ELEMENT) {
+      result_ = scenarioHeaderPsiElement(builder_, 0);
     }
-    else if (root_ == SCENARIO_HEADER) {
-      result_ = scenarioHeader(builder_, 0);
+    else if (root_ == STEP_PSI_ELEMENT) {
+      result_ = stepPsiElement(builder_, 0);
     }
-    else if (root_ == TABLE) {
-      result_ = table(builder_, 0);
+    else if (root_ == STEP_TEXT_PSI_ELEMENT) {
+      result_ = stepTextPsiElement(builder_, 0);
     }
-    else if (root_ == THEN_STEP) {
-      result_ = thenStep(builder_, 0);
+    else if (root_ == STEP_TYPE_PSI_ELEMENT) {
+      result_ = stepTypePsiElement(builder_, 0);
     }
-    else if (root_ == WHEN_STEP) {
-      result_ = whenStep(builder_, 0);
+    else if (root_ == TABLE_PSI_ELEMENT) {
+      result_ = tablePsiElement(builder_, 0);
     }
     else {
       result_ = parse_root_(root_, builder_, 0);
@@ -60,109 +60,87 @@ public class StoryParser implements PsiParser {
 
   /* ********************************************************** */
   // EXAMPLE EXAMPLE_TEXT
-  public static boolean exampleBlock(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "exampleBlock")) return false;
+  public static boolean exampleBlockPsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "exampleBlockPsiElement")) return false;
     if (!nextTokenIs(builder_, EXAMPLE)) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeTokens(builder_, 0, EXAMPLE, EXAMPLE_TEXT);
-    exit_section_(builder_, marker_, EXAMPLE_BLOCK, result_);
+    exit_section_(builder_, marker_, EXAMPLE_BLOCK_PSI_ELEMENT, result_);
     return result_;
-  }
-
-  /* ********************************************************** */
-  // GIVEN STEP_TEXT?
-  public static boolean givenStep(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "givenStep")) return false;
-    if (!nextTokenIs(builder_, GIVEN)) return false;
-    boolean result_ = false;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, GIVEN);
-    result_ = result_ && givenStep_1(builder_, level_ + 1);
-    exit_section_(builder_, marker_, GIVEN_STEP, result_);
-    return result_;
-  }
-
-  // STEP_TEXT?
-  private static boolean givenStep_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "givenStep_1")) return false;
-    consumeToken(builder_, STEP_TEXT);
-    return true;
   }
 
   /* ********************************************************** */
   // META META_KEY META_TEXT
-  public static boolean metaInfo(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "metaInfo")) return false;
+  public static boolean metaInfoPsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "metaInfoPsiElement")) return false;
     if (!nextTokenIs(builder_, META)) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeTokens(builder_, 0, META, META_KEY, META_TEXT);
-    exit_section_(builder_, marker_, META_INFO, result_);
+    exit_section_(builder_, marker_, META_INFO_PSI_ELEMENT, result_);
     return result_;
   }
 
   /* ********************************************************** */
   // STORY_DESCRIPTION STORY_DESCRIPTION*
-  public static boolean narrativeBlock(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "narrativeBlock")) return false;
+  public static boolean narrativeBlockPsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "narrativeBlockPsiElement")) return false;
     if (!nextTokenIs(builder_, STORY_DESCRIPTION)) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, STORY_DESCRIPTION);
-    result_ = result_ && narrativeBlock_1(builder_, level_ + 1);
-    exit_section_(builder_, marker_, NARRATIVE_BLOCK, result_);
+    result_ = result_ && narrativeBlockPsiElement_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, NARRATIVE_BLOCK_PSI_ELEMENT, result_);
     return result_;
   }
 
   // STORY_DESCRIPTION*
-  private static boolean narrativeBlock_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "narrativeBlock_1")) return false;
+  private static boolean narrativeBlockPsiElement_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "narrativeBlockPsiElement_1")) return false;
     int pos_ = current_position_(builder_);
     while (true) {
       if (!consumeToken(builder_, STORY_DESCRIPTION)) break;
-      if (!empty_element_parsed_guard_(builder_, "narrativeBlock_1", pos_)) break;
+      if (!empty_element_parsed_guard_(builder_, "narrativeBlockPsiElement_1", pos_)) break;
       pos_ = current_position_(builder_);
     }
     return true;
   }
 
   /* ********************************************************** */
-  // scenarioHeader (metaInfo | exampleBlock | givenStep | whenStep | thenStep | table | COMMENT)*
-  public static boolean scenarioBlock(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "scenarioBlock")) return false;
+  // scenarioHeaderPsiElement (metaInfoPsiElement | exampleBlockPsiElement | stepPsiElement | tablePsiElement | COMMENT)*
+  public static boolean scenarioBlockPsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "scenarioBlockPsiElement")) return false;
     if (!nextTokenIs(builder_, SCENARIO)) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
-    result_ = scenarioHeader(builder_, level_ + 1);
-    result_ = result_ && scenarioBlock_1(builder_, level_ + 1);
-    exit_section_(builder_, marker_, SCENARIO_BLOCK, result_);
+    result_ = scenarioHeaderPsiElement(builder_, level_ + 1);
+    result_ = result_ && scenarioBlockPsiElement_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, SCENARIO_BLOCK_PSI_ELEMENT, result_);
     return result_;
   }
 
-  // (metaInfo | exampleBlock | givenStep | whenStep | thenStep | table | COMMENT)*
-  private static boolean scenarioBlock_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "scenarioBlock_1")) return false;
+  // (metaInfoPsiElement | exampleBlockPsiElement | stepPsiElement | tablePsiElement | COMMENT)*
+  private static boolean scenarioBlockPsiElement_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "scenarioBlockPsiElement_1")) return false;
     int pos_ = current_position_(builder_);
     while (true) {
-      if (!scenarioBlock_1_0(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "scenarioBlock_1", pos_)) break;
+      if (!scenarioBlockPsiElement_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "scenarioBlockPsiElement_1", pos_)) break;
       pos_ = current_position_(builder_);
     }
     return true;
   }
 
-  // metaInfo | exampleBlock | givenStep | whenStep | thenStep | table | COMMENT
-  private static boolean scenarioBlock_1_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "scenarioBlock_1_0")) return false;
+  // metaInfoPsiElement | exampleBlockPsiElement | stepPsiElement | tablePsiElement | COMMENT
+  private static boolean scenarioBlockPsiElement_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "scenarioBlockPsiElement_1_0")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
-    result_ = metaInfo(builder_, level_ + 1);
-    if (!result_) result_ = exampleBlock(builder_, level_ + 1);
-    if (!result_) result_ = givenStep(builder_, level_ + 1);
-    if (!result_) result_ = whenStep(builder_, level_ + 1);
-    if (!result_) result_ = thenStep(builder_, level_ + 1);
-    if (!result_) result_ = table(builder_, level_ + 1);
+    result_ = metaInfoPsiElement(builder_, level_ + 1);
+    if (!result_) result_ = exampleBlockPsiElement(builder_, level_ + 1);
+    if (!result_) result_ = stepPsiElement(builder_, level_ + 1);
+    if (!result_) result_ = tablePsiElement(builder_, level_ + 1);
     if (!result_) result_ = consumeToken(builder_, COMMENT);
     exit_section_(builder_, marker_, null, result_);
     return result_;
@@ -170,18 +148,62 @@ public class StoryParser implements PsiParser {
 
   /* ********************************************************** */
   // SCENARIO SCENARIO_TEXT
-  public static boolean scenarioHeader(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "scenarioHeader")) return false;
+  public static boolean scenarioHeaderPsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "scenarioHeaderPsiElement")) return false;
     if (!nextTokenIs(builder_, SCENARIO)) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeTokens(builder_, 0, SCENARIO, SCENARIO_TEXT);
-    exit_section_(builder_, marker_, SCENARIO_HEADER, result_);
+    exit_section_(builder_, marker_, SCENARIO_HEADER_PSI_ELEMENT, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // narrativeBlock scenarioBlock* | BAD_CHARACTER
+  // stepTypePsiElement stepTextPsiElement?
+  public static boolean stepPsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "stepPsiElement")) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, "<step psi element>");
+    result_ = stepTypePsiElement(builder_, level_ + 1);
+    result_ = result_ && stepPsiElement_1(builder_, level_ + 1);
+    exit_section_(builder_, level_, marker_, STEP_PSI_ELEMENT, result_, false, null);
+    return result_;
+  }
+
+  // stepTextPsiElement?
+  private static boolean stepPsiElement_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "stepPsiElement_1")) return false;
+    stepTextPsiElement(builder_, level_ + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // STEP_TEXT
+  public static boolean stepTextPsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "stepTextPsiElement")) return false;
+    if (!nextTokenIs(builder_, STEP_TEXT)) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, STEP_TEXT);
+    exit_section_(builder_, marker_, STEP_TEXT_PSI_ELEMENT, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // GIVEN | WHEN | THEN
+  public static boolean stepTypePsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "stepTypePsiElement")) return false;
+    boolean result_ = false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, "<step type psi element>");
+    result_ = consumeToken(builder_, GIVEN);
+    if (!result_) result_ = consumeToken(builder_, WHEN);
+    if (!result_) result_ = consumeToken(builder_, THEN);
+    exit_section_(builder_, level_, marker_, STEP_TYPE_PSI_ELEMENT, result_, false, null);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // narrativeBlockPsiElement scenarioBlockPsiElement* | BAD_CHARACTER
   static boolean storyFile(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "storyFile")) return false;
     if (!nextTokenIs(builder_, "", BAD_CHARACTER, STORY_DESCRIPTION)) return false;
@@ -193,23 +215,23 @@ public class StoryParser implements PsiParser {
     return result_;
   }
 
-  // narrativeBlock scenarioBlock*
+  // narrativeBlockPsiElement scenarioBlockPsiElement*
   private static boolean storyFile_0(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "storyFile_0")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
-    result_ = narrativeBlock(builder_, level_ + 1);
+    result_ = narrativeBlockPsiElement(builder_, level_ + 1);
     result_ = result_ && storyFile_0_1(builder_, level_ + 1);
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
-  // scenarioBlock*
+  // scenarioBlockPsiElement*
   private static boolean storyFile_0_1(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "storyFile_0_1")) return false;
     int pos_ = current_position_(builder_);
     while (true) {
-      if (!scenarioBlock(builder_, level_ + 1)) break;
+      if (!scenarioBlockPsiElement(builder_, level_ + 1)) break;
       if (!empty_element_parsed_guard_(builder_, "storyFile_0_1", pos_)) break;
       pos_ = current_position_(builder_);
     }
@@ -218,27 +240,27 @@ public class StoryParser implements PsiParser {
 
   /* ********************************************************** */
   // TABLE_DELIM (TABLE_CELL TABLE_DELIM)+
-  public static boolean table(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "table")) return false;
+  public static boolean tablePsiElement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "tablePsiElement")) return false;
     if (!nextTokenIs(builder_, TABLE_DELIM)) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, TABLE_DELIM);
-    result_ = result_ && table_1(builder_, level_ + 1);
-    exit_section_(builder_, marker_, TABLE, result_);
+    result_ = result_ && tablePsiElement_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, TABLE_PSI_ELEMENT, result_);
     return result_;
   }
 
   // (TABLE_CELL TABLE_DELIM)+
-  private static boolean table_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "table_1")) return false;
+  private static boolean tablePsiElement_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "tablePsiElement_1")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
-    result_ = table_1_0(builder_, level_ + 1);
+    result_ = tablePsiElement_1_0(builder_, level_ + 1);
     int pos_ = current_position_(builder_);
     while (result_) {
-      if (!table_1_0(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "table_1", pos_)) break;
+      if (!tablePsiElement_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "tablePsiElement_1", pos_)) break;
       pos_ = current_position_(builder_);
     }
     exit_section_(builder_, marker_, null, result_);
@@ -246,53 +268,13 @@ public class StoryParser implements PsiParser {
   }
 
   // TABLE_CELL TABLE_DELIM
-  private static boolean table_1_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "table_1_0")) return false;
+  private static boolean tablePsiElement_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "tablePsiElement_1_0")) return false;
     boolean result_ = false;
     Marker marker_ = enter_section_(builder_);
     result_ = consumeTokens(builder_, 0, TABLE_CELL, TABLE_DELIM);
     exit_section_(builder_, marker_, null, result_);
     return result_;
-  }
-
-  /* ********************************************************** */
-  // THEN STEP_TEXT?
-  public static boolean thenStep(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "thenStep")) return false;
-    if (!nextTokenIs(builder_, THEN)) return false;
-    boolean result_ = false;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, THEN);
-    result_ = result_ && thenStep_1(builder_, level_ + 1);
-    exit_section_(builder_, marker_, THEN_STEP, result_);
-    return result_;
-  }
-
-  // STEP_TEXT?
-  private static boolean thenStep_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "thenStep_1")) return false;
-    consumeToken(builder_, STEP_TEXT);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // WHEN STEP_TEXT?
-  public static boolean whenStep(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "whenStep")) return false;
-    if (!nextTokenIs(builder_, WHEN)) return false;
-    boolean result_ = false;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, WHEN);
-    result_ = result_ && whenStep_1(builder_, level_ + 1);
-    exit_section_(builder_, marker_, WHEN_STEP, result_);
-    return result_;
-  }
-
-  // STEP_TEXT?
-  private static boolean whenStep_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "whenStep_1")) return false;
-    consumeToken(builder_, STEP_TEXT);
-    return true;
   }
 
 }

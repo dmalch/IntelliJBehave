@@ -1,6 +1,6 @@
 package com.github.kumaraman21.intellijbehave.resolver;
 
-import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
+import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepPsiElement;
 import com.github.kumaraman21.intellijbehave.utility.ScanUtils;
 import com.intellij.psi.*;
 import com.intellij.util.ProcessingContext;
@@ -18,18 +18,18 @@ public class StepPsiReferenceContributor extends PsiReferenceContributor {
                     @NotNull
                     @Override
                     public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
-                        if (!(element instanceof StepPsiElement)) {
+                        if (!(element instanceof StoryStepPsiElement)) {
                             return new PsiReference[0];
                         }
 
-                        final StepPsiElement stepPsiElement = (StepPsiElement) element;
+                        final StoryStepPsiElement storyStepPsiElement = (StoryStepPsiElement) element;
 
-                        final StepAnnotationFinder stepAnnotationFinder = new StepAnnotationFinder(stepPsiElement);
-                        ScanUtils.iterateInContextOf(stepPsiElement, stepAnnotationFinder);
+                        final StepAnnotationFinder stepAnnotationFinder = new StepAnnotationFinder(storyStepPsiElement);
+                        ScanUtils.iterateInContextOf(storyStepPsiElement, stepAnnotationFinder);
                         final StepDefinitionAnnotation definitionAnnotation = stepAnnotationFinder.getMatchingAnnotation();
                         final PsiAnnotation annotation = definitionAnnotation.getAnnotation();
 
-                        return new PsiReference[]{new StepPsiReference(annotation, annotation.getTextRange())};
+                        return new PsiReference[]{new StoryStepPsiReference(annotation, annotation.getTextRange())};
                     }
                 }
         );

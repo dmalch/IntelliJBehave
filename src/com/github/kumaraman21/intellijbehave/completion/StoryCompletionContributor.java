@@ -4,7 +4,7 @@ import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
 import com.github.kumaraman21.intellijbehave.parser.StoryTypes;
 import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionAnnotation;
 import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionIterator;
-import com.github.kumaraman21.intellijbehave.resolver.StepPsiReference;
+import com.github.kumaraman21.intellijbehave.resolver.StoryStepPsiReference;
 import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;
 import com.github.kumaraman21.intellijbehave.utility.ParametrizedString;
 import com.github.kumaraman21.intellijbehave.utility.ScanUtils;
@@ -128,8 +128,8 @@ public class StoryCompletionContributor extends CompletionContributor {
         PsiElement positionParent = position.getParent();
         if (positionParent instanceof StepPsiElement) {
             return (StepPsiElement) positionParent;
-        } else if (position instanceof StepPsiReference) {
-            return (StepPsiElement) ((StepPsiReference) position).getElement();
+        } else if (position instanceof StoryStepPsiReference) {
+            return (StepPsiElement) ((StoryStepPsiReference) position).getElement();
         } else if (position instanceof StepPsiElement) {
             return (StepPsiElement) position;
         } else {
@@ -151,7 +151,7 @@ public class StoryCompletionContributor extends CompletionContributor {
                               String textBeforeCaret,
                               Consumer<LookupElement> consumer,
                               StepPsiElement storyRef) {
-            super(null, storyRef);
+            super(null, null);
             this.prefixMatcher = prefixMatcher;
             this.stepType = stepType;
             this.actualStepPrefix = actualStepPrefix;

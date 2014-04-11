@@ -7,40 +7,44 @@ import com.intellij.psi.PsiElement;
 
 public class StoryVisitor extends PsiElementVisitor {
 
-  public void visitExampleBlock(@NotNull StoryExampleBlock o) {
+  public void visitExampleBlockPsiElement(@NotNull StoryExampleBlockPsiElement o) {
     visitPsiElement(o);
   }
 
-  public void visitGivenStep(@NotNull StoryGivenStep o) {
+  public void visitMetaInfoPsiElement(@NotNull StoryMetaInfoPsiElement o) {
     visitPsiElement(o);
   }
 
-  public void visitMetaInfo(@NotNull StoryMetaInfo o) {
+  public void visitNarrativeBlockPsiElement(@NotNull StoryNarrativeBlockPsiElement o) {
     visitPsiElement(o);
   }
 
-  public void visitNarrativeBlock(@NotNull StoryNarrativeBlock o) {
+  public void visitScenarioBlockPsiElement(@NotNull StoryScenarioBlockPsiElement o) {
     visitPsiElement(o);
   }
 
-  public void visitScenarioBlock(@NotNull StoryScenarioBlock o) {
+  public void visitScenarioHeaderPsiElement(@NotNull StoryScenarioHeaderPsiElement o) {
     visitPsiElement(o);
   }
 
-  public void visitScenarioHeader(@NotNull StoryScenarioHeader o) {
+  public void visitStepPsiElement(@NotNull StoryStepPsiElement o) {
     visitPsiElement(o);
   }
 
-  public void visitTable(@NotNull StoryTable o) {
+  public void visitStepTextPsiElement(@NotNull StoryStepTextPsiElement o) {
     visitPsiElement(o);
   }
 
-  public void visitThenStep(@NotNull StoryThenStep o) {
+  public void visitStepTypePsiElement(@NotNull StoryStepTypePsiElement o) {
+    visitJBehaveStepTypePsiElement(o);
+  }
+
+  public void visitTablePsiElement(@NotNull StoryTablePsiElement o) {
     visitPsiElement(o);
   }
 
-  public void visitWhenStep(@NotNull StoryWhenStep o) {
-    visitPsiElement(o);
+  public void visitJBehaveStepTypePsiElement(@NotNull JBehaveStepTypePsiElement o) {
+    visitElement(o);
   }
 
   public void visitPsiElement(@NotNull PsiElement o) {

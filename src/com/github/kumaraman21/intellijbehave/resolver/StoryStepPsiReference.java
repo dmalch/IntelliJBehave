@@ -25,9 +25,9 @@ import org.jetbrains.annotations.Nullable;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
-public class StepPsiReference extends PsiReferenceBase<PsiAnnotation> implements PsiReference {
+public class StoryStepPsiReference extends PsiReferenceBase<PsiAnnotation> implements PsiReference {
 
-    public StepPsiReference(PsiAnnotation element, TextRange range) {
+    public StoryStepPsiReference(PsiAnnotation element, TextRange range) {
         super(element, range);
     }
 
