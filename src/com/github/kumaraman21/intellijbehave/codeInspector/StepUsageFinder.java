@@ -1,7 +1,7 @@
 package com.github.kumaraman21.intellijbehave.codeInspector;
 
-import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
 import com.github.kumaraman21.intellijbehave.parser.StoryFile;
+import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepPsiElement;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.intellij.openapi.project.Project;
@@ -20,13 +20,13 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class StepUsageFinder implements ContentIterator {
 	private final Project project;
-	private final Set<StepPsiElement> stepUsages = newHashSet();
+	private final Set<StoryStepPsiElement> stepUsages = newHashSet();
 
-	private static final LoadingCache<CacheKey, List<StepPsiElement>> cache = newBuilder()
+	private static final LoadingCache<CacheKey, List<StoryStepPsiElement>> cache = newBuilder()
 			.expireAfterWrite(10, SECONDS)
-			.build(new CacheLoader<CacheKey, List<StepPsiElement>>() {
+			.build(new CacheLoader<CacheKey, List<StoryStepPsiElement>>() {
 				@Override
-				public List<StepPsiElement> load(final CacheKey key) throws Exception {
+				public List<StoryStepPsiElement> load(final CacheKey key) throws Exception {
 					return key.getPsiFile().getSteps();
 				}
 			});
@@ -44,7 +44,7 @@ public class StepUsageFinder implements ContentIterator {
 		return true;
 	}
 
-	private List<StepPsiElement> getSteps(final StoryFile psiFile) {
+	private List<StoryStepPsiElement> getSteps(final StoryFile psiFile) {
 		try {
 			return cache.getUnchecked(key(psiFile));
 		} catch (final Exception e) {
@@ -56,7 +56,7 @@ public class StepUsageFinder implements ContentIterator {
 		return new CacheKey(psiFile);
 	}
 
-	public Set<StepPsiElement> getStepUsages() {
+	public Set<StoryStepPsiElement> getStepUsages() {
 		return stepUsages;
 	}
 

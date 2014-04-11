@@ -28,7 +28,7 @@ public class StoryVisitor extends PsiElementVisitor {
   }
 
   public void visitStepPsiElement(@NotNull StoryStepPsiElement o) {
-    visitPsiElement(o);
+    visitJBehaveStepPsiElement(o);
   }
 
   public void visitStepTextPsiElement(@NotNull StoryStepTextPsiElement o) {
@@ -41,6 +41,10 @@ public class StoryVisitor extends PsiElementVisitor {
 
   public void visitTablePsiElement(@NotNull StoryTablePsiElement o) {
     visitPsiElement(o);
+  }
+
+  public void visitJBehaveStepPsiElement(@NotNull JBehaveStepPsiElement o) {
+    visitElement(o);
   }
 
   public void visitJBehaveStepTypePsiElement(@NotNull JBehaveStepTypePsiElement o) {

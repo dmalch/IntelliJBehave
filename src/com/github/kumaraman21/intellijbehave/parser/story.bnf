@@ -20,7 +20,8 @@ scenarioBlockPsiElement ::= scenarioHeaderPsiElement (metaInfoPsiElement | examp
 scenarioHeaderPsiElement ::= SCENARIO SCENARIO_TEXT
 metaInfoPsiElement ::= META META_KEY META_TEXT
 exampleBlockPsiElement ::= EXAMPLE EXAMPLE_TEXT
-stepPsiElement ::= stepTypePsiElement stepTextPsiElement?
+stepPsiElement ::= stepTypePsiElement stepTextPsiElement? {mixin="com.github.kumaraman21.intellijbehave.parser.psi.impl.JBehaveStepPsiElementImpl"
+ implements="com.github.kumaraman21.intellijbehave.parser.psi.JBehaveStepPsiElement"}
 stepTypePsiElement ::= GIVEN | WHEN | THEN {mixin="com.github.kumaraman21.intellijbehave.parser.psi.impl.JBehaveStepTypePsiElementImpl"
  implements="com.github.kumaraman21.intellijbehave.parser.psi.JBehaveStepTypePsiElement"}
 stepTextPsiElement ::= STEP_TEXT

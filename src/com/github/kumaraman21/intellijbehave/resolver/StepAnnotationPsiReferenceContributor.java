@@ -1,7 +1,7 @@
 package com.github.kumaraman21.intellijbehave.resolver;
 
 import com.github.kumaraman21.intellijbehave.codeInspector.StepUsageFinder;
-import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
+import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepPsiElement;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.intellij.openapi.project.Project;
@@ -46,22 +46,22 @@ public class StepAnnotationPsiReferenceContributor extends PsiReferenceContribut
         );
     }
 
-    private Function<StepPsiElement, StepAnnotationPsiReference> toStepAnnotationPsiReferences() {
-        return new Function<StepPsiElement, StepAnnotationPsiReference>() {
+    private Function<StoryStepPsiElement, StepAnnotationPsiReference> toStepAnnotationPsiReferences() {
+        return new Function<StoryStepPsiElement, StepAnnotationPsiReference>() {
             @Override
-            public StepAnnotationPsiReference apply(StepPsiElement stepPsiElement) {
+            public StepAnnotationPsiReference apply(StoryStepPsiElement stepPsiElement) {
                 return new StepAnnotationPsiReference(stepPsiElement, stepPsiElement.getTextRange());
             }
         };
     }
 
-    private Predicate<StepPsiElement> stepReferencesInStories(final PsiLiteralExpression psiLiteral, final PsiAnnotation psiAnnotation) {
-        return new Predicate<StepPsiElement>() {
+    private Predicate<StoryStepPsiElement> stepReferencesInStories(final PsiLiteralExpression psiLiteral, final PsiAnnotation psiAnnotation) {
+        return new Predicate<StoryStepPsiElement>() {
             @Override
-            public boolean apply(StepPsiElement stepPsiElement) {
+            public boolean apply(StoryStepPsiElement stepPsiElement) {
                 StepMatcher stepMatcher
                         = STEP_PATTERN_PARSER.parseStep(getStepType(psiAnnotation), String.valueOf(psiLiteral.getValue()));
-                return stepMatcher.matches(stepPsiElement.getStepText());
+                return stepMatcher.matches(stepPsiElement.getStepTextPsiElement().getText());
             }
         };
     }
@@ -70,7 +70,7 @@ public class StepAnnotationPsiReferenceContributor extends PsiReferenceContribut
         return (PsiAnnotation) psiLiteral.getParent().getParent().getParent();
     }
 
-    private Set<StepPsiElement> findStepsFor(PsiAnnotation psiAnnotation) {
+    private Set<StoryStepPsiElement> findStepsFor(PsiAnnotation psiAnnotation) {
         Project project = psiAnnotation.getProject();
         StepUsageFinder stepUsageFinder = new StepUsageFinder(project);
         ProjectRootManager.getInstance(project).getFileIndex().iterateContent(stepUsageFinder);

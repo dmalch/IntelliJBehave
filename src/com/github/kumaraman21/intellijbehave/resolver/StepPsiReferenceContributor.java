@@ -27,9 +27,13 @@ public class StepPsiReferenceContributor extends PsiReferenceContributor {
                         final StepAnnotationFinder stepAnnotationFinder = new StepAnnotationFinder(storyStepPsiElement);
                         ScanUtils.iterateInContextOf(storyStepPsiElement, stepAnnotationFinder);
                         final StepDefinitionAnnotation definitionAnnotation = stepAnnotationFinder.getMatchingAnnotation();
-                        final PsiAnnotation annotation = definitionAnnotation.getAnnotation();
+                        if (definitionAnnotation != null) {
+                            final PsiAnnotation annotation = definitionAnnotation.getAnnotation();
 
-                        return new PsiReference[]{new StoryStepPsiReference(annotation, annotation.getTextRange())};
+                            return new PsiReference[]{new StoryStepPsiReference(annotation, annotation.getTextRange())};
+                        }
+
+                        return new PsiReference[0];
                     }
                 }
         );
