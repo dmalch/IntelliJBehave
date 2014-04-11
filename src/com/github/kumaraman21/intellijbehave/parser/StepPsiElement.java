@@ -22,8 +22,6 @@ import org.jbehave.core.steps.StepType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static org.apache.commons.lang.StringUtils.trim;
-
 public class StepPsiElement extends ASTWrapperPsiElement {
     private StepType stepType;
 
@@ -41,14 +39,6 @@ public class StepPsiElement extends ASTWrapperPsiElement {
         return getNode().findChildByType(TokenSet.create(StoryTypes.STEP_PSI_ELEMENT));
     }
 
-    public String getStepText() {
-        int offset = getStepTextOffset();
-        if (offset == 0) {
-            return trim(getText());
-        }
-        return trim(getText().substring(offset));
-    }
-
     @Nullable
     public String getActualStepPrefix() {
         ASTNode keyword = getKeyword();
@@ -56,10 +46,5 @@ public class StepPsiElement extends ASTWrapperPsiElement {
             return null;
         }
         return keyword.getText();
-    }
-
-    public int getStepTextOffset() {
-        String stepPrefix = getActualStepPrefix();
-        return stepPrefix != null ? stepPrefix.length() + 1 : 0;
     }
 }

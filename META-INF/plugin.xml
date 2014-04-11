@@ -100,7 +100,7 @@
                    implementationClass="com.github.kumaraman21.intellijbehave.resolver.StoryAnnotator"/>
         <lang.commenter language="Story"
                         implementationClass="com.github.kumaraman21.intellijbehave.commenter.StoryCommenter"/>
-        <!--<colorSettingsPage implementation="com.github.kumaraman21.intellijbehave.highlighter.StoryColorsAndFontsPage"/>-->
+        <colorSettingsPage implementation="com.github.kumaraman21.intellijbehave.highlighter.StoryColorsAndFontsPage"/>
         <!--<completion.contributor language="Story"
                                 implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor"/>-->
 
@@ -116,7 +116,7 @@
                 implementation="com.github.kumaraman21.intellijbehave.resolver.StepAnnotationPsiReferenceContributor"/>
         <psi.referenceContributor
                 implementation="com.github.kumaraman21.intellijbehave.resolver.StepPsiReferenceContributor"/>
-        <!--<lang.syntaxHighlighterFactory key="Story"
-                                       implementationClass="com.github.kumaraman21.intellijbehave.highlighter.StorySyntaxHighlighterFactory"/>-->
+        <lang.syntaxHighlighterFactory key="Story"
+                                       implementationClass="com.github.kumaraman21.intellijbehave.highlighter.StorySyntaxHighlighterFactory"/>
     </extensions>
 </idea-plugin>
