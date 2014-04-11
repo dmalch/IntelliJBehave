@@ -1,5 +1,5 @@
 // This is a generated file. Not intended for manual editing.
-package com.github.kumaraman21.intellijbehave.psi.impl;
+package com.github.kumaraman21.intellijbehave.parser.psi.impl;
 
 import java.util.List;
 import org.jetbrains.annotations.*;
@@ -9,16 +9,16 @@ import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.kumaraman21.intellijbehave.parser.StoryTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import com.github.kumaraman21.intellijbehave.psi.*;
+import com.github.kumaraman21.intellijbehave.parser.psi.*;
 
-public class StoryScenarioHeaderImpl extends ASTWrapperPsiElement implements StoryScenarioHeader {
+public class StoryExampleBlockImpl extends ASTWrapperPsiElement implements StoryExampleBlock {
 
-  public StoryScenarioHeaderImpl(ASTNode node) {
+  public StoryExampleBlockImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof StoryVisitor) ((StoryVisitor)visitor).visitScenarioHeader(this);
+    if (visitor instanceof StoryVisitor) ((StoryVisitor)visitor).visitExampleBlock(this);
     else super.accept(visitor);
   }
 

@@ -4,7 +4,7 @@ package com.github.kumaraman21.intellijbehave.parser;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
-import com.github.kumaraman21.intellijbehave.psi.impl.*;
+import com.github.kumaraman21.intellijbehave.parser.psi.impl.*;
 
 public interface StoryTypes {
 
