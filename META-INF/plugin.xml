@@ -98,6 +98,8 @@
                                implementationClass="com.github.kumaraman21.intellijbehave.parser.StoryParserDefinition"/>
         <annotator language="Story"
                    implementationClass="com.github.kumaraman21.intellijbehave.resolver.StoryAnnotator"/>
+        <annotator language="JAVA"
+                   implementationClass="com.github.kumaraman21.intellijbehave.resolver.JavaStepAnnotator"/>
         <lang.commenter language="Story"
                         implementationClass="com.github.kumaraman21.intellijbehave.commenter.StoryCommenter"/>
         <colorSettingsPage implementation="com.github.kumaraman21.intellijbehave.highlighter.StoryColorsAndFontsPage"/>
@@ -118,5 +120,7 @@
                 implementation="com.github.kumaraman21.intellijbehave.resolver.StepPsiReferenceContributor"/>
         <lang.syntaxHighlighterFactory key="Story"
                                        implementationClass="com.github.kumaraman21.intellijbehave.highlighter.StorySyntaxHighlighterFactory"/>
+        <lang.findUsagesProvider language="Story"
+                                 implementationClass="com.github.kumaraman21.intellijbehave.usage.StoryFindUsagesProvider"/>
     </extensions>
 </idea-plugin>

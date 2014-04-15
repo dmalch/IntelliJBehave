@@ -16,10 +16,15 @@
 package com.github.kumaraman21.intellijbehave.resolver;
 
 import com.github.kumaraman21.intellijbehave.parser.psi.StoryStepPsiElement;
+import com.github.kumaraman21.intellijbehave.utility.ParametrizedString;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
+
+import static com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection.getAnnotationTextFrom;
+import static com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection.referencesContainValueOf;
 
 public class StoryAnnotator implements Annotator {
     @Override
@@ -28,29 +33,28 @@ public class StoryAnnotator implements Annotator {
             return;
         }
 
-        /*StoryStepPsiElement storyStepPsiElement = (StoryStepPsiElement) psiElement;
+        StoryStepPsiElement storyStepPsiElement = (StoryStepPsiElement) psiElement;
 
-        if (referencesContainValueOf(storyStepPsiElement, StepPsiReference.class)) {
+        if (referencesContainValueOf(storyStepPsiElement, StoryStepPsiReference.class)) {
             annotateParameters(storyStepPsiElement, annotationHolder);
             return;
         }
 
-        annotationHolder.createErrorAnnotation(psiElement, "No definition found for the step");*/
+        annotationHolder.createErrorAnnotation(psiElement, "No definition found for the step");
     }
 
-    /*private void annotateParameters(StepPsiElement stepPsiElement, AnnotationHolder annotationHolder) {
-        String stepText = stepPsiElement.getStepText();
-        String annotationText = getAnnotationTextFrom(stepPsiElement);
+    private void annotateParameters(StoryStepPsiElement storyStepPsiElement, AnnotationHolder annotationHolder) {
+        String stepText = storyStepPsiElement.getStepTextPsiElement().getText();
+        String annotationText = getAnnotationTextFrom(storyStepPsiElement);
         ParametrizedString pString = new ParametrizedString(annotationText);
 
-        int offset = stepPsiElement.getTextOffset();
-        for (StringToken token : pString.tokenize(stepText)) {
+        int offset = storyStepPsiElement.getTextOffset();
+        for (ParametrizedString.StringToken token : pString.tokenize(stepText)) {
             int length = token.getValue().length();
             if (token.isIdentifier()) {
-                annotationHolder.createInfoAnnotation(
-                        TextRange.from(offset, length), "Parameter");
+                annotationHolder.createInfoAnnotation(TextRange.from(offset, length), "Parameter");
             }
             offset += length;
         }
-    }*/
+    }
 }

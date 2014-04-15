@@ -23,8 +23,6 @@ import org.jbehave.core.steps.StepType;
  * @author <a href="http://twitter.com/aloyer">@aloyer</a>
  */
 public class StoryCompletionContributor extends CompletionContributor {
-    public StoryCompletionContributor() {
-    }
 
     @Override
     public void fillCompletionVariants(CompletionParameters parameters, final CompletionResultSet _result) {
