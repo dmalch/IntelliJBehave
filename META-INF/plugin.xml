@@ -122,5 +122,7 @@
                                        implementationClass="com.github.kumaraman21.intellijbehave.highlighter.StorySyntaxHighlighterFactory"/>
         <lang.findUsagesProvider language="Story"
                                  implementationClass="com.github.kumaraman21.intellijbehave.usage.StoryFindUsagesProvider"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.github.kumaraman21.intellijbehave.marker.JavaStepLineMarkerProvider"/>
     </extensions>
 </idea-plugin>
