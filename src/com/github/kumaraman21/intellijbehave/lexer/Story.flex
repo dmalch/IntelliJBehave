@@ -1,3 +1,4 @@
+//Doesn't used, see StoryLocalizedLexer for lexer
 package com.github.kumaraman21.intellijbehave.highlighter;
 
 import com.intellij.lexer.FlexLexer;

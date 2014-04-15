@@ -1,5 +1,6 @@
-package com.github.kumaraman21.intellijbehave.highlighter;
+package com.github.kumaraman21.intellijbehave.lexer;
 
+import com.github.kumaraman21.intellijbehave.parser.StoryTokenType;
 import com.github.kumaraman21.intellijbehave.utility.CharTree;
 import com.github.kumaraman21.intellijbehave.utility.JBKeyword;
 import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;

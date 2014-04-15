@@ -6,6 +6,8 @@ import static com.github.kumaraman21.intellijbehave.Samples.META_SAMPLE;
 import static com.github.kumaraman21.intellijbehave.Samples.SIMPLE_SAMPLE;
 import static org.fest.assertions.api.Assertions.assertThat;
 
+import com.github.kumaraman21.intellijbehave.lexer.StoryLocalizedLexer;
+import com.github.kumaraman21.intellijbehave.parser.StoryTokenType;
 import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;
 import com.intellij.psi.tree.IElementType;
 

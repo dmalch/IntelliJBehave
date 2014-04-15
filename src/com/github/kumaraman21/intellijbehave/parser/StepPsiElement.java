@@ -15,7 +15,6 @@
  */
 package com.github.kumaraman21.intellijbehave.parser;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
 import com.github.kumaraman21.intellijbehave.resolver.StepPsiReference;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;

@@ -15,8 +15,7 @@
  */
 package com.github.kumaraman21.intellijbehave.parser;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryLexerFactory;
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
+import com.github.kumaraman21.intellijbehave.lexer.StoryLocalizedLexer;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
@@ -36,7 +35,7 @@ public class StoryParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
-        return new StoryLexerFactory().createLexer();
+        return new StoryLocalizedLexer();
     }
 
     @Override

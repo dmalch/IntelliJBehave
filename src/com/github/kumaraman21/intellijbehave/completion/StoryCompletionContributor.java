@@ -1,6 +1,6 @@
 package com.github.kumaraman21.intellijbehave.completion;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
+import com.github.kumaraman21.intellijbehave.parser.StoryTokenType;
 import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
 import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionAnnotation;
 import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionIterator;

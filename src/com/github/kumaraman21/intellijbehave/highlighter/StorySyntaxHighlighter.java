@@ -15,6 +15,8 @@
  */
 package com.github.kumaraman21.intellijbehave.highlighter;
 
+import com.github.kumaraman21.intellijbehave.lexer.StoryLocalizedLexer;
+import com.github.kumaraman21.intellijbehave.parser.StoryTokenType;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
 import com.intellij.openapi.editor.HighlighterColors;
@@ -28,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-import static com.intellij.openapi.editor.colors.TextAttributesKey.*;
+import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
 public class StorySyntaxHighlighter extends SyntaxHighlighterBase {
 
@@ -37,7 +39,7 @@ public class StorySyntaxHighlighter extends SyntaxHighlighterBase {
     @NotNull
     @Override
     public Lexer getHighlightingLexer() {
-        return new StorySyntaxHighlightingLexer();
+        return new StoryLocalizedLexer();
     }
 
     @NotNull
