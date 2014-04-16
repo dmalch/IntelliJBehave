@@ -17,44 +17,57 @@
     <name>JBehave Support</name>
     <id>jbehave-support-plugin</id>
     <description><![CDATA[
-    <h1>IntelliJ IDEA Plugin for JBehave</h1>
-    <p>
-    This plugin provides some support for JBehave. <br/>
-    It is a fork of IntelliJBehave, originally created by Aman Kumar. <br/>
-    See <a href="https://github.com/kumaraman21/IntelliJBehave/wiki">https://github.com/kumaraman21/IntelliJBehave/wiki</a>
-    <br/>
+        <h1>IntelliJ IDEA Plugin for JBehave</h1>
+        <p>
+            This plugin provides some support for JBehave. <br/>
+            It is a fork of IntelliJBehave, originally created by Aman Kumar. <br/>
+            See <a href="https://github.com/kumaraman21/IntelliJBehave/wiki">https://github.com/kumaraman21/IntelliJBehave/wiki</a>
+            <br/>
 
-    Most of the original code has been retained, but several improvements have been incorporated by various contributors:
-    <ul>
-        <li><a href="https://github.com/jarosite">https://github.com/jarosite</a></li>
-        <li><a href="https://github.com/Arnauld">https://github.com/Arnauld</a></li>
-        <li><a href="https://github.com/harley84">https://github.com/harley84</a></li>
-    </ul>
-    And <a href="https://github.com/witspirit/IntelliJBehave/graphs/contributors">others</a>.
-    </p>
+            Most of the original code has been retained, but several improvements have been incorporated by various
+            contributors:
+        <ul>
+            <li><a href="https://github.com/jarosite">https://github.com/jarosite</a></li>
+            <li><a href="https://github.com/Arnauld">https://github.com/Arnauld</a></li>
+            <li><a href="https://github.com/harley84">https://github.com/harley84</a></li>
+        </ul>
+        And <a href="https://github.com/witspirit/IntelliJBehave/graphs/contributors">others</a>.
+        </p>
 
-    <p>
-    The plugin provides the following features:
-    </p>
-    <ul>
-    <li> Basic syntax highlighting for JBehave story files</li>
-    <li> Jump to step definition in Java or Groovy</li>
-    <li> Error Highlighting in story if step was not defined</li>
-    <li> Create new story files from a configurable story template</li>
-    <li> Comment/uncomment lines in story files</li>
-    <li> Code inspections to report unused steps definitions and undefined step usages </li>
-    <li> Run *.story files</li>
-    </ul>
+        <p>
+            JBehave icon comes from
+            https://github.com/jbehave/jbehave-eclipse/blob/master/org.jbehave.eclipse/icons/bdd-jb-orange-red-green.png.
+        </p>
 
-    <p>
-    Known limitations:
-    </p>
-    <ul>
-        <li>Searches complete module classpath, no configuration available to limit scope</li>
-        <li>Does not take into account any custom JBehave configuration</li>
-    </ul>
-  ]]></description>
-    <version>1.4</version>
+        <p>
+            New in version 1.5
+        </p>
+        <ul>
+            <li>Line markers for @Given, @When, @Then annotations in java files</li>
+        </ul>
+
+        <p>
+            The plugin provides the following features:
+        </p>
+        <ul>
+            <li> Basic syntax highlighting for JBehave story files</li>
+            <li> Jump to step definition in Java or Groovy</li>
+            <li> Error Highlighting in story if step was not defined</li>
+            <li> Create new story files from a configurable story template</li>
+            <li> Comment/uncomment lines in story files</li>
+            <li> Code inspections to report unused steps definitions and undefined step usages</li>
+            <li> Run *.story files</li>
+        </ul>
+
+        <p>
+            Known limitations:
+        </p>
+        <ul>
+            <li>Searches complete module classpath, no configuration available to limit scope</li>
+            <li>Does not take into account any custom JBehave configuration</li>
+        </ul>
+        ]]></description>
+    <version>1.5</version>
     <vendor url="https://github.com/witspirit" email="witspirit@gmail.com">Bert Van Vlerken</vendor>
 
     <idea-version since-build="133.0"/>
@@ -109,5 +122,9 @@
                                 implementation="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspectionProvider"/>
         <inspectionToolProvider id="undefinedStepsInspection" order="LAST"
                                 implementation="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspectionProvider"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.github.kumaraman21.intellijbehave.marker.JavaStepLineMarkerProvider"/>
+        <psi.referenceContributor
+                implementation="com.github.kumaraman21.intellijbehave.resolver.StepAnnotationPsiReferenceContributor"/>
     </extensions>
 </idea-plugin>

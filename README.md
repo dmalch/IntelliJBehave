@@ -12,7 +12,12 @@ Most of the original code has been retained, but several improvements have been 
 * https://github.com/jarosite
 * https://github.com/Arnauld
 * https://github.com/harley84
-    
+
+JBehave icon comes from https://github.com/jbehave/jbehave-eclipse/blob/master/org.jbehave.eclipse/icons/bdd-jb-orange-red-green.png.
+
+New in version 1.5
+* Line markers for @Given, @When, @Then annotations in java files
+
 Features
 --------
 The plugin provides the following features:
