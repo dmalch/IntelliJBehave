@@ -1,4 +1,4 @@
-package com.github.kumaraman21.intellijbehave.highlighter;
+package com.github.kumaraman21.intellijbehave.lexer;
 
 import static com.github.kumaraman21.intellijbehave.Samples.EXAMPLES_SAMPLE;
 import static com.github.kumaraman21.intellijbehave.Samples.LONG_SAMPLE;

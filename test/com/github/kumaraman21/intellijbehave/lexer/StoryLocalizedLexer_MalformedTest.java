@@ -1,4 +1,4 @@
-package com.github.kumaraman21.intellijbehave.highlighter;
+package com.github.kumaraman21.intellijbehave.lexer;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
