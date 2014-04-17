@@ -32,7 +32,7 @@ public class UndefinedStepsInspection extends LocalInspectionTool {
     @NotNull
     @Override
     public String getShortName() {
-        return "UndefinedStep";
+        return "UndefinedSteps";
     }
 
     @NotNull

@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-import static com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepDeclarationInspection.JBEHAVE_ANNOTATIONS;
+import static com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection.JBEHAVE_ANNOTATIONS;
 import static com.github.kumaraman21.intellijbehave.utility.StepTypeMappings.ANNOTATION_TO_STEP_TYPE_MAPPING;
 import static com.google.common.collect.FluentIterable.from;
 import static com.intellij.patterns.PsiJavaPatterns.literalExpression;

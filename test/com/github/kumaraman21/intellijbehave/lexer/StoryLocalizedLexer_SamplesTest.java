@@ -1,18 +1,12 @@
 package com.github.kumaraman21.intellijbehave.lexer;
 
-import static com.github.kumaraman21.intellijbehave.Samples.EXAMPLES_SAMPLE;
-import static com.github.kumaraman21.intellijbehave.Samples.LONG_SAMPLE;
-import static com.github.kumaraman21.intellijbehave.Samples.META_SAMPLE;
-import static com.github.kumaraman21.intellijbehave.Samples.SIMPLE_SAMPLE;
-import static org.fest.assertions.api.Assertions.assertThat;
-
-import com.github.kumaraman21.intellijbehave.lexer.StoryLocalizedLexer;
 import com.github.kumaraman21.intellijbehave.parser.StoryTokenType;
 import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;
 import com.intellij.psi.tree.IElementType;
-
-import org.junit.Ignore;
 import org.junit.Test;
+
+import static com.github.kumaraman21.intellijbehave.Samples.*;
+import static org.fest.assertions.api.Assertions.assertThat;
 
 /**
  * @author <a href="http://twitter.com/aloyer">@aloyer</a>
@@ -20,16 +14,6 @@ import org.junit.Test;
 public class StoryLocalizedLexer_SamplesTest {
 
     private StoryLocalizedLexer storyLexer;
-
-    @Test
-    @Ignore
-    public void traceAll() {
-        //traceAll(SIMPLE_SAMPLE);
-        traceAll(LONG_SAMPLE);
-        //traceAll(META_SAMPLE);
-        //traceAll(EXAMPLES_SAMPLE);
-        //traceAll(COMPLEX_SAMPLE);
-    }
 
     @Test
     public void parseSimpleSample() {
@@ -157,7 +141,7 @@ public class StoryLocalizedLexer_SamplesTest {
         advanceAndAssert(StoryTokenType.STEP_TEXT, " i get an error message of type \"Wrong Credentials\"");
         advanceAndAssert(StoryTokenType.WHITE_SPACE);
         advanceAndAssert(StoryTokenType.EXAMPLE_TYPE, "Examples:");
-        advanceAndAssert(StoryTokenType.WHITE_SPACE);
+        advanceAndAssert(StoryTokenType.EXAMPLE_TYPE, " ");
         advanceAndAssert(StoryTokenType.WHITE_SPACE);
         advanceAndAssert(StoryTokenType.TABLE_DELIM);
         advanceAndAssert(StoryTokenType.TABLE_CELL, "  login   ");
@@ -201,37 +185,4 @@ public class StoryLocalizedLexer_SamplesTest {
         assertThat(storyLexer.getTokenSequence()).isEqualTo(content);
         assertThat(storyLexer.getTokenType()).isEqualTo(storyTokenType);
     }
-
-    private void traceAll(String content) {
-        storyLexer = new StoryLocalizedLexer(new LocalizedStorySupport());
-        storyLexer.start(content);
-
-        IElementType tokenType;
-        do {
-            tokenType = storyLexer.getTokenType();
-            System.out.println(
-                    rightPad("" + storyLexer.getPosition(), 3) + " " +
-                            "[" + rightPad(tokenType, "STORY_DESCRIPTION".length()) + "]" +
-                            rightPad(storyLexer.lexerState(), "IN_DIRECTIVE".length()) +
-                            ": >>" + escape(storyLexer.getTokenSequence()) + "<<");
-
-            storyLexer.advance();
-            tokenType = storyLexer.getTokenType();
-        }
-        while (tokenType != null);
-    }
-
-    private String rightPad(Object object, int length) {
-        StringBuilder builder = new StringBuilder(object.toString());
-        while (builder.length() < length) {
-            builder.append(" ");
-        }
-        return builder.toString();
-    }
-
-    private String escape(CharSequence tokenSequence) {
-        return tokenSequence.toString().replace("\n", "\\n").replace("\r", "\\r");
-    }
-
-
 }

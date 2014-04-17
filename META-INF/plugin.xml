@@ -36,15 +36,10 @@
 
         <p>
             JBehave icon comes from
-            https://github.com/jbehave/jbehave-eclipse/blob/master/org.jbehave.eclipse/icons/bdd-jb-orange-red-green.png.
+            <a href="https://github.com/jbehave/jbehave-eclipse/blob/master/org.jbehave.eclipse/icons/bdd-jb-orange-red-green.png">
+                https://github.com/jbehave/jbehave-eclipse/blob/master/org.jbehave.eclipse/icons/bdd-jb-orange-red-green.png
+            </a>.
         </p>
-
-        <p>
-            New in version 1.5
-        </p>
-        <ul>
-            <li>Line markers for @Given, @When, @Then annotations in java files</li>
-        </ul>
 
         <p>
             The plugin provides the following features:
@@ -65,6 +60,14 @@
         <ul>
             <li>Searches complete module classpath, no configuration available to limit scope</li>
             <li>Does not take into account any custom JBehave configuration</li>
+        </ul>
+
+        <h2>Release notes:</h2>
+        <p>
+            New in version 1.5:
+        </p>
+        <ul>
+            <li>Line markers for @Given, @When, @Then annotations in java files</li>
         </ul>
         ]]></description>
     <version>1.5</version>
@@ -118,10 +121,10 @@
                                 implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor"/>
 
         <!--code inspections-->
-        <localInspection id="unusedStepDeclaration" language="JAVA" displayName="Unused step declaration"
+        <localInspection id="unusedSteps" language="JAVA" displayName="Unused step declaration"
                          groupName="JBehave" enabledByDefault="false" level="WARNING"
-                         implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepDeclarationInspection"/>
-        <localInspection id="undefinedStep" language="Story" displayName="Undefined step"
+                         implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection"/>
+        <localInspection id="undefinedSteps" language="Story" displayName="Undefined step"
                          groupName="JBehave" enabledByDefault="true" level="WARNING"
                          implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection"/>
         <codeInsight.lineMarkerProvider language="JAVA"
