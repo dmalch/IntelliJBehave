@@ -15,6 +15,7 @@
  */
 package com.github.kumaraman21.intellijbehave.resolver;
 
+import com.github.kumaraman21.intellijbehave.codeInspector.StepAnnotationFinder;
 import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
 import com.github.kumaraman21.intellijbehave.utility.ScanUtils;
 import com.intellij.openapi.util.Comparing;
@@ -22,9 +23,6 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.util.IncorrectOperationException;
-import org.jbehave.core.parsers.RegexPrefixCapturingPatternParser;
-import org.jbehave.core.parsers.StepMatcher;
-import org.jbehave.core.parsers.StepPatternParser;
 import org.jbehave.core.steps.StepType;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,8 +62,9 @@ public class StepPsiReference implements PsiReference {
     @Override
     public PsiElement resolve() {
         StepDefinitionAnnotation stepDefinitionAnnotation = stepDefinitionAnnotation();
-        if (stepDefinitionAnnotation == null)
+        if (stepDefinitionAnnotation == null) {
             return null;
+        }
         return stepDefinitionAnnotation.getAnnotation();
     }
 
@@ -106,36 +105,6 @@ public class StepPsiReference implements PsiReference {
 
         public List<String> getSuggestions() {
             return suggestions;
-        }
-    }
-
-    private static class StepAnnotationFinder extends StepDefinitionIterator {
-
-        private StepType stepType;
-        private String stepText;
-        private StepDefinitionAnnotation matchingAnnotation;
-        private StepPatternParser stepPatternParser = new RegexPrefixCapturingPatternParser();
-
-        private StepAnnotationFinder(StepType stepType, String stepText, PsiElement storyRef) {
-            super(stepType, storyRef);
-            this.stepType = stepType;
-            this.stepText = stepText;
-        }
-
-        @Override
-        public boolean processStepDefinition(StepDefinitionAnnotation stepDefinitionAnnotation) {
-            StepMatcher stepMatcher = stepPatternParser.parseStep(stepType, stepDefinitionAnnotation.getAnnotationText());
-
-            if (stepMatcher.matches(stepText)) {
-                matchingAnnotation = stepDefinitionAnnotation;
-
-                return false;
-            }
-            return true;
-        }
-
-        public StepDefinitionAnnotation getMatchingAnnotation() {
-            return matchingAnnotation;
         }
     }
 
