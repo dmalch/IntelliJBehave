@@ -27,12 +27,12 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import org.jetbrains.annotations.NotNull;
 
-public class UndefinedStepsInspection extends LocalInspectionTool {
+public class UndefinedStepInspection extends LocalInspectionTool {
 
     @NotNull
     @Override
     public String getShortName() {
-        return "UndefinedSteps";
+        return "UndefinedStep";
     }
 
     @NotNull

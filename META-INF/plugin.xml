@@ -121,12 +121,12 @@
                                 implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor"/>
 
         <!--code inspections-->
-        <localInspection id="unusedSteps" language="JAVA" displayName="Unused step declaration"
+        <localInspection id="unusedStep" language="JAVA" displayName="Unused step declaration"
                          groupName="JBehave" enabledByDefault="false" level="WARNING"
-                         implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepsInspection"/>
-        <localInspection id="undefinedSteps" language="Story" displayName="Undefined step"
+                         implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepDeclarationInspection"/>
+        <localInspection id="undefinedStep" language="Story" displayName="Undefined step"
                          groupName="JBehave" enabledByDefault="true" level="WARNING"
-                         implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepsInspection"/>
+                         implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UndefinedStepInspection"/>
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.github.kumaraman21.intellijbehave.marker.JavaStepLineMarkerProvider"/>
         <psi.referenceContributor

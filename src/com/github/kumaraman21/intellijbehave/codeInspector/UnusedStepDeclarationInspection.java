@@ -31,7 +31,7 @@ import java.util.List;
 import static com.github.kumaraman21.intellijbehave.marker.JavaStepLineMarkerProvider.referencesContainValueOf;
 import static com.intellij.psi.impl.PsiImplUtil.findAttributeValue;
 
-public class UnusedStepsInspection extends BaseJavaLocalInspectionTool {
+public class UnusedStepDeclarationInspection extends BaseJavaLocalInspectionTool {
 
     public static final List<String> JBEHAVE_ANNOTATIONS = ImmutableList.of(
             Given.class.getName(),
@@ -43,7 +43,7 @@ public class UnusedStepsInspection extends BaseJavaLocalInspectionTool {
     @NotNull
     @Override
     public String getShortName() {
-        return "UnusedSteps";
+        return "UnusedStepDeclaration";
     }
 
     @NotNull
