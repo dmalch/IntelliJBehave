@@ -28,11 +28,15 @@ public abstract class StepDefinitionIterator implements ContentIterator {
 
     private final StepDefinitionAnnotationConverter stepDefinitionAnnotationConverter = new StepDefinitionAnnotationConverter();
     private StepType stepType;
-  private PsiElement storyRef;
+    private PsiElement storyRef;
 
-  public StepDefinitionIterator(@Nullable StepType stepType, PsiElement storyRef) {
+    public StepDefinitionIterator(@Nullable StepType stepType, PsiElement storyRef) {
         this.stepType = stepType;
         this.storyRef = storyRef;
+    }
+
+    public StepType getStepType() {
+        return stepType;
     }
 
     @Override

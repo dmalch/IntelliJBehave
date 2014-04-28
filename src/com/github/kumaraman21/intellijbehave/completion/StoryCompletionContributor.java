@@ -139,7 +139,6 @@ public class StoryCompletionContributor extends CompletionContributor {
     private static class StepSuggester extends StepDefinitionIterator {
 
         private final PrefixMatcher prefixMatcher;
-        private final StepType stepType;
         private final String actualStepPrefix;
         private final String textBeforeCaret;
         private final Consumer<LookupElement> consumer;
@@ -150,9 +149,8 @@ public class StoryCompletionContributor extends CompletionContributor {
                               String textBeforeCaret,
                               Consumer<LookupElement> consumer,
                               StepPsiElement storyRef) {
-            super(null, storyRef);
+            super(stepType, storyRef);
             this.prefixMatcher = prefixMatcher;
-            this.stepType = stepType;
             this.actualStepPrefix = actualStepPrefix;
             this.textBeforeCaret = textBeforeCaret;
             this.consumer = consumer;
@@ -161,7 +159,7 @@ public class StoryCompletionContributor extends CompletionContributor {
         @Override
         public boolean processStepDefinition(StepDefinitionAnnotation stepDefinitionAnnotation) {
             StepType annotationStepType = stepDefinitionAnnotation.getStepType();
-            if (annotationStepType != stepType) {
+            if (annotationStepType != getStepType()) {
                 return true;
             }
             String annotationText = stepDefinitionAnnotation.getAnnotationText();
