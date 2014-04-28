@@ -20,6 +20,7 @@ import com.github.kumaraman21.intellijbehave.parser.StepPsiElement;
 import com.github.kumaraman21.intellijbehave.utility.ScanUtils;
 import com.intellij.openapi.util.Comparing;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReference;
 import com.intellij.util.IncorrectOperationException;
@@ -29,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
+import static com.intellij.psi.impl.PsiImplUtil.findAttributeValue;
 import static org.apache.commons.lang.StringUtils.trim;
 
 public class StepPsiReference implements PsiReference {
@@ -65,7 +67,8 @@ public class StepPsiReference implements PsiReference {
         if (stepDefinitionAnnotation == null) {
             return null;
         }
-        return stepDefinitionAnnotation.getAnnotation();
+        PsiAnnotation annotation = stepDefinitionAnnotation.getAnnotation();
+        return findAttributeValue(annotation, "value");
     }
 
     private static final boolean useVariants = false;
@@ -126,7 +129,7 @@ public class StepPsiReference implements PsiReference {
 
     @Override
     public boolean isReferenceTo(PsiElement psiElement) {
-        return psiElement instanceof StepPsiElement && Comparing.equal(resolve(), psiElement);
+        return Comparing.equal(resolve(), psiElement);
     }
 
     @Override

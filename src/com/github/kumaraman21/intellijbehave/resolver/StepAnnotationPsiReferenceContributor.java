@@ -61,6 +61,7 @@ public class StepAnnotationPsiReferenceContributor extends PsiReferenceContribut
                 final PsiAnnotation psiAnnotation = findAnnotationFor(psiLiteral);
                 StepMatcher stepMatcher = STEP_PATTERN_PARSER.parseStep(getStepType(psiAnnotation), String.valueOf(psiLiteral.getValue()));
                 boolean matches = stepMatcher.matches(stepPsiElement.getStepText());
+                //super slow
                 /*if (matches) {
                     StepPsiReference reference = stepPsiElement.getReference();
                     return reference.isReferenceTo(psiLiteral);
