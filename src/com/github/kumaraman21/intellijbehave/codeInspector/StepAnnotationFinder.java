@@ -22,17 +22,15 @@ public class StepAnnotationFinder extends StepDefinitionIterator {
     }
 
     @Override
-    public boolean processStepDefinition(StepDefinitionAnnotation stepDefinitionAnnotation) {
-        StepMatcher stepMatcher = stepPatternParser.parseStep(getStepType(), stepDefinitionAnnotation.getAnnotationText());
+    public boolean processStepDefinition(StepDefinitionAnnotation newAnnotation) {
+        StepMatcher stepMatcher = stepPatternParser.parseStep(getStepType(), newAnnotation.getAnnotationText());
 
         if (stepMatcher.matches(stepText)) {
-            PsiAnnotation newAnnotation = stepDefinitionAnnotation.getAnnotation();
-
             final Integer newPriority = getPriority(newAnnotation);
-            final Integer oldPriority = getPriority(annotation.getAnnotation());
+            final Integer oldPriority = getPriority(annotation);
 
             if (newPriority > oldPriority) {
-                annotation = stepDefinitionAnnotation;
+                annotation = newAnnotation;
             }
         }
         return true;
@@ -42,7 +40,13 @@ public class StepAnnotationFinder extends StepDefinitionIterator {
         return annotation;
     }
 
-    private Integer getPriority(PsiAnnotation psiAnnotation) {
+    private Integer getPriority(StepDefinitionAnnotation stepDefinitionAnnotation) {
+        if (stepDefinitionAnnotation == null) {
+            return -1;
+        }
+
+        PsiAnnotation psiAnnotation = stepDefinitionAnnotation.getAnnotation();
+
         if (psiAnnotation == null) {
             return -1;
         }
@@ -55,4 +59,5 @@ public class StepAnnotationFinder extends StepDefinitionIterator {
 
         return Integer.valueOf(priority.getText());
     }
+
 }

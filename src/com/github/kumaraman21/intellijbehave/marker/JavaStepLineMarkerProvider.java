@@ -22,16 +22,6 @@ import static com.google.common.collect.Lists.newArrayList;
 import static com.intellij.psi.impl.PsiImplUtil.findAttributeValue;
 
 public class JavaStepLineMarkerProvider extends RelatedItemLineMarkerProvider {
-    public static boolean referencesContainValueOf(PsiElement value, Class ofClass) {
-        if (value != null) {
-            for (PsiReference reference : value.getReferences()) {
-                if (ofClass.isInstance(reference)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     @Override
     protected void collectNavigationMarkers(@NotNull PsiElement psiElement, Collection<? super RelatedItemLineMarkerInfo> result) {
@@ -47,14 +37,15 @@ public class JavaStepLineMarkerProvider extends RelatedItemLineMarkerProvider {
 
         final PsiAnnotationMemberValue value = findAttributeValue(psiAnnotation, "value");
 
-        if (value != null && referencesContainValueOf(value, StepAnnotationPsiReference.class)) {
-            List<PsiElement> properties = from(newArrayList(value.getReferences()))
+        if (value != null) {
+            List<PsiElement> stepElements = from(newArrayList(value.getReferences()))
                     .filter(instanceOf(StepAnnotationPsiReference.class))
                     .transform(toPsiElements()).toList();
-            if (properties.size() > 0) {
+
+            if (stepElements.size() > 0) {
                 result.add(NavigationGutterIconBuilder
                         .create(JBehaveIcons.JB)
-                        .setTargets(properties)
+                        .setTargets(stepElements)
                         .setTooltipText("Navigate to steps")
                         .createLineMarkerInfo(psiElement));
             }

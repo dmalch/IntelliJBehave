@@ -19,16 +19,12 @@ import com.github.kumaraman21.intellijbehave.resolver.StepAnnotationPsiReference
 import com.google.common.collect.ImmutableList;
 import com.intellij.codeInspection.BaseJavaLocalInspectionTool;
 import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.psi.JavaElementVisitor;
-import com.intellij.psi.PsiAnnotation;
-import com.intellij.psi.PsiAnnotationMemberValue;
-import com.intellij.psi.PsiElementVisitor;
+import com.intellij.psi.*;
 import org.jbehave.core.annotations.*;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.github.kumaraman21.intellijbehave.marker.JavaStepLineMarkerProvider.referencesContainValueOf;
 import static com.intellij.psi.impl.PsiImplUtil.findAttributeValue;
 
 public class UnusedStepDeclarationInspection extends BaseJavaLocalInspectionTool {
@@ -39,6 +35,17 @@ public class UnusedStepDeclarationInspection extends BaseJavaLocalInspectionTool
             Then.class.getName(),
             Alias.class.getName(),
             Aliases.class.getName());
+
+    public static boolean referencesContainValueOf(PsiElement value, Class ofClass) {
+        if (value != null) {
+            for (PsiReference reference : value.getReferences()) {
+                if (ofClass.isInstance(reference)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     @NotNull
     @Override
