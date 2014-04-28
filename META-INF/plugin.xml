@@ -121,7 +121,7 @@
                                 implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor"/>
 
         <!--code inspections-->
-        <localInspection id="unusedStep" language="JAVA" displayName="Unused step declaration"
+        <localInspection id="unusedStepDeclaration" language="JAVA" displayName="Unused step declaration"
                          groupName="JBehave" enabledByDefault="false" level="WARNING"
                          implementationClass="com.github.kumaraman21.intellijbehave.codeInspector.UnusedStepDeclarationInspection"/>
         <localInspection id="undefinedStep" language="Story" displayName="Undefined step"
