@@ -35,37 +35,43 @@ public class StepAnnotationPsiReferenceContributor extends PsiReferenceContribut
                     @Override
                     public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext context) {
                         final PsiLiteralExpression psiLiteral = (PsiLiteralExpression) element;
-                        final PsiAnnotation psiAnnotation = findAnnotationFor(psiLiteral);
 
-                        return from(findAllSteps(psiAnnotation.getProject()))
-                                .filter(stepReferencesInStories(getStepType(psiAnnotation), String.valueOf(psiLiteral.getValue())))
-                                .transform(toStepAnnotationPsiReferences())
+                        return from(findAllSteps(psiLiteral.getProject()))
+                                .filter(stepReferencesInStories(psiLiteral))
+                                .transform(toStepAnnotationPsiReferences(psiLiteral))
                                 .toArray(StepAnnotationPsiReference.class);
                     }
                 }
         );
     }
 
-    private static Function<StepPsiElement, StepAnnotationPsiReference> toStepAnnotationPsiReferences() {
+    private static Function<StepPsiElement, StepAnnotationPsiReference> toStepAnnotationPsiReferences(final PsiLiteralExpression psiLiteral) {
         return new Function<StepPsiElement, StepAnnotationPsiReference>() {
             @Override
             public StepAnnotationPsiReference apply(StepPsiElement stepPsiElement) {
-                return new StepAnnotationPsiReference(stepPsiElement, stepPsiElement.getTextRange());
+                return new StepAnnotationPsiReference(psiLiteral, stepPsiElement);
             }
         };
     }
 
-    private static Predicate<StepPsiElement> stepReferencesInStories(final StepType stepType, final String stepText) {
+    private static Predicate<StepPsiElement> stepReferencesInStories(final PsiLiteralExpression psiLiteral) {
         return new Predicate<StepPsiElement>() {
             @Override
             public boolean apply(StepPsiElement stepPsiElement) {
-                StepMatcher stepMatcher = STEP_PATTERN_PARSER.parseStep(stepType, stepText);
-                return stepMatcher.matches(stepPsiElement.getStepText());
+                final PsiAnnotation psiAnnotation = findAnnotationFor(psiLiteral);
+                StepMatcher stepMatcher = STEP_PATTERN_PARSER.parseStep(getStepType(psiAnnotation), String.valueOf(psiLiteral.getValue()));
+                boolean matches = stepMatcher.matches(stepPsiElement.getStepText());
+                /*if (matches) {
+                    StepPsiReference reference = stepPsiElement.getReference();
+                    return reference.isReferenceTo(psiLiteral);
+                }
+                return false;*/
+                return matches;
             }
         };
     }
 
-    private PsiAnnotation findAnnotationFor(PsiLiteralExpression psiLiteral) {
+    private static PsiAnnotation findAnnotationFor(PsiLiteralExpression psiLiteral) {
         return (PsiAnnotation) psiLiteral.getParent().getParent().getParent();
     }
 

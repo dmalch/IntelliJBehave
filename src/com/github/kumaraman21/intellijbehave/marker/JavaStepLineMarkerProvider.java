@@ -56,7 +56,7 @@ public class JavaStepLineMarkerProvider extends RelatedItemLineMarkerProvider {
         return new Function<PsiReference, PsiElement>() {
             @Override
             public PsiElement apply(PsiReference psiReference) {
-                return psiReference.getElement();
+                return psiReference.resolve();
             }
         };
     }
