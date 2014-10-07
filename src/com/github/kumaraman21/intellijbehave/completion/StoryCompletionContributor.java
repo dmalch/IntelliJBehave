@@ -1,10 +1,10 @@
 package com.github.kumaraman21.intellijbehave.completion;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
+import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenTypes;
 import com.github.kumaraman21.intellijbehave.parser.JBehaveStep;
+import com.github.kumaraman21.intellijbehave.resolver.JBehaveStepReference;
 import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionAnnotation;
 import com.github.kumaraman21.intellijbehave.resolver.StepDefinitionIterator;
-import com.github.kumaraman21.intellijbehave.resolver.StepPsiReference;
 import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;
 import com.github.kumaraman21.intellijbehave.utility.ParametrizedString;
 import com.github.kumaraman21.intellijbehave.utility.ScanUtils;
@@ -19,16 +19,18 @@ import com.intellij.psi.PsiElement;
 import com.intellij.util.Consumer;
 import org.jbehave.core.i18n.LocalizedKeywords;
 import org.jbehave.core.steps.StepType;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Locale;
+
+import static java.util.Locale.ENGLISH;
 
 /**
  * @author <a href="http://twitter.com/aloyer">@aloyer</a>
  */
 public class StoryCompletionContributor extends CompletionContributor {
-    public StoryCompletionContributor() {
-    }
-
     @Override
-    public void fillCompletionVariants(CompletionParameters parameters, final CompletionResultSet _result) {
+    public void fillCompletionVariants(@NotNull CompletionParameters parameters, @NotNull final CompletionResultSet _result) {
         if (parameters.getCompletionType() == CompletionType.BASIC) {
             String prefix = CompletionUtil.findReferenceOrAlphanumericPrefix(parameters);
             CompletionResultSet result = _result.withPrefixMatcher(prefix);
@@ -37,18 +39,15 @@ public class StoryCompletionContributor extends CompletionContributor {
             Consumer<LookupElement> consumer = newConsumer(_result);
 
             addAllKeywords(result.getPrefixMatcher(), consumer, keywords);
-            addAllSteps(parameters,
-                    result.getPrefixMatcher(),
-                    consumer,
-                    keywords);
+            addAllSteps(parameters, result.getPrefixMatcher(), consumer, keywords);
         }
     }
 
     private LocalizedKeywords lookupLocalizedKeywords(CompletionParameters parameters) {
-        String locale = "en";
-        ASTNode localeNode = parameters.getOriginalFile().getNode().findChildByType(StoryTokenType.COMMENT_WITH_LOCALE);
+        Locale locale = ENGLISH;
+        ASTNode localeNode = parameters.getOriginalFile().getNode().findChildByType(StoryTokenTypes.COMMENT_WITH_LOCALE);
         if (localeNode != null) {
-            String localeFound = LocalizedStorySupport.checkForLanguageDefinition(localeNode.getText());
+            Locale localeFound = LocalizedStorySupport.checkForLanguageDefinition(localeNode.getText());
             if (localeFound != null) {
                 locale = localeFound;
             }
@@ -128,8 +127,8 @@ public class StoryCompletionContributor extends CompletionContributor {
         PsiElement positionParent = position.getParent();
         if (positionParent instanceof JBehaveStep) {
             return (JBehaveStep) positionParent;
-        } else if (position instanceof StepPsiReference) {
-            return ((StepPsiReference) position).getElement();
+        } else if (position instanceof JBehaveStepReference) {
+            return ((JBehaveStepReference) position).getElement();
         } else if (position instanceof JBehaveStep) {
             return (JBehaveStep) position;
         } else {

@@ -6,6 +6,7 @@ import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.impl.java.stubs.index.JavaFullClassNameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
@@ -96,5 +97,10 @@ public class JBehaveStepsIndex {
         }
 
         return null;
+    }
+
+    public List<JavaStepDefinition> getAllStepDefinitions(PsiFile storyFile) {
+        Module module = ModuleUtilCore.findModuleForPsiElement(storyFile);
+        return module == null ? Collections.<JavaStepDefinition>emptyList() : loadStepsFor(module);
     }
 }

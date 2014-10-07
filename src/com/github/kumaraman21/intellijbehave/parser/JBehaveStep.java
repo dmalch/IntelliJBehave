@@ -15,16 +15,20 @@
  */
 package com.github.kumaraman21.intellijbehave.parser;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
+import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
+import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiReference;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.impl.source.resolve.reference.ReferenceProvidersRegistry;
+import com.intellij.psi.tree.TokenSet;
+import com.intellij.util.Function;
 import org.jbehave.core.steps.StepType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static org.apache.commons.lang.StringUtils.trim;
+import static com.intellij.openapi.util.text.StringUtil.trim;
 
 public class JBehaveStep extends ASTWrapperPsiElement {
     private StepType stepType;
@@ -46,10 +50,22 @@ public class JBehaveStep extends ASTWrapperPsiElement {
 
     @Nullable
     public ASTNode getKeyword() {
-        return getNode().findChildByType(StoryTokenType.STEP_TYPES);
+        return getNode().findChildByType(StoryTokenTypes.STEP_TYPES);
     }
 
+    private static TokenSet TEXT_FILTER = TokenSet.create(StoryTokenTypes.STEP_TEXT, TokenType.WHITE_SPACE);
+
     public String getStepText() {
+        ASTNode[] children = getNode().getChildren(TEXT_FILTER);
+
+        return StringUtil.join(children, new Function<ASTNode, String>() {
+            public String fun(ASTNode astNode) {
+                return astNode.getText();
+            }
+        }, "").trim();
+    }
+
+    public String getStepTextOld() {
         int offset = getStepTextOffset();
         String text = getText();
 

@@ -1,11 +1,8 @@
 package com.github.kumaraman21.intellijbehave.utility;
 
 import org.jetbrains.annotations.Nullable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 /**
  * @author <a href="http://twitter.com/aloyer">@aloyer</a>
@@ -77,8 +74,7 @@ public class CharTree<T> {
             int c = seq.charAt(pos);
             CharTree<T> child = getOrCreate(c);
             child.push(seq, pos + 1, value);
-        }
-        else {
+        } else {
             this.value = value;
         }
     }

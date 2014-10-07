@@ -15,6 +15,8 @@
  */
 package com.github.kumaraman21.intellijbehave.parser;
 
+import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenTypes;
+import com.github.kumaraman21.intellijbehave.utility.LocalizedStorySupport;
 import com.github.kumaraman21.intellijbehave.utility.NodeToPsiElement;
 import com.github.kumaraman21.intellijbehave.utility.NodeToStepPsiElement;
 import com.intellij.extapi.psi.PsiFileBase;
@@ -26,9 +28,10 @@ import com.intellij.psi.tree.TokenSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.Locale;
 
 import static com.github.kumaraman21.intellijbehave.language.StoryFileType.STORY_FILE_TYPE;
-import static com.github.kumaraman21.intellijbehave.parser.StoryElementType.*;
+import static com.github.kumaraman21.intellijbehave.parser.StoryElementTypes.*;
 import static com.google.common.collect.Lists.newArrayList;
 import static com.google.common.collect.Lists.transform;
 import static java.util.Arrays.asList;
@@ -51,7 +54,7 @@ public class StoryFile extends PsiFileBase {
         List<ASTNode> stepNodes = newArrayList();
 
         for (PsiElement scenario : getScenarios()) {
-            ASTNode[] stepNodesOfScenario = scenario.getNode().getChildren(STEPS_TOKEN_SET);
+            ASTNode[] stepNodesOfScenario = scenario.getNode().getChildren(STEPS);
             stepNodes.addAll(asList(stepNodesOfScenario));
         }
 
@@ -70,12 +73,27 @@ public class StoryFile extends PsiFileBase {
     }
 
     private PsiElement getStory() {
-        ASTNode[] storyNodes = this.getNode().getChildren(TokenSet.create(STORY));
+        ASTNode[] storyNodes = getNode().getChildren(TokenSet.create(STORY));
 
         if (storyNodes.length > 0) {
             return storyNodes[0].getPsi();
         }
 
         return null;
+    }
+
+    public Locale getLocale() {
+        ASTNode localeNode = getNode().findChildByType(StoryTokenTypes.COMMENT_WITH_LOCALE);
+        if (localeNode != null) {
+            Locale localeFound = LocalizedStorySupport.checkForLanguageDefinition(localeNode.getText());
+            if (localeFound != null) {
+                return localeFound;
+            }
+        }
+        return getDefaultLocale();
+    }
+
+    public static Locale getDefaultLocale() {
+        return Locale.ENGLISH;
     }
 }

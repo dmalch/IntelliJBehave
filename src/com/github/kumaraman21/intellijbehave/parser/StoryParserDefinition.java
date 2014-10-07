@@ -15,8 +15,8 @@
  */
 package com.github.kumaraman21.intellijbehave.parser;
 
-import com.github.kumaraman21.intellijbehave.highlighter.StoryLexerFactory;
-import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenType;
+import com.github.kumaraman21.intellijbehave.highlighter.StoryLocalizedLexer;
+import com.github.kumaraman21.intellijbehave.highlighter.StoryTokenTypes;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
@@ -32,11 +32,13 @@ import com.intellij.psi.tree.TokenSet;
 import org.jbehave.core.steps.StepType;
 import org.jetbrains.annotations.NotNull;
 
+import static com.github.kumaraman21.intellijbehave.parser.StoryElementTypes.*;
+
 public class StoryParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public Lexer createLexer(Project project) {
-        return new StoryLexerFactory().createLexer();
+        return new StoryLocalizedLexer();
     }
 
     @Override
@@ -46,19 +48,19 @@ public class StoryParserDefinition implements ParserDefinition {
 
     @Override
     public IFileElementType getFileNodeType() {
-        return StoryElementType.STORY_FILE;
+        return STORY_FILE;
     }
 
     @NotNull
     @Override
     public TokenSet getWhitespaceTokens() {
-        return TokenSet.create(StoryTokenType.WHITE_SPACE);
+        return TokenSet.create(StoryTokenTypes.WHITE_SPACE);
     }
 
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return TokenSet.create(StoryTokenType.COMMENT, StoryTokenType.COMMENT_WITH_LOCALE);
+        return TokenSet.create(StoryTokenTypes.COMMENT, StoryTokenTypes.COMMENT_WITH_LOCALE);
     }
 
     @NotNull
@@ -71,11 +73,11 @@ public class StoryParserDefinition implements ParserDefinition {
     @Override
     public PsiElement createElement(ASTNode node) {
         final IElementType type = node.getElementType();
-        if (type == StoryElementType.GIVEN_STEP) {
+        if (type == GIVEN_STEP) {
             return new JBehaveStep(node, StepType.GIVEN);
-        } else if (type == StoryElementType.WHEN_STEP) {
+        } else if (type == WHEN_STEP) {
             return new JBehaveStep(node, StepType.WHEN);
-        } else if (type == StoryElementType.THEN_STEP) {
+        } else if (type == THEN_STEP) {
             return new JBehaveStep(node, StepType.THEN);
         }
 

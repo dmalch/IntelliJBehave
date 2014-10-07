@@ -30,11 +30,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class StepPsiReference implements PsiPolyVariantReference {
+public class JBehaveStepReference implements PsiPolyVariantReference {
     private final JBehaveStep myStep;
     private final TextRange myRange;
 
-    public StepPsiReference(JBehaveStep element, TextRange range) {
+    public JBehaveStepReference(JBehaveStep element, TextRange range) {
         myStep = element;
         myRange = range;
     }

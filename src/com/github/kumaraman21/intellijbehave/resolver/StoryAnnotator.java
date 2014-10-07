@@ -37,11 +37,11 @@ public class StoryAnnotator implements Annotator {
         JBehaveStep step = (JBehaveStep) psiElement;
         PsiReference[] references = step.getReferences();
 
-        if (references.length != 1 || !(references[0] instanceof StepPsiReference)) {
+        if (references.length != 1 || !(references[0] instanceof JBehaveStepReference)) {
             return;
         }
 
-        StepPsiReference reference = (StepPsiReference) references[0];
+        JBehaveStepReference reference = (JBehaveStepReference) references[0];
         JavaStepDefinition definition = reference.resolveToDefinition();
 
         if (definition == null) {
@@ -60,8 +60,7 @@ public class StoryAnnotator implements Annotator {
         for (StringToken token : pString.tokenize(stepText)) {
             int length = token.getValue().length();
             if (token.isIdentifier()) {
-                annotationHolder.createInfoAnnotation(
-                        TextRange.from(offset, length), "Parameter");
+                annotationHolder.createInfoAnnotation(TextRange.from(offset, length), "Parameter");
             }
             offset += length;
         }

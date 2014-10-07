@@ -23,63 +23,63 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 
 public class JBehaveConfigurable implements SearchableConfigurable {
-  private JBehaveSettingsPanel jBehaveSettingsPanel;
+    private JBehaveSettingsPanel jBehaveSettingsPanel;
 
-  @NotNull
-  @Override
-  public String getId() {
-    return getHelpTopic();
-  }
-
-  @Override
-  public Runnable enableSearch(String s) {
-    return null;
-  }
-
-  @Nls
-  @Override
-  public String getDisplayName() {
-    return "JBehave";
-  }
-
-  @Override
-  public String getHelpTopic() {
-    return "reference.settingsdialog.project.jbehave";
-  }
-
-  @Override
-  public JComponent createComponent() {
-    if (jBehaveSettingsPanel == null) {
-      jBehaveSettingsPanel = new JBehaveSettingsPanel();
+    @NotNull
+    @Override
+    public String getId() {
+        return getHelpTopic();
     }
-    reset();
-    return jBehaveSettingsPanel.getContentPane();
-  }
 
-  @Override
-  public boolean isModified() {
-    if(jBehaveSettingsPanel != null) {
-      return jBehaveSettingsPanel.isModified();
+    @Override
+    public Runnable enableSearch(String s) {
+        return null;
     }
-    return false;
-  }
 
-  @Override
-  public void apply() throws ConfigurationException {
-    if(jBehaveSettingsPanel != null) {
-      jBehaveSettingsPanel.apply();
+    @Nls
+    @Override
+    public String getDisplayName() {
+        return "JBehave";
     }
-  }
 
-  @Override
-  public void reset() {
-    if(jBehaveSettingsPanel != null) {
-      jBehaveSettingsPanel.reset();
+    @Override
+    public String getHelpTopic() {
+        return "reference.settingsdialog.project.jbehave";
     }
-  }
 
-  @Override
-  public void disposeUIResources() {
-    jBehaveSettingsPanel = null;
-  }
+    @Override
+    public JComponent createComponent() {
+        if (jBehaveSettingsPanel == null) {
+            jBehaveSettingsPanel = new JBehaveSettingsPanel();
+        }
+        reset();
+        return jBehaveSettingsPanel.getContentPane();
+    }
+
+    @Override
+    public boolean isModified() {
+        if (jBehaveSettingsPanel != null) {
+            return jBehaveSettingsPanel.isModified();
+        }
+        return false;
+    }
+
+    @Override
+    public void apply() throws ConfigurationException {
+        if (jBehaveSettingsPanel != null) {
+            jBehaveSettingsPanel.apply();
+        }
+    }
+
+    @Override
+    public void reset() {
+        if (jBehaveSettingsPanel != null) {
+            jBehaveSettingsPanel.reset();
+        }
+    }
+
+    @Override
+    public void disposeUIResources() {
+        jBehaveSettingsPanel = null;
+    }
 }

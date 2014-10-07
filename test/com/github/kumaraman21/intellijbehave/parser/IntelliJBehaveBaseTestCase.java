@@ -1,7 +1,7 @@
 package com.github.kumaraman21.intellijbehave.parser;
 
 import com.github.kumaraman21.intellijbehave.Samples;
-import com.github.kumaraman21.intellijbehave.highlighter.StoryLexerFactory;
+import com.github.kumaraman21.intellijbehave.highlighter.StoryLocalizedLexer;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.impl.PsiBuilderImpl;
@@ -14,6 +14,8 @@ import com.intellij.testFramework.PsiTestCase;
 import com.intellij.testFramework.fixtures.IdeaProjectTestFixture;
 import com.intellij.testFramework.fixtures.IdeaTestFixtureFactory;
 import com.intellij.testFramework.fixtures.TestFixtureBuilder;
+
+import static com.github.kumaraman21.intellijbehave.parser.StoryElementTypes.STORY_FILE;
 
 /**
  * @author <a href="http://twitter.com/aloyer">@aloyer</a>
@@ -56,7 +58,7 @@ public class IntelliJBehaveBaseTestCase extends PsiTestCase {
         ApplicationManager.getApplication().invokeLater(new Runnable() {
             public void run() {
                 try {
-                    if(!myFixture.getProject().isDisposed())
+                    if (!myFixture.getProject().isDisposed())
                         myFixture.tearDown();
                 } catch (Exception e) {
                     // mute
@@ -65,22 +67,22 @@ public class IntelliJBehaveBaseTestCase extends PsiTestCase {
         });
     }
 
-    public void testCase_Simple () {
+    public void testCase_Simple() {
         ASTNode astNode = doParse(Samples.SIMPLE_SAMPLE);
         System.out.println("IntelliJBehaveBaseTestCase.testCase_Simple: " + DebugUtil.treeToString(astNode, false));
     }
 
-    public void testCase_Long () {
+    public void testCase_Long() {
         ASTNode astNode = doParse(Samples.LONG_SAMPLE);
         System.out.println("IntelliJBehaveBaseTestCase.testCase_Long: " + DebugUtil.treeToString(astNode, false));
     }
 
-    public void testCase_Meta () {
+    public void testCase_Meta() {
         ASTNode astNode = doParse(Samples.META_SAMPLE);
         System.out.println("IntelliJBehaveBaseTestCase.testCase_Meta: " + DebugUtil.treeToString(astNode, false));
     }
 
-    public void testCase_Examples () {
+    public void testCase_Examples() {
         ASTNode astNode = doParse(Samples.EXAMPLES_SAMPLE);
         System.out.println("IntelliJBehaveBaseTestCase.testCase_Examples: " + DebugUtil.treeToString(astNode, false));
     }
@@ -99,14 +101,14 @@ public class IntelliJBehaveBaseTestCase extends PsiTestCase {
         PsiBuilder builder = new PsiBuilderImpl(myProject,
                 null,
                 new StoryParserDefinition(),
-                new StoryLexerFactory().createLexer(),
+                new StoryLocalizedLexer(),
                 null,
                 content,
                 null,
                 null);
 
         StoryParser parser = new StoryParser();
-        return parser.parse(StoryElementType.STORY_FILE, builder);
+        return parser.parse(STORY_FILE, builder);
     }
 
 }

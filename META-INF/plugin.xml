@@ -112,6 +112,8 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <projectConfigurable instance="com.github.kumaraman21.intellijbehave.settings.JBehaveConfigurable"/>
+        <spellchecker.support language="Story"
+                              implementationClass="com.github.kumaraman21.intellijbehave.spellchecker.JBehaveSpellcheckerStrategy"/>
         <fileTypeFactory implementation="com.github.kumaraman21.intellijbehave.language.StoryFileTypeFactory"/>
         <lang.parserDefinition language="Story"
                                implementationClass="com.github.kumaraman21.intellijbehave.parser.StoryParserDefinition"/>
@@ -121,7 +123,7 @@
                         implementationClass="com.github.kumaraman21.intellijbehave.commenter.StoryCommenter"/>
         <colorSettingsPage implementation="com.github.kumaraman21.intellijbehave.highlighter.StoryColorsAndFontsPage"/>
         <completion.contributor language="Story"
-                                implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor"/>
+                                implementationClass="com.github.kumaraman21.intellijbehave.completion.StoryCompletionContributor2"/>
 
         <referencesSearch
                 implementation="com.github.kumaraman21.intellijbehave.service.JBehaveJavaStepDefinitionSearch"/>
@@ -139,5 +141,7 @@
 
         <projectService serviceInterface="com.github.kumaraman21.intellijbehave.service.JBehaveStepsIndex"
                         serviceImplementation="com.github.kumaraman21.intellijbehave.service.JBehaveStepsIndex"/>
+        <projectService serviceInterface="com.github.kumaraman21.intellijbehave.psi.StoryLanguageService"
+                        serviceImplementation="com.github.kumaraman21.intellijbehave.psi.StoryLanguageService"/>
     </extensions>
 </idea-plugin>
