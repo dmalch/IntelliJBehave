@@ -25,10 +25,7 @@ import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 public class StoryCompletionContributor2 extends CompletionContributor {
 
@@ -85,11 +82,11 @@ public class StoryCompletionContributor2 extends CompletionContributor {
                 List<JavaStepDefinition> definitions = JBehaveStepsIndex.getInstance(file.getProject()).getAllStepDefinitions(file);
 
                 for (JavaStepDefinition definition : definitions) {
-                    String text = definition.getAnnotationText();
-                    if (text != null) {
+                    Set<String> texts = definition.getAnnotationTexts();
+                    for (String text : texts) {
                         text = text.replaceAll("\\$", "").replaceAll("\\s+", " ");
 
-                        PsiMethod method = definition.getElement();
+                        PsiMethod method = definition.getAnnotatedMethod();
                         LookupElementBuilder lookup = method != null ? LookupElementBuilder.create(method, text).bold() : LookupElementBuilder.create(text);
 
                         result.addElement(lookup.withInsertHandler(new StepInsertHandler(initialPrefix.length() - flattenedPrefix.length())));
