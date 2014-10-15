@@ -53,7 +53,7 @@ public class StoryAnnotator implements Annotator {
 
     private void annotateParameters(JBehaveStep step, JavaStepDefinition javaStepDefinition, AnnotationHolder annotationHolder) {
         String stepText = step.getStepText();
-        String annotationText = javaStepDefinition.getAnnotationText();
+        String annotationText = javaStepDefinition.getAnnotationTextFor(stepText);
         ParametrizedString pString = new ParametrizedString(annotationText);
 
         int offset = step.getTextOffset();

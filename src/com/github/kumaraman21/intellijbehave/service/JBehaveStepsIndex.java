@@ -1,17 +1,22 @@
 package com.github.kumaraman21.intellijbehave.service;
 
 import com.github.kumaraman21.intellijbehave.parser.JBehaveStep;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.util.Computable;
+import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
+import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
 import com.intellij.psi.impl.java.stubs.index.JavaFullClassNameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.search.searches.AnnotatedElementsSearch;
-import com.intellij.util.Query;
+import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Then;
+import org.jbehave.core.annotations.When;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,12 +65,13 @@ public class JBehaveStepsIndex {
         return definition.getAnnotationPriority();
     }
 
+    @NotNull
     public List<JavaStepDefinition> loadStepsFor(@NotNull Module module) {
         GlobalSearchScope dependenciesScope = module.getModuleWithDependenciesAndLibrariesScope(true);
 
-        PsiClass givenAnnotationClass = findStepAnnotation("org.jbehave.core.annotations.Given", module, dependenciesScope);
-        PsiClass whenAnnotationClass = findStepAnnotation("org.jbehave.core.annotations.When", module, dependenciesScope);
-        PsiClass thenAnnotationClass = findStepAnnotation("org.jbehave.core.annotations.Then", module, dependenciesScope);
+        PsiClass givenAnnotationClass = findStepAnnotation(Given.class.getName(), module, dependenciesScope);
+        PsiClass whenAnnotationClass = findStepAnnotation(When.class.getName(), module, dependenciesScope);
+        PsiClass thenAnnotationClass = findStepAnnotation(Then.class.getName(), module, dependenciesScope);
 
         if (givenAnnotationClass == null || whenAnnotationClass == null || thenAnnotationClass == null) {
             return emptyList();
@@ -75,14 +81,24 @@ public class JBehaveStepsIndex {
 
         List<PsiClass> stepAnnotations = asList(givenAnnotationClass, whenAnnotationClass, thenAnnotationClass);
         for (PsiClass stepAnnotation : stepAnnotations) {
-            Query<PsiMethod> javaStepDefinitions = AnnotatedElementsSearch.searchPsiMethods(stepAnnotation, dependenciesScope);
+            Collection<PsiAnnotation> allStepAnnotations = getAllStepAnnotations(stepAnnotation, dependenciesScope);
 
-            for (PsiMethod stepDefMethod : javaStepDefinitions) {
-                result.add(new JavaStepDefinition(stepDefMethod));
+            for (PsiAnnotation stepDefAnnotation : allStepAnnotations) {
+                result.add(new JavaStepDefinition(stepDefAnnotation));
             }
         }
 
         return result;
+    }
+
+    @NotNull
+    private static Collection<PsiAnnotation> getAllStepAnnotations(@NotNull final PsiClass annClass, @NotNull final GlobalSearchScope scope) {
+        return ApplicationManager.getApplication().runReadAction(new Computable<Collection<PsiAnnotation>>() {
+            @Override
+            public Collection<PsiAnnotation> compute() {
+                return JavaAnnotationIndex.getInstance().get(annClass.getName(), annClass.getProject(), scope);
+            }
+        });
     }
 
     @Nullable
