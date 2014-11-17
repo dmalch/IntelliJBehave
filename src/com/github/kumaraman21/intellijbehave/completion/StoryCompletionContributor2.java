@@ -21,7 +21,6 @@ import com.intellij.patterns.PsiElementPattern.Capture;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.PsiWhiteSpace;
 import com.intellij.util.ProcessingContext;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,11 +45,8 @@ public class StoryCompletionContributor2 extends CompletionContributor {
                 if (psiFile instanceof StoryFile) {
                     StoryKeywordTable table = getKeywordsTable(psiFile, psiFile.getProject());
 
-                    PsiElement prevElement = getPreviousElement(parameters.getPosition());
-                    if (prevElement == null || prevElement.getNode().getElementType() != StoryTokenTypes.SCENARIO_TYPE) {
-                        addKeywordsToResult(table.getNarrativeKeywords(), result, 80);
-                        addKeywordsToResult(table.getScenarioKeyword(), result, 70);
-                    }
+                    addKeywordsToResult(table.getNarrativeKeywords(), result, 80);
+                    addKeywordsToResult(table.getScenarioKeyword(), result, 70);
                 }
             }
         };
@@ -113,15 +109,6 @@ public class StoryCompletionContributor2 extends CompletionContributor {
         StoryKeywordTable table = getKeywordsTable(file, file.getProject());
         result.addAll(table.getStepKeywords());
         return result;
-    }
-
-    private static PsiElement getPreviousElement(PsiElement element) {
-        PsiElement prevElement = element.getPrevSibling();
-        if (prevElement != null && prevElement instanceof PsiWhiteSpace) {
-            prevElement = prevElement.getPrevSibling();
-        }
-
-        return prevElement;
     }
 
     private static void addKeywordsToResult(Collection<String> keywords, CompletionResultSet result, int priority) {
