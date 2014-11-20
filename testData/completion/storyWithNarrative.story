@@ -1,5 +1,5 @@
 Narrative:
-lalala<caret>
+<caret>
 ---
 BASIC 1 EQUALS
 Scenario:

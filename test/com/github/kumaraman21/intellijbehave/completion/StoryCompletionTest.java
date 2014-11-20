@@ -26,6 +26,14 @@ public class StoryCompletionTest extends LightPlatformCodeInsightFixtureTestCase
         doTest();
     }
 
+    public void testEmptyGiven() throws Throwable {
+        doTest();
+    }
+
+    public void testComment() throws Throwable {
+        doTest();
+    }
+
     private void doTest() throws Throwable {
         String fileName = getTestName(true) + ".story";
         myCompletionTester.doTestVariantsInner(fileName, StoryFileType.STORY_FILE_TYPE);
