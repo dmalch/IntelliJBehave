@@ -16,7 +16,6 @@ import com.intellij.codeInsight.lookup.TailTypeDecorator;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
-import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.PsiElementPattern.Capture;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
@@ -26,19 +25,42 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+import static com.intellij.patterns.PlatformPatterns.psiElement;
+
 public class StoryCompletionContributor2 extends CompletionContributor {
 
     public StoryCompletionContributor2() {
-        Capture<PsiElement> inFile = PlatformPatterns.psiElement().inFile(PlatformPatterns.psiElement(StoryFile.class));
-        Capture<PsiElement> inScenario = PlatformPatterns.psiElement().inside(PlatformPatterns.psiElement().withElementType(StoryElementTypes.SCENARIO));
-        Capture<PsiElement> inStep = PlatformPatterns.psiElement().inside(PlatformPatterns.psiElement().withElementType(StoryTokenTypes.STEP_TEXT));
+        Capture<PsiElement> beforeNarrative = psiElement()
+                .beforeLeaf(psiElement().withElementType(StoryTokenTypes.NARRATIVE_TYPE));
+        Capture<PsiElement> beforeDescription = psiElement()
+                .beforeLeaf(psiElement().withElementType(StoryTokenTypes.STORY_DESCRIPTION));
 
-        extend(CompletionType.BASIC, inFile.andNot(inScenario), inFileProvider());
+
+        Capture<PsiElement> afterNarrative = psiElement()
+                .afterLeaf(psiElement().withElementType(StoryTokenTypes.NARRATIVE_TYPE));
+        Capture<PsiElement> afterDescription = psiElement()
+                .afterLeaf(psiElement().withElementType(StoryTokenTypes.STORY_DESCRIPTION));
+        Capture<PsiElement> inScenario = psiElement()
+                .inside(psiElement().withElementType(StoryElementTypes.SCENARIO));
+        Capture<PsiElement> inStep = psiElement().withElementType(StoryTokenTypes.STEP_TEXT);
+        Capture<PsiElement> inComment = psiElement().withElementType(StoryTokenTypes.COMMENTS);
+
+        Capture<PsiElement> a = psiElement()
+                .inside(psiElement().withElementType(StoryElementTypes.STORY))
+                .andNot(inScenario)
+                .andNot(afterNarrative)
+                .andNot(afterDescription);
+
+        extend(CompletionType.BASIC, a, beforeNarrativeProvider());
+        extend(CompletionType.BASIC, beforeDescription, beforeNarrativeProvider());
+        extend(CompletionType.BASIC, beforeNarrative, beforeNarrativeProvider());
+        extend(CompletionType.BASIC, afterNarrative.andNot(inComment), afterNarrativeProvider());
+        extend(CompletionType.BASIC, afterDescription.andNot(inComment), afterNarrativeProvider());
         extend(CompletionType.BASIC, inScenario.andNot(inStep), inScenarioProvider());
         extend(CompletionType.BASIC, inStep, inStepProvider());
     }
 
-    private CompletionProvider<CompletionParameters> inFileProvider() {
+    private CompletionProvider<CompletionParameters> beforeNarrativeProvider() {
         return new CompletionProvider<CompletionParameters>() {
             protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
                 PsiFile psiFile = parameters.getOriginalFile();
@@ -46,6 +68,19 @@ public class StoryCompletionContributor2 extends CompletionContributor {
                     StoryKeywordTable table = getKeywordsTable(psiFile, psiFile.getProject());
 
                     addKeywordsToResult(table.getNarrativeKeywords(), result, 80);
+                    addKeywordsToResult(table.getScenarioKeyword(), result, 70);
+                }
+            }
+        };
+    }
+
+    private CompletionProvider<CompletionParameters> afterNarrativeProvider() {
+        return new CompletionProvider<CompletionParameters>() {
+            protected void addCompletions(@NotNull CompletionParameters parameters, ProcessingContext context, @NotNull CompletionResultSet result) {
+                PsiFile psiFile = parameters.getOriginalFile();
+                if (psiFile instanceof StoryFile) {
+                    StoryKeywordTable table = getKeywordsTable(psiFile, psiFile.getProject());
+
                     addKeywordsToResult(table.getScenarioKeyword(), result, 70);
                 }
             }

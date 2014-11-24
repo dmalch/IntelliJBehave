@@ -18,6 +18,10 @@ public class StoryCompletionTest extends LightPlatformCodeInsightFixtureTestCase
         doTest();
     }
 
+    public void testStoryWithEmptyNarrative() throws Throwable {
+        doTest();
+    }
+
     public void testStoryWithNarrative() throws Throwable {
         doTest();
     }
@@ -30,7 +34,15 @@ public class StoryCompletionTest extends LightPlatformCodeInsightFixtureTestCase
         doTest();
     }
 
-    public void testComment() throws Throwable {
+    public void testCommentInEmptyStory() throws Throwable {
+        doTest();
+    }
+
+    public void testCommentInStoryWithEmptyNarrative() throws Throwable {
+        doTest();
+    }
+
+    public void testCommentInStoryWithNarrative() throws Throwable {
         doTest();
     }
 

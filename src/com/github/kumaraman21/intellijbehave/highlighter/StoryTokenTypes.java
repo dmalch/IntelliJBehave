@@ -41,9 +41,9 @@ public interface StoryTokenTypes {
     public static final IElementType EXAMPLE_TYPE = new StoryElementType("EXAMPLE_TYPE");
     public static final IElementType GIVEN_STORIES = new StoryElementType("GIVEN_STORIES");
     public static final IElementType NARRATIVE_TYPE = new StoryElementType("NARRATIVE_TYPE");
-    public static final IElementType NARRATIVE_TEXT = new StoryElementType("NARRATIVE_TEXT");
-
     public static final TokenSet STEP_TYPES = TokenSet.create(STEP_TYPE_GIVEN, STEP_TYPE_WHEN, STEP_TYPE_THEN, STEP_TYPE_AND);
+
+    public static final TokenSet COMMENTS = TokenSet.create(COMMENT, COMMENT_WITH_LOCALE);
     public static final TokenSet KEYWORDS = TokenSet.create(STORY_DESCRIPTION, SCENARIO_TYPE,
             STEP_TYPE_GIVEN, STEP_TYPE_WHEN, STEP_TYPE_THEN, STEP_TYPE_AND,
             GIVEN_STORIES, NARRATIVE_TYPE, EXAMPLE_TYPE);

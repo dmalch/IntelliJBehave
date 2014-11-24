@@ -103,7 +103,6 @@ public class StorySyntaxHighlighter extends SyntaxHighlighterBase {
     static {
         ATTRIBUTES.put(StoryTokenTypes.STORY_DESCRIPTION, STORY_DESCRIPTION);
         ATTRIBUTES.put(StoryTokenTypes.NARRATIVE_TYPE, STORY_DESCRIPTION);
-        ATTRIBUTES.put(StoryTokenTypes.NARRATIVE_TEXT, STORY_DESCRIPTION);
         ATTRIBUTES.put(StoryTokenTypes.SCENARIO_TYPE, SCENARIO_TYPE);
         ATTRIBUTES.put(StoryTokenTypes.SCENARIO_TEXT, SCENARIO_TEXT);
         ATTRIBUTES.put(StoryTokenTypes.STEP_TYPE_GIVEN, STEP_TYPE);

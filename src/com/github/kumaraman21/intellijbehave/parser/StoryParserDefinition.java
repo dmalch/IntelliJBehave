@@ -60,7 +60,7 @@ public class StoryParserDefinition implements ParserDefinition {
     @NotNull
     @Override
     public TokenSet getCommentTokens() {
-        return TokenSet.create(StoryTokenTypes.COMMENT, StoryTokenTypes.COMMENT_WITH_LOCALE);
+        return StoryTokenTypes.COMMENTS;
     }
 
     @NotNull

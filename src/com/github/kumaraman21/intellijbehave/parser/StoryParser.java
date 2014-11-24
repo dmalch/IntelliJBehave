@@ -391,7 +391,6 @@ public class StoryParser implements PsiParser {
 
     private static boolean isStoryDescription(IElementType tokenType) {
         return tokenType == StoryTokenTypes.STORY_DESCRIPTION
-                || tokenType == StoryTokenTypes.NARRATIVE_TYPE
-                || tokenType == StoryTokenTypes.NARRATIVE_TEXT;
+                || tokenType == StoryTokenTypes.NARRATIVE_TYPE;
     }
 }
